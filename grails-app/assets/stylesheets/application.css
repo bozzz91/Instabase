@@ -11,3 +11,51 @@
 *= require mobile
 *= require_self
 */
+
+#introspection_tree {
+    padding: 10px;
+}
+
+body {
+    /*background-color: #efefef;*/
+    /*background-color: white;*/
+}
+
+.left-panel {
+    display: block;
+    float: left;
+    width: 150px;
+    margin: 0 10px;
+}
+
+.person-info {
+    display: block;
+    float: left;
+    width: 150px;
+    height: 200px;
+    margin-bottom: 10px;
+    background-color: #efefef;
+}
+
+.navigation-info {
+    display: block;
+    float: left;
+    width: 150px;
+    height: 200px;
+    background-color: #efefef;
+    margin-bottom: 10px;
+}
+
+.workspace {
+    display: block;
+    float: left;
+    width: 765px;
+    background-color: #efefef;
+    padding: 0.5em 0.75em;
+}
+
+.with-shadow-box {
+    -moz-box-shadow: 0 0 3px 1px #aaaaaa;
+    -webkit-box-shadow: 0 0 3px 1px #aaaaaa;
+    box-shadow: 0 0 3px 1px #aaaaaa;
+}

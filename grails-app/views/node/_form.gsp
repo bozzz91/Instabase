@@ -14,7 +14,7 @@
 		<g:message code="node.type.label" default="Type" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:select name="type" from="${nodeInstance.constraints.type.inList}" required="" value="${nodeInstance?.type}" valueMessagePrefix="node.type"/>
+	<g:select name="type" from="${nodeInstance.constraints.type.inList}" required="" value="${nodeInstance?.type ?: params.type}" valueMessagePrefix="node.type"/>
 
 </div>
 
@@ -54,11 +54,12 @@
 <g:each in="${nodeInstance?.nodes?}" var="n">
     <li><g:link controller="node" action="show" id="${n.id}">${n?.encodeAsHTML()}</g:link></li>
 </g:each>
-<li class="add">
-<g:link controller="node" action="create" params="['node.id': nodeInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'node.label', default: 'Node')])}</g:link>
-</li>
+    <li class="add">
+        <g:link controller="node" action="create" params="['node.id': nodeInstance?.id, 'type':nodeInstance?.type]">
+            ${message(code: 'default.add.label', args: [message(code: 'node.label', default: 'Node')])}
+        </g:link>
+    </li>
 </ul>
 
 
 </div>
-

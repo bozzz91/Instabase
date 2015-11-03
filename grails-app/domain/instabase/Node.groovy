@@ -4,7 +4,7 @@ class Node {
 
     static constraints = {
         name(nullable: false, blank: false)
-        type(nullable: false, inList: ['Group','Country','Region','Town'])
+        type(nullable: false, inList: ['root','Страна','Регион','Город', 'Категория', 'База'])
         parent(nullable: true)
     }
 
@@ -14,10 +14,14 @@ class Node {
     Node parent
 
     String name
-    String type = 'G'
+    String type
+
+    boolean isEmpty() {
+        nodes?.isEmpty() && bases?.isEmpty()
+    }
 
     @Override
     String toString() {
-        name
+        "Узел - $name"
     }
 }

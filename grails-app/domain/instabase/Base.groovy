@@ -1,12 +1,25 @@
 package instabase
 
-class Base {
+class Base extends Node {
 
-    static constraints = {}
-    static belongsTo = [node: Node]
+    static constraints = {
+        creationDate(nullable: true)
+    }
 
-    Node node
-
-    String name
     Integer ver
+    Date creationDate
+
+    def beforeInsert() {
+        creationDate = new Date()
+    }
+
+    @Override
+    boolean isEmpty() {
+        true
+    }
+
+    @Override
+    String toString() {
+        "База - $name"
+    }
 }

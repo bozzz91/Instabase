@@ -1,54 +1,87 @@
-
 <%@ page import="instabase.Node" %>
+
 <!DOCTYPE html>
 <html>
 	<head>
 		<meta name="layout" content="main">
 		<g:set var="entityName" value="${message(code: 'node.label', default: 'Node')}" />
 		<title><g:message code="default.list.label" args="[entityName]" /></title>
+        <script src="<g:createLinkTo dir='js' file='jstree.min.js'/>"></script>
+        <link rel="stylesheet" type="text/css" href="<g:createLinkTo dir='css' file='themes/default/style.min.css'/>" />
+        <script type="text/javascript">
+            $(function () {
+                $("#introspection_tree").jstree({
+                    "plugins" : ["themes", "json_data", "ui", "wholerow", "contextmenu", "state"],
+                    /*"checkbox" : {
+                        "keep_selected_style" : false,
+                        "whole_node": false
+                    },*/
+                    "state" : {
+                        "key" : "instabaseTree"
+                    },
+                    "contextmenu" : {
+                        "select_node" : false,
+                        "items" : function (node) {
+                            var tree = $("#introspection_tree").jstree(true);
+                            return {
+                                "Create node": {
+                                    "separator_before": false,
+                                    "separator_after": false,
+                                    "label": "Create node",
+                                    "action": function (obj) {
+                                        console.log(obj);
+                                        node = tree.create_node(node);
+                                    }
+                                },
+                                "Open": {
+                                    "separator_before": false,
+                                    "separator_after": false,
+                                    "label": "Open",
+                                    "action": function (obj) {
+                                        console.log(obj);
+                                        window.location.href = '${createLink(action: 'show')}' + '/' + node.id;
+                                    }
+                                }
+                            };
+                        }
+                    },
+                    "core" : {
+                        'data': {
+                            'url': "${createLink(action: 'generateFileList')}",
+                            'data': function (node) {
+                                return {'nodeId': node.id};
+                            }
+                        }
+                    }
+                });
+            });
+
+            function submitPurchase() {
+                var checked_ids = $("#introspection_tree").jstree(true).get_selected();
+                console.log('checked: ' + checked_ids);
+                $.ajax({
+                    'url': '${createLink(action: 'purchase')}',
+                    'data': { 'ids': checked_ids.toString()},
+                    'success': function(data) {
+                        console.log('success purchasing. ' + data);
+                    },
+                    'error': function() {
+                        console.log('error');
+                    }
+                });
+            }
+        </script>
 	</head>
 	<body>
-		<a href="#list-node" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
 		<div class="nav" role="navigation">
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-				<li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
+                <li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
+                <li><a class="create" href="#" onclick="submitPurchase()">Purchase</a></li>
 			</ul>
 		</div>
-		<div id="list-node" class="content scaffold-list" role="main">
-			<h1><g:message code="default.list.label" args="[entityName]" /></h1>
-			<g:if test="${flash.message}">
-				<div class="message" role="status">${flash.message}</div>
-			</g:if>
-			<table>
-			<thead>
-					<tr>
-					
-						<g:sortableColumn property="name" title="${message(code: 'node.name.label', default: 'Name')}" />
-					
-						<g:sortableColumn property="type" title="${message(code: 'node.type.label', default: 'Type')}" />
-					
-						<th><g:message code="node.parent.label" default="Parent" /></th>
-					
-					</tr>
-				</thead>
-				<tbody>
-				<g:each in="${nodeInstanceList}" status="i" var="nodeInstance">
-					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
-					
-						<td><g:link action="show" id="${nodeInstance.id}">${fieldValue(bean: nodeInstance, field: "name")}</g:link></td>
-					
-						<td>${fieldValue(bean: nodeInstance, field: "type")}</td>
-					
-						<td>${fieldValue(bean: nodeInstance, field: "parent")}</td>
-					
-					</tr>
-				</g:each>
-				</tbody>
-			</table>
-			<div class="pagination">
-				<g:paginate total="${nodeInstanceCount ?: 0}" />
-			</div>
-		</div>
+
+        <div id="introspection_tree">
+        </div>
 	</body>
 </html>

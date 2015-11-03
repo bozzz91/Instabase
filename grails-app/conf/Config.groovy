@@ -85,9 +85,14 @@ grails.hibernate.pass.readonly = false
 // configure passing read-only to OSIV session by default, requires "singleSession = false" OSIV mode
 grails.hibernate.osiv.readonly = false
 
+grails.gorm.failOnError = true
+
+grails.app.context = "/"
+
 environments {
     development {
         grails.logging.jul.usebridge = true
+        grails.serverURL = "http://localhost:8080"
     }
     production {
         grails.logging.jul.usebridge = false
