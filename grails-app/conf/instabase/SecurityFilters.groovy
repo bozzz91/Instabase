@@ -1,3 +1,5 @@
+package instabase
+
 class SecurityFilters {
 
     def filters = {
