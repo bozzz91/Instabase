@@ -9,8 +9,13 @@ class PersonController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-    def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
+    def generateNodeTreeService
+
+    def index() {
+        render (view: 'index')
+    }
+
+    def list() {
         respond Person.list(params), model: [personInstanceCount: Person.count()]
     }
 
@@ -20,7 +25,7 @@ class PersonController {
     }
 
     def validate() {
-        def user = Person.findByLogin(params.login)
+        def user = Person.findByLogin(params.login as String)
         if (user && user.password == params.password){
             session.user = user
             if (params.cName)
@@ -36,6 +41,10 @@ class PersonController {
     def logout = {
         session.user = null
         redirect(uri:'/')
+    }
+
+    def generateFileList = {
+        render generateNodeTreeService.generateTree("${params.nodeId}", session.user as Person)
     }
 
     def show(Person personInstance) {

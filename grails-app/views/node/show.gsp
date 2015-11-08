@@ -50,17 +50,6 @@
 				</li>
 				</g:if>
 			
-				<g:if test="${nodeInstance?.bases}">
-				<li class="fieldcontain">
-					<span id="bases-label" class="property-label"><g:message code="node.bases.label" default="Bases" /></span>
-					
-						<g:each in="${nodeInstance.bases}" var="b">
-						<span class="property-value" aria-labelledby="bases-label"><g:link controller="base" action="show" id="${b.id}">${b?.encodeAsHTML()}</g:link></span>
-						</g:each>
-					
-				</li>
-				</g:if>
-			
 				<g:if test="${nodeInstance?.nodes}">
 				<li class="fieldcontain">
 					<span id="nodes-label" class="property-label"><g:message code="node.nodes.label" default="Nodes" /></span>
@@ -75,7 +64,7 @@
 			</ol>
 			<g:form url="[resource:nodeInstance, action:'delete']" method="DELETE">
 				<fieldset class="buttons">
-					<g:link class="edit" action="edit" resource="${nodeInstance}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
+					<g:link class="edit" action="edit" resource="${nodeInstance}" params="['node.id': nodeInstance?.parent?.id]"><g:message code="default.button.edit.label" default="Edit" /></g:link>
 					<g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
 				</fieldset>
 			</g:form>

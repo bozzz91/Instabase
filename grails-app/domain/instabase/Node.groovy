@@ -8,7 +8,7 @@ class Node {
         parent(nullable: true)
     }
 
-    static hasMany = [nodes: Node, bases: Base]
+    static hasMany = [nodes: Node]
     static belongsTo = [parent: Node]
 
     Node parent
@@ -17,7 +17,7 @@ class Node {
     String type
 
     boolean isEmpty() {
-        nodes?.isEmpty() && bases?.isEmpty()
+        nodes?.isEmpty()
     }
 
     @Override

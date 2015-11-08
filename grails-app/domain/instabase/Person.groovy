@@ -3,6 +3,7 @@ package instabase
 class Person {
 
     static constraints = {
+        email(email: true, blank: false)
         login(nullable: false, blank: false)
         password(nullable: false, blank: false)
         fullName(nullable: false, blank: false)
@@ -14,6 +15,7 @@ class Person {
 
     Role role
 
+    String email
     String login
     String password
     String fullName
@@ -22,7 +24,9 @@ class Person {
 
     def beforeInsert() {
         created = new Date()
-        cash = 0.0
+        if (!cash) {
+            cash = 0.0
+        }
     }
 
     String toString() {
