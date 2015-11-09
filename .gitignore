@@ -41,3 +41,7 @@ gen### Grails template
 /target
 
 # Created by .ignore support plugin (hsz.mobi)
+/.slcache
+/.project
+/.classpath
+/.asscache
