@@ -18,3 +18,14 @@ if (typeof jQuery !== 'undefined') {
 		});
 	})(jQuery);
 }
+
+function openDialog(text) {
+    $("#dialog").text(text).dialog({
+        modal: true,
+        buttons: {
+            'Ok': function() {
+                $(this).dialog("close");
+            }
+        }
+    });
+}

@@ -52,7 +52,8 @@ class GenerateNodeTreeService {
     private def nodeToJson = { Node node ->
         def idPrefix = 'node_'
         def icon = grailsLinkGenerator.resource(dir: 'images', file: 'folder.png')
-        if (node instanceof Base) {
+        def isBase = node instanceof Base
+        if (isBase) {
             idPrefix = 'base_'
             icon = grailsLinkGenerator.resource(dir: 'images', file: 'db.png')
         }
@@ -65,6 +66,7 @@ class GenerateNodeTreeService {
                 ],
                 icon: icon,
                 children: !node.isEmpty(),
+                file: isBase
         ]
     }
 }

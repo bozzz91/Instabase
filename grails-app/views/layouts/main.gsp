@@ -21,7 +21,20 @@
 		<div id="grailsLogo" role="banner"><a href="${createLink(url:'/')}"><img src="${createLinkTo(dir: "images", file: "logo.png")}"/></a></div>
         <div class="left-panel">
             <div class="person-info with-shadow-box">
-                <g:loginToggle/>
+                %{--<g:loginToggle/>--}%
+                <span id='loginLink' style='position: relative; margin-right: 30px; float: right'>
+                    <sec:ifLoggedIn>
+                        Logged in as <sec:username/>
+                        <form name="logout" method="POST" action="${createLink(controller:'logout')}">
+                            <input type="submit" value=" (logout)">
+                        </form>
+                    </sec:ifLoggedIn>
+                    <sec:ifNotLoggedIn>
+                        <form name="login" method="GET" action="${createLink(controller:'login')}">
+                            <input type="submit" value="Login">
+                        </form>
+                    </sec:ifNotLoggedIn>
+                </span>
             </div>
             <div class="navigation-info with-shadow-box">
                 <a href="#">Link menu 1</a>

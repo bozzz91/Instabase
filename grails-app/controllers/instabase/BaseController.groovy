@@ -1,11 +1,19 @@
 package instabase
 
+import grails.plugin.springsecurity.annotation.Secured
+import org.springframework.web.multipart.MultipartFile
+import org.springframework.web.multipart.MultipartHttpServletRequest
+import org.springframework.web.multipart.commons.CommonsMultipartFile
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
+@Secured(['ROLE_ADMIN'])
 @Transactional(readOnly = true)
 class BaseController {
+
+    def springSecurityService
+    def contentService
 
     static allowedMethods = [save: "POST", update: "POST", delete: "DELETE"]
 
@@ -18,16 +26,53 @@ class BaseController {
         respond baseInstance
     }
 
+    @Secured(['ROLE_USER'])
     def download(Base baseInstance) {
-        response.setContentType("application/octet-stream")
-        response.setHeader("Content-disposition", "attachment;filename=\"${baseInstance.contentName}\"")
-        response.outputStream << baseInstance.content
-        response.outputStream.flush()
+        Person person = springSecurityService.currentUser as Person
+        if (person.bases.contains(baseInstance)) {
+            File baseFile = contentService.getBaseFile(baseInstance)
+            if (baseFile.exists()) {
+                response.setCharacterEncoding("UTF-8")
+                response.setContentType("application/octet-stream")
+                response.setHeader("Content-disposition", "attachment;filename=${URLEncoder.encode(baseInstance.contentName, "UTF-8")}")
+                response.outputStream << new FileInputStream(baseFile)
+                response.outputStream.flush()
+            } else {
+                render(status: INTERNAL_SERVER_ERROR, view: 'error', model: [text: "Base doesn't exists"])
+            }
+        } else {
+            render(status: FORBIDDEN, view: 'error', model: [text: 'You can not download base because you did not purchase it yet.'])
+        }
+
     }
 
     def create() {
         params.type = 'База'
         respond new Base(params)
+    }
+
+    CommonsMultipartFile processUpload(Base inst) {
+        def req = request as MultipartHttpServletRequest
+        def upload = req.getFile('filePath') as CommonsMultipartFile
+        if (!upload.isEmpty()) {
+            log.info "not empty file"
+            inst.contentName = upload.originalFilename
+            inst.length = upload.size
+            params.filePath = inst.filePath
+        } else {
+            log.info "empty file"
+            inst.filePath = null
+        }
+        inst.clearErrors()
+        return upload
+    }
+
+    def saveUpload(Base base, def upload) {
+        upload = upload as CommonsMultipartFile
+        if (!upload.isEmpty()) {
+            contentService.saveBaseFile(base, upload)
+        }
+        base.validate()
     }
 
     @Transactional
@@ -37,11 +82,13 @@ class BaseController {
             return
         }
 
+        def upload = processUpload(baseInstance)
         if (baseInstance.hasErrors()) {
             respond baseInstance.errors, view: 'create'
             return
         }
 
+        saveUpload(baseInstance, upload)
         baseInstance.save flush: true
 
         request.withFormat {
@@ -64,13 +111,13 @@ class BaseController {
             return
         }
 
+        def upload = processUpload(baseInstance)
         if (baseInstance.hasErrors()) {
             respond baseInstance.errors, view: 'edit'
             return
         }
 
-        def fileName = params.content?.fileItem?.fileName
-        baseInstance.contentName = fileName
+        saveUpload(baseInstance, upload)
         baseInstance.save flush: true
 
         request.withFormat {

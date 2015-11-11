@@ -1,7 +1,11 @@
 package instabase
 
+import grails.plugin.springsecurity.annotation.Secured
+
+import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
+@Secured('IS_AUTHENTICATED_ANONYMOUSLY')
 @Transactional(readOnly = true)
 class NodeController {
 
@@ -9,23 +13,27 @@ class NodeController {
 
     def purchaseService
     def generateNodeTreeService
+    def springSecurityService
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         render (view: 'index')
     }
 
-    def purchase = {
+    @Transactional
+    @Secured(['ROLE_USER'])
+    def purchase() {
         String ids = params.ids
-        Person p = Person.findByLogin(session.user.login as String)
+        Person p = springSecurityService.currentUser as Person
         def result = purchaseService.purchaseBases(ids, p)
         render result
     }
 
-    def generateFileList = {
+    def generateFileList() {
         render generateNodeTreeService.generateTree(params.nodeId as String)
     }
 
+    @Secured(['ROLE_ADMIN'])
     def show(Node nodeInstance) {
         if (nodeInstance instanceof Base) {
             redirect ([controller: 'base', action: 'show', params: [id: nodeInstance.id]])
@@ -33,6 +41,7 @@ class NodeController {
         respond nodeInstance
     }
 
+    @Secured(['ROLE_ADMIN'])
     def create() {
         def type = params.type
         if (!type) {
@@ -53,6 +62,7 @@ class NodeController {
     }
 
     @Transactional
+    @Secured(['ROLE_ADMIN'])
     def save(Node nodeInstance) {
         if (nodeInstance == null) {
             notFound()
@@ -75,11 +85,13 @@ class NodeController {
         }
     }
 
+    @Secured(['ROLE_ADMIN'])
     def edit(Node nodeInstance) {
         respond nodeInstance
     }
 
     @Transactional
+    @Secured(['ROLE_ADMIN'])
     def update(Node nodeInstance) {
         if (nodeInstance == null) {
             notFound()
@@ -103,6 +115,7 @@ class NodeController {
     }
 
     @Transactional
+    @Secured(['ROLE_ADMIN'])
     def delete(Node nodeInstance) {
 
         if (nodeInstance == null) {

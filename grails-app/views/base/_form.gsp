@@ -39,12 +39,12 @@
 	<g:field type="number" name="cost" value="${fieldValue(bean: baseInstance, field: 'cost')}" required=""/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: baseInstance, field: 'content', 'error')} required">
-	<label for="content">
+<div class="fieldcontain  required">
+	<label for="filePath">
 		<g:message code="base.content.label" default="Content" />
 		<span class="required-indicator">*</span>
 	</label>
-	<input type="file" id="content" name="content" />
+	<input type="file" id="filePath" name="filePath" />
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: baseInstance, field: 'ver', 'error')} required">

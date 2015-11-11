@@ -26,6 +26,10 @@ class PurchaseService {
         def totalCost = 0.0
         def validate = bases.every { Long baseId ->
             Base base = Base.findById(baseId)
+            if (p.bases.contains(base)) {
+                return true
+            }
+
             totalCost += base.cost
             if (p.cash < totalCost) {
                 return false
@@ -34,15 +38,15 @@ class PurchaseService {
         }
 
         if (validate) {
-            p.save();
+            p.cash -= totalCost
+            p.save(failOnError: true);
             return "OK"
         } else {
             return "Недостаточно средств"
         }
     }
 
-    private def collectBasesFromNode = { Node node ->
-        //node = Node.get(node.id)
+    private def collectBasesFromNode(Node node) {
         def bases = [] as Set
         def nodes = [] as Set
         nodes << node.id

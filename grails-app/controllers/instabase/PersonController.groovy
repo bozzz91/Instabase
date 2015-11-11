@@ -1,16 +1,20 @@
 package instabase
 
+import grails.plugin.springsecurity.annotation.Secured
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
+@Secured(['ROLE_ADMIN'])
 @Transactional(readOnly = true)
 class PersonController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def generateNodeTreeService
+    def springSecurityService
 
+    @Secured(['ROLE_USER'])
     def index() {
         render (view: 'index')
     }
@@ -19,32 +23,10 @@ class PersonController {
         respond Person.list(params), model: [personInstanceCount: Person.count()]
     }
 
-    def login() {
-        if (params.cName)
-            return [cName:params.cName, aName:params.aName]
-    }
-
-    def validate() {
-        def user = Person.findByLogin(params.login as String)
-        if (user && user.password == params.password){
-            session.user = user
-            if (params.cName)
-                redirect controller:params.cName, action:params.aName
-            else
-                redirect controller:'node', action:'index'
-        } else {
-            flash.message = "Invalid login or password."
-            render view:'login'
-        }
-    }
-
-    def logout = {
-        session.user = null
-        redirect(uri:'/')
-    }
-
-    def generateFileList = {
-        render generateNodeTreeService.generateTree("${params.nodeId}", session.user as Person)
+    @Secured(['ROLE_USER'])
+    def generateFileList() {
+        Person user = springSecurityService.currentUser as Person
+        render generateNodeTreeService.generateTree("${params.nodeId}", user)
     }
 
     def show(Person personInstance) {

@@ -89,6 +89,8 @@ grails.gorm.failOnError = true
 
 grails.app.context = "/"
 
+instabase.storage.root = "C:\\root\\"
+
 environments {
     development {
         grails.logging.jul.usebridge = true
@@ -108,6 +110,8 @@ log4j.main = {
     //    console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
     //}
 
+    //debug 'org.springframework.security'
+
     error  'org.codehaus.groovy.grails.web.servlet',        // controllers
            'org.codehaus.groovy.grails.web.pages',          // GSP
            'org.codehaus.groovy.grails.web.sitemesh',       // layouts
@@ -120,3 +124,22 @@ log4j.main = {
            'org.hibernate',
            'net.sf.ehcache.hibernate'
 }
+
+
+// Added by the Spring Security Core plugin:
+grails.plugin.springsecurity.userLookup.userDomainClassName = 'instabase.SecUser'
+grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'instabase.SecUserSecRole'
+grails.plugin.springsecurity.authority.className = 'instabase.SecRole'
+grails.plugin.springsecurity.securityConfigType = "Annotation"
+grails.plugin.springsecurity.roleHierarchy = 'ROLE_ADMIN > ROLE_USER'
+grails.plugin.springsecurity.controllerAnnotations.staticRules = [
+	'/':                              ['permitAll'],
+	'/index':                         ['permitAll'],
+	'/index.gsp':                     ['permitAll'],
+	'/assets/**':                     ['permitAll'],
+	'/**/js/**':                      ['permitAll'],
+	'/**/css/**':                     ['permitAll'],
+	'/**/images/**':                  ['permitAll'],
+    '/plugins/**':                    ['permitAll'],
+	'/**/favicon.ico':                ['permitAll']
+]

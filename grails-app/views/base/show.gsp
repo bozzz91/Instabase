@@ -69,9 +69,9 @@
                     </li>
                 </g:if>
 
-				<g:if test="${baseInstance?.content}">
+				<g:if test="${baseInstance?.contentName}">
 				<li class="fieldcontain">
-					<span id="content-label" class="property-label"><g:message code="base.content.label" default="Content" /></span>
+					<span id="content-label" class="property-label"><g:message code="base.content.label" default="Content Name" /></span>
                     <span class="property-value" aria-labelledby="parent-label">
                         <g:link controller="base" action="download" resource="${baseInstance}">
                             ${baseInstance?.contentName?.encodeAsHTML()}

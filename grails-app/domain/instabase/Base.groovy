@@ -6,8 +6,9 @@ class Base extends Node {
         creationDate(nullable: true)
         cost(nullable: false, min: 0.0d)
         ver(nullable: false, min: 1)
-        content(nullable: false, maxSize: 5*1024*1024)
+        filePath(nullable: false)
         contentName(nullable: true)
+        length(nullable: false, min: 0l, max: 5000000l)
     }
 
     static mapping = {}
@@ -15,11 +16,21 @@ class Base extends Node {
     Integer ver
     Date creationDate
     Double cost = 1.0d
-    byte[] content
+    String filePath
+    Long length = 0l
     String contentName = "unknown"
 
     def beforeInsert() {
         creationDate = new Date()
+    }
+
+    def afterDelete() {
+        if (filePath) {
+            File upload = new File(filePath)
+            if (upload.exists()) {
+                upload.delete()
+            }
+        }
     }
 
     @Override
