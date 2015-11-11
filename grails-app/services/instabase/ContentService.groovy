@@ -1,19 +1,17 @@
 package instabase
 import grails.transaction.Transactional
-import grails.util.Holders
+import grails.util.Metadata
 import org.springframework.web.multipart.commons.CommonsMultipartFile
 
 @Transactional
 class ContentService {
 
-    def grailsApplication = Holders.getGrailsApplication()
-
-    private String getStorageRoot() {
-        String path = grailsApplication.config.instabase.storage.root
+    private static String getStorageRoot() {
+        String path = Metadata.getCurrent().get('instabase.storage.root')
         path
     }
 
-    private File generateBaseDir(Base base) {
+    private static File generateBaseDir(Base base) {
         String root = getStorageRoot()
         String s = File.separator
         String baseDir = root
@@ -35,7 +33,7 @@ class ContentService {
         return new File(baseDir)
     }
 
-    def saveBaseFile(Base base, CommonsMultipartFile multipartFile) {
+    void saveBaseFile(Base base, CommonsMultipartFile multipartFile) {
         File dir = generateBaseDir(base)
         dir.mkdirs()
         File uploadedFile = new File(dir, multipartFile.originalFilename)

@@ -89,8 +89,6 @@ grails.gorm.failOnError = true
 
 grails.app.context = "/"
 
-instabase.storage.root = "C:\\root\\"
-
 environments {
     development {
         grails.logging.jul.usebridge = true

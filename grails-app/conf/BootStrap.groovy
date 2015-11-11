@@ -2,8 +2,6 @@ import instabase.*
 
 class BootStrap {
 
-    def springSecurityService
-
     def init = { servletContext ->
         SecRole userRole = SecRole.findByAuthority('ROLE_USER') ?: new SecRole(authority: 'ROLE_USER').save(failOnError: true)
         SecRole adminRole = SecRole.findByAuthority('ROLE_ADMIN') ?: new SecRole(authority: 'ROLE_ADMIN').save(failOnError: true)
