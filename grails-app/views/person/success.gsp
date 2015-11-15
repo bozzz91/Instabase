@@ -15,8 +15,6 @@
 			</ul>
 		</div>
 
-        <ul class="success">
-            <li>${text}</li>
-        </ul>
+        <div class="message" role="status">${text}</div>
 	</body>
 </html>
