@@ -9,9 +9,12 @@ class GenerateNodeTreeService {
 
     LinkGenerator grailsLinkGenerator
 
-    def generateTree = { String nodeId, Person owner = null ->
+    def generateTree = { Map params, Person owner = null ->
+        String nodeId = params.nodeId
+        String category = params.category
+
         if (!nodeId || nodeId == "#") {
-            return nodesToJson(Node.findAll("from Node n where n.type = 'root'"))
+            return nodesToJson(Node.findAll("from Node n where n.type = 'root' and n.name = ?", [category]))
         }
         Node currentNode = Node.get(nodeId as Integer)
 

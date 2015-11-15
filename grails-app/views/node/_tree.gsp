@@ -66,7 +66,7 @@
                 'check_callback': true,
                 'dblclick_toggle': true,
                 'data': {
-                    'url': "${createLink(action: 'generateFileList')}",
+                    'url': "${createLink(action: 'generateFileList', params: ['category': category])}",
                     'data': function (node) {
                         return {'nodeId': node.id.substring(5)};
                     }

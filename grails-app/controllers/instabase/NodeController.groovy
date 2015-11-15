@@ -15,9 +15,9 @@ class NodeController {
     def generateNodeTreeService
     def springSecurityService
 
-    def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-        render (view: 'index')
+    def index() {
+        String category = params.category ?: "Instagram"
+        render (view: 'index', model: [category: category])
     }
 
     @Transactional
@@ -30,7 +30,7 @@ class NodeController {
     }
 
     def generateFileList() {
-        render generateNodeTreeService.generateTree(params.nodeId as String)
+        render generateNodeTreeService.generateTree(params)
     }
 
     @Secured(['ROLE_ADMIN'])

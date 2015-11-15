@@ -89,6 +89,8 @@ grails.gorm.failOnError = true
 
 grails.app.context = "/"
 
+grails.assets.excludes = ["mixins/*.scss"]
+
 environments {
     development {
         grails.logging.jul.usebridge = true

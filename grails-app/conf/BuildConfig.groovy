@@ -70,6 +70,8 @@ grails.project.dependency.resolution = {
         runtime ":jquery-ui:1.10.4"
         runtime ':spring-security-core:2.0-RC4'
 
+        provided ":sass-asset-pipeline:2.3.1"
+
         // Uncomment these to enable additional asset-pipeline capabilities
         //compile ":sass-asset-pipeline:1.9.0"
         //compile ":less-asset-pipeline:1.10.0"
