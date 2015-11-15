@@ -11,8 +11,6 @@ class Base extends Node {
         length(nullable: false, min: 0l, max: 5000000l)
     }
 
-    static mapping = {}
-
     Integer ver
     Date creationDate
     Double cost = 1.0d
@@ -22,6 +20,12 @@ class Base extends Node {
 
     def beforeInsert() {
         creationDate = new Date()
+    }
+
+    def beforeDelete() {
+        /*Base.withSession {
+            PersonBase.removeAll(this, true)
+        }*/
     }
 
     def afterDelete() {

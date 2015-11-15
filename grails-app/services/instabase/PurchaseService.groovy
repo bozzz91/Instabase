@@ -34,7 +34,7 @@ class PurchaseService {
             if (p.cash < totalCost) {
                 return false
             }
-            p.addToBases(base)
+            PersonBase.create(p, base)
         }
 
         if (validate) {

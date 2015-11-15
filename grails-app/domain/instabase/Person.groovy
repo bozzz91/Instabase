@@ -8,12 +8,17 @@ class Person extends SecUser {
         cash(nullable: false, blank: false, min: 0.0d)
         created(nullable: true)
     }
-    static hasMany = [bases: Base, payments: Payment]
+
+    static hasMany = [payments: Payment]
 
     String email
     String fullName
     Date created
     Double cash
+
+    Set<Base> getBases() {
+        PersonBase.findAllByPerson(this).collect { it.base }
+    }
 
     @Override
     def beforeInsert() {

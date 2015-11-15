@@ -6,7 +6,7 @@ class BootStrap {
         SecRole userRole = SecRole.findByAuthority('ROLE_USER') ?: new SecRole(authority: 'ROLE_USER').save(failOnError: true)
         SecRole adminRole = SecRole.findByAuthority('ROLE_ADMIN') ?: new SecRole(authority: 'ROLE_ADMIN').save(failOnError: true)
         
-        def adminUser = SecUser.findByUsername('admin') ?: new Person(
+        Person adminUser = SecUser.findByUsername('admin') ?: new Person(
                 email: 'admin@asb.com', cash: 100.0d, fullName: 'admin',
                 username: 'admin',
                 password: 'admin',
@@ -16,7 +16,7 @@ class BootStrap {
             SecUserSecRole.create adminUser, adminRole
         }
 
-        def user = SecUser.findByUsername('user') ?: new Person(
+        Person user = SecUser.findByUsername('user') ?: new Person(
                 email: 'user@asb.com', cash: 100.0d, fullName: 'user',
                 username: 'user',
                 password: 'user',
@@ -37,6 +37,12 @@ class BootStrap {
         Base base1 = new Base(name: 'base 1', type: 'База', parent: ufa, ver: 1, filePath: 'sdf', contentName: 'name1').save();
         Base base2 = new Base(name: 'base 2', type: 'База', parent: msc, ver: 1, filePath: 'sdfsf', contentName: 'name2').save();
         Base base3 = new Base(name: 'base 3', type: 'База', parent: chs, ver: 1, filePath: 'sdfsdfsdf', contentName: 'name3').save();
+
+        PersonBase.create(adminUser, base1)
+        PersonBase.create(adminUser, base2)
+
+        PersonBase.create(user, base2)
+        PersonBase.create(user, base3)
     }
 
     def destroy = {

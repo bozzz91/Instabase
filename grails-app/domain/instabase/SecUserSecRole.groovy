@@ -5,8 +5,6 @@ import org.apache.commons.lang.builder.HashCodeBuilder
 @SuppressWarnings("UnnecessaryQualifiedReference")
 class SecUserSecRole implements Serializable {
 
-	private static final long serialVersionUID = 1
-
 	SecUser secUser
 	SecRole secRole
 

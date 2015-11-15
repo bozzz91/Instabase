@@ -22,14 +22,20 @@ class BaseController {
         respond Base.list(params), model: [baseInstanceCount: Base.count()]
     }
 
+    @Secured(['ROLE_USER'])
     def show(Base baseInstance) {
-        respond baseInstance
+        Person person = springSecurityService.currentUser as Person
+        if (PersonBase.exists(person.id, baseInstance.id)) {
+            respond baseInstance
+        } else {
+            render(status: FORBIDDEN, view: 'error', model: [text: 'You can not open base because you did not purchase it yet.'])
+        }
     }
 
     @Secured(['ROLE_USER'])
     def download(Base baseInstance) {
         Person person = springSecurityService.currentUser as Person
-        if (person.bases.contains(baseInstance)) {
+        if (PersonBase.exists(person.id, baseInstance.id)) {
             File baseFile = contentService.getBaseFile(baseInstance)
             if (baseFile.exists()) {
                 response.setCharacterEncoding("UTF-8")
@@ -51,7 +57,7 @@ class BaseController {
         respond new Base(params)
     }
 
-    CommonsMultipartFile processUpload(Base inst) {
+    private CommonsMultipartFile processUpload(Base inst) {
         def req = request as MultipartHttpServletRequest
         def upload = req.getFile('filePath') as CommonsMultipartFile
         if (!upload.isEmpty()) {
@@ -67,7 +73,7 @@ class BaseController {
         return upload
     }
 
-    def saveUpload(Base base, def upload) {
+    private def saveUpload(Base base, def upload) {
         upload = upload as CommonsMultipartFile
         if (!upload.isEmpty()) {
             contentService.saveBaseFile(base, upload)
@@ -137,6 +143,7 @@ class BaseController {
             return
         }
 
+        PersonBase.removeAll(baseInstance, true)
         baseInstance.delete flush: true
 
         request.withFormat {

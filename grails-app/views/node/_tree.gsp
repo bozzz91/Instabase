@@ -51,11 +51,12 @@
             "checkbox" : {
                 "keep_selected_style" : false,
                 "whole_node": false,
-                "cascade": "down",
-                "three_state": false
+                //"cascade": "up+down",
+                "three_state": true
             },
             "state" : {
-                "key" : "instabaseTree"
+                "key" : "instabaseTree",
+                "ttl": 300000 //5 min to clean state
             },
             "contextmenu" : {
                 "select_node" : false,
