@@ -26,8 +26,8 @@ class BootStrap {
             SecUserSecRole.create user, userRole
         }
 
-        Node root = new Node(name: 'Instagram', type: 'root').save();
-        Node country = new Node(name: 'Россия', type: 'Страна', parent: root).save();
+        Node root1 = new Node(name: 'Instagram', type: 'root').save();
+        Node country = new Node(name: 'Россия', type: 'Страна', parent: root1).save();
         Node region1 = new Node(name: 'РБ', type: 'Регион', parent: country).save();
         Node ufa = new Node(name: 'Уфа', type: 'Город', parent: region1).save();
         Node chs = new Node(name: 'Чишмы', type: 'Город', parent: region1).save();
@@ -43,6 +43,24 @@ class BootStrap {
 
         PersonBase.create(user, base2)
         PersonBase.create(user, base3)
+
+        Node root2 = new Node(name: 'VK', type: 'root').save();
+        Node country2 = new Node(name: 'Россия', type: 'Страна', parent: root2).save();
+        Node region3 = new Node(name: 'Татарстан', type: 'Регион', parent: country2).save();
+        Node kazan = new Node(name: 'Казань', type: 'Город', parent: region3).save();
+        Node nij = new Node(name: 'Нижнекамск', type: 'Город', parent: region3).save();
+        Node region4 = new Node(name: 'Самарская обл', type: 'Регион', parent: country2).save();
+        Node samara = new Node(name: 'Самара', type: 'Город', parent: region4).save();
+
+        Base base4 = new Base(name: 'base 4', type: 'База', parent: kazan, ver: 1, filePath: 'sdf', contentName: 'name1').save();
+        Base base5 = new Base(name: 'base 5', type: 'База', parent: nij, ver: 1, filePath: 'sdfsf', contentName: 'name2').save();
+        Base base6 = new Base(name: 'base 6', type: 'База', parent: samara, ver: 1, filePath: 'sdfsdfsdf', contentName: 'name3').save();
+
+        PersonBase.create(adminUser, base4)
+        PersonBase.create(adminUser, base5)
+
+        PersonBase.create(user, base5)
+        PersonBase.create(user, base6)
     }
 
     def destroy = {

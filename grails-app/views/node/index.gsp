@@ -1,5 +1,3 @@
-<%@ page import="instabase.Node" %>
-
 <!DOCTYPE html>
 <html>
 	<head>
@@ -14,29 +12,9 @@
         </sec:ifLoggedIn>
 	</head>
 	<body>
-		<div class="nav" role="navigation">
-			<ul>
-				<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-                <li><a class="list" href="${createLink(controller: 'node')}"><g:message code="node.bases.label"/></a></li>
-                <sec:ifLoggedIn>
-                    <li><a class="create" href="#" onclick="submitPurchase()"><g:message code="purchase.label"/></a></li>
-                </sec:ifLoggedIn>
-			</ul>
-		</div>
+		<g:render template="nav"/>
         <br/>
-        <div class="nav category-nav" role="navigation">
-            <ul>
-                <li class="category-tab">
-                    <a class="a-category-tab tab-insta" href="${createLink(action: 'index', params: ['category':'Instagram'])}">Instagram</a>
-                </li>
-                <li class="category-tab">
-                    <a class="a-category-tab tab-vk"href="${createLink(action: 'index', params: ['category':'VK'])}">VK</a>
-                </li>
-                <li class="category-tab">
-                    <a class="a-category-tab tab-unknown"href="${createLink(action: 'index', params: ['category':'Unknown'])}">Unknown</a>
-                </li>
-            </ul>
-        </div>
+        <g:render template="/layouts/tabs"/>
 
         <div id="introspection_tree"></div>
 

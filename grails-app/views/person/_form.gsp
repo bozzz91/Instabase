@@ -1,7 +1,5 @@
 <%@ page import="instabase.Person" %>
 
-
-
 <div class="fieldcontain ${hasErrors(bean: personInstance, field: 'username', 'error')} required">
     <label for="username">
         <g:message code="person.username.label" default="Username"/>

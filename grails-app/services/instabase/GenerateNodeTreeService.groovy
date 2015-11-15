@@ -64,7 +64,7 @@ class GenerateNodeTreeService {
                 id: idPrefix + node.id,
                 text: node.name,
                 state : [
-                        'opened' : false,
+                        'opened' : node.type == 'root' || node.type == 'Страна',
                         'selected' : false
                 ],
                 icon: icon,
