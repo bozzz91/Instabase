@@ -64,7 +64,7 @@ class PersonController {
         def activation = new Activation(
                 code: code,
                 done: false,
-                owner: personInstance
+                person: personInstance
         )
         activation.save()
 
@@ -90,8 +90,8 @@ class PersonController {
             if (activation) {
                 activation.done = true
                 activation.save()
-                activation.owner.enabled = true
-                activation.owner.save()
+                activation.person.enabled = true
+                activation.person.save()
                 render(view: 'success', model: ['text': "Activation success!"])
             } else {
                 render(view: 'error', model: ['text': "Wrong activation code"])
@@ -126,6 +126,7 @@ class PersonController {
                 return
             }
 
+            Activation.where { person == personInstance }.deleteAll()
             personInstance.save flush: true
 
             request.withFormat {

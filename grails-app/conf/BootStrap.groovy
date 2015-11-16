@@ -24,7 +24,7 @@ class BootStrap {
         def activation = new Activation(
                 code: '123',
                 done: false,
-                owner: user
+                person: user
         )
         activation.save()
 

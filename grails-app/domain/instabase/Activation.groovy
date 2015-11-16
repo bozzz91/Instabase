@@ -5,7 +5,7 @@ class Activation {
     static constraints = {
     }
 
-    Person owner
+    Person person
     String code
     boolean done
 }
