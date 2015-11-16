@@ -96,6 +96,9 @@
           <root url="jar://$MAVEN_REPOSITORY$/com/bertramlabs/plugins/jruby-container/0.6.1/jruby-container-0.6.1.jar!/" />
           <root url="jar://$MAVEN_REPOSITORY$/org/jruby/jruby-complete/1.7.11/jruby-complete-1.7.11.jar!/" />
           <root url="jar://$MAVEN_REPOSITORY$/com/bertramlabs/plugins/sass-asset-pipeline/2.3.1/sass-asset-pipeline-2.3.1.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/javax/mail/javax.mail-api/1.5.1/javax.mail-api-1.5.1.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/javax/activation/activation/1.1/activation-1.1.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/com/sun/mail/javax.mail/1.5.1/javax.mail-1.5.1.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

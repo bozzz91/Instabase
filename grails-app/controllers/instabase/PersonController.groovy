@@ -13,6 +13,7 @@ class PersonController {
 
     def generateNodeTreeService
     def springSecurityService
+    def mailService
 
     @Secured(['ROLE_USER'])
     def index() {
@@ -59,27 +60,42 @@ class PersonController {
         }
 
         personInstance.save flush: true
+        String code = springSecurityService.encodePassword(personInstance.email, null)
+        def activation = new Activation(
+                code: code,
+                done: false,
+                owner: personInstance
+        )
+        activation.save()
 
-        /*request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'person.label', default: 'Person'), personInstance.id])
-                redirect personInstance
-            }
-            '*' { respond personInstance, [status: CREATED] }
-        }*/
-        //TODO send activation on email
+        mailService.sendMail {
+            to personInstance.email
+            from "admin@desu.com"
+            subject "Account activation"
+            body "your code ${code}"
+        }
+        log.info("your code ${code}")
+
         render (view: 'success', model: ['text': "Activation link was sent on ${personInstance.email}"])
     }
 
     @Transactional
     @Secured(['IS_AUTHENTICATED_ANONYMOUSLY'])
     def activate() {
-        String activateHash = params.activateHash
+        String activateHash = params.activateCode
         if (!activateHash) {
-            render(view: 'error', model: ['text': "Wrong activation hash"])
+            render(view: 'error', model: ['text': "Wrong activation code"])
         } else {
-            //todo find activation in DB
-            render(view: 'success', model: ['text': "Activation success!"])
+            def activation = Activation.findAllByCodeAndDone(activateHash, false).max { it.id }
+            if (activation) {
+                activation.done = true
+                activation.save()
+                activation.owner.enabled = true
+                activation.owner.save()
+                render(view: 'success', model: ['text': "Activation success!"])
+            } else {
+                render(view: 'error', model: ['text': "Wrong activation code"])
+            }
         }
     }
 

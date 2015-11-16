@@ -102,6 +102,18 @@ environments {
     }
 }
 
+grails {
+    mail {
+        host = "127.0.0.1"
+        port = 25
+        username = "admin@desu.com"
+        password = "admin"
+        props = ["mail.smtp.auth" : "false"]
+    }
+}
+
+grails.mail.disabled = true
+
 // log4j configuration
 log4j.main = {
     // Example of changing the log pattern for the default console appender:

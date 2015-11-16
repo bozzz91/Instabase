@@ -20,7 +20,13 @@ class BootStrap {
                 email: 'user@asb.com', cash: 100.0d, fullName: 'user',
                 username: 'user',
                 password: 'user',
-                enabled: true).save(failOnError: true)
+                enabled: false).save(failOnError: true)
+        def activation = new Activation(
+                code: '123',
+                done: false,
+                owner: user
+        )
+        activation.save()
 
         if (!user.authorities.contains(userRole)) {
             SecUserSecRole.create user, userRole
