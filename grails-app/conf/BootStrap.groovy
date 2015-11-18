@@ -7,8 +7,8 @@ class BootStrap {
         SecRole adminRole = SecRole.findByAuthority('ROLE_ADMIN') ?: new SecRole(authority: 'ROLE_ADMIN').save(failOnError: true)
         
         Person adminUser = Person.findByUsername('admin') ?: new Person(
-                email: 'admin@asb.com', cash: 100.0d, fullName: 'admin',
-                username: 'admin',
+                cash: 100.0d, fullName: 'admin',
+                username: 'admin@admin.com',
                 password: 'admin',
                 enabled: true).save(failOnError: true)
 
@@ -17,8 +17,8 @@ class BootStrap {
         }
 
         Person user = Person.findByUsername('user') ?: new Person(
-                email: 'user@asb.com', cash: 100.0d, fullName: 'user',
-                username: 'user',
+                cash: 100.0d, fullName: 'user',
+                username: 'user@user.com',
                 password: 'user',
                 enabled: false).save(failOnError: true)
         def activation = new Activation(

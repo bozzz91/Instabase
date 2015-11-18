@@ -113,6 +113,7 @@ grails {
 }
 
 grails.mail.disabled = true
+grails.mail.default.from="noreply@instabase.com"
 
 // log4j configuration
 log4j.main = {

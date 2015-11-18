@@ -3,7 +3,6 @@ package instabase
 class Person extends SecUser {
 
     static constraints = {
-        email(email: true, blank: false)
         fullName(nullable: false, blank: false)
         cash(nullable: false, blank: false, min: 0.0d)
         created(nullable: true)
@@ -11,10 +10,9 @@ class Person extends SecUser {
 
     static hasMany = [payments: Payment]
 
-    String email
     String fullName
     Date created
-    Double cash
+    Double cash = 0.0d
 
     Set<Base> getBases() {
         PersonBase.findAllByPerson(this).collect { it.base }

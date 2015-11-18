@@ -6,16 +6,16 @@ class SecUser {
 
 	String username
 	String password
-	boolean enabled = true
-	boolean accountExpired
-	boolean accountLocked
-	boolean passwordExpired
+	boolean enabled = false
+	boolean accountExpired = false
+	boolean accountLocked = false
+	boolean passwordExpired = false
 
 	static transients = ['springSecurityService']
 
 	static constraints = {
-		username blank: false, unique: true
-		password blank: false
+		username blank: false, unique: true, email: true
+        password nullable: false, blank: false
 	}
 
 	static mapping = {

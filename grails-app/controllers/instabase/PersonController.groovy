@@ -36,6 +36,13 @@ class PersonController {
         respond personInstance
     }
 
+    private static boolean hasAccessToPerson(Person current, Person p) {
+        def hasAccess = false
+        hasAccess = hasAccess || current.id == p.id
+        hasAccess = hasAccess || SecUserSecRole.where { secUser == current && secRole.authority == 'ROLE_ADMIN' }.count() > 0
+        hasAccess
+    }
+
     @Secured(['IS_AUTHENTICATED_ANONYMOUSLY'])
     def create() {
         Person user = springSecurityService.currentUser as Person
@@ -59,8 +66,14 @@ class PersonController {
             return
         }
 
+        if (params.password != params.confirmPassword) {
+            flash.message = 'Не совпадают пароли!'
+            respond personInstance.errors, view: 'create'
+            return
+        }
+
         personInstance.save flush: true
-        String code = springSecurityService.encodePassword(personInstance.email, null)
+        String code = springSecurityService.encodePassword(personInstance.username, null)
         def activation = new Activation(
                 code: code,
                 done: false,
@@ -69,24 +82,23 @@ class PersonController {
         activation.save()
 
         mailService.sendMail {
-            to personInstance.email
-            from "admin@desu.com"
+            to personInstance.username
             subject "Account activation"
             body "your code ${code}"
         }
         log.info("your code ${code}")
 
-        render (view: 'success', model: ['text': "Activation link was sent on ${personInstance.email}"])
+        render (view: 'success', model: ['text': "Activation link was sent on ${personInstance.username}"])
     }
 
     @Transactional
     @Secured(['IS_AUTHENTICATED_ANONYMOUSLY'])
     def activate() {
-        String activateHash = params.activateCode
-        if (!activateHash) {
+        String activateCode = params.activateCode
+        if (!activateCode) {
             render(view: 'error', model: ['text': "Wrong activation code"])
         } else {
-            def activation = Activation.findAllByCodeAndDone(activateHash, false).max { it.id }
+            def activation = Activation.findAllByCodeAndDone(activateCode, false).max { it.id }
             if (activation) {
                 activation.done = true
                 activation.save()
@@ -102,10 +114,10 @@ class PersonController {
     @Secured(['ROLE_USER'])
     def edit(Person personInstance) {
         Person user = springSecurityService.currentUser as Person
-        if (!user.authorities.contains('ROLE_ADMIN')) {
-            render(status: FORBIDDEN, view: 'error', model: [text: 'You can not edit other accounts.'])
-        } else {
+        if (hasAccessToPerson(user, personInstance)) {
             respond personInstance
+        } else {
+            render(status: FORBIDDEN, view: 'error', model: [text: 'You can not edit other accounts.'])
         }
     }
 
@@ -118,7 +130,7 @@ class PersonController {
         }
 
         Person user = springSecurityService.currentUser as Person
-        if (!user.authorities.contains('ROLE_ADMIN')) {
+        if (!hasAccessToPerson(user, personInstance)) {
             render(status: FORBIDDEN, view: 'error', model: [text: 'You can not update other accounts.'])
         } else {
             if (personInstance.hasErrors()) {

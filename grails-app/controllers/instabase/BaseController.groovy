@@ -53,7 +53,7 @@ class BaseController {
         }
     }
 
-    private boolean hasAccessToBase(Person p, Base b) {
+    private static boolean hasAccessToBase(Person p, Base b) {
         def hasAccess = false
         hasAccess = hasAccess || PersonBase.exists(p.id, b.id)
         hasAccess = hasAccess || SecUserSecRole.where { secUser == p && secRole.authority == 'ROLE_ADMIN' }.count() > 0
