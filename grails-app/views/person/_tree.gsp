@@ -2,16 +2,18 @@
     function customMenu(node) {
         var id = node.id.substring(5);
         var items = {
+            <sec:ifAnyGranted roles="ROLE_ADMIN">
             'openNode': {
                 "separator_before": false,
                 "separator_after": false,
-                'label': "Open node",
+                'label': "Просмотр категории",
                 'action': function () {
                     window.location.href = '${createLink(controller: 'node', action: 'show')}' + '/' + id;
                 }
             },
+            </sec:ifAnyGranted>
             'openBase': {
-                'label': "Open base",
+                'label': "Просмотр базы",
                 'action': function () {
                     window.location.href = '${createLink(controller: 'base', action: 'show')}' + '/' + id;
                 }
@@ -25,6 +27,10 @@
         }
 
         return items;
+    }
+
+    function downloadBase(id) {
+        window.location.href = "${createLink(controller: 'base', action: 'download')}/" + id;
     }
 
     $(function () {

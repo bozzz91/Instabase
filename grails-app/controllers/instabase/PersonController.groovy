@@ -28,7 +28,7 @@ class PersonController {
     @Secured(['ROLE_USER'])
     def generateFileList() {
         Person user = springSecurityService.currentUser as Person
-        render generateNodeTreeService.generateTree(params, user)
+        render generateNodeTreeService.generateTree(params, user, true)
     }
 
     @Secured(['ROLE_USER'])

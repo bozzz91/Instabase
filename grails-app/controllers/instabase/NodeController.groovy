@@ -23,14 +23,14 @@ class NodeController {
     @Transactional
     @Secured(['ROLE_USER'])
     def purchase() {
-        String ids = params.ids
         Person p = springSecurityService.currentUser as Person
-        def result = purchaseService.purchaseBases(ids, p)
+        def result = purchaseService.purchaseBases(params, p)
         render result
     }
 
     def generateFileList() {
-        render generateNodeTreeService.generateTree(params)
+        Person p = springSecurityService.currentUser as Person
+        render generateNodeTreeService.generateTree(params, p)
     }
 
     @Secured(['ROLE_ADMIN'])

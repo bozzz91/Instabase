@@ -2,10 +2,11 @@
     function customMenu(node) {
         var id = node.id.substring(5);
         var items = {
+            <sec:ifAnyGranted roles="ROLE_ADMIN">
             'createNode': {
                 "separator_before": false,
                 "separator_after": false,
-                'label': "Create node",
+                'label': "Добавить категорию",
                 'action': function () {
                     window.location.href = '${createLink(controller: 'node', action: 'create')}' + '/?node.id=' + id;
                 }
@@ -13,7 +14,7 @@
             'createBase': {
                 "separator_before": false,
                 "separator_after": false,
-                'label': "Create base",
+                'label': "Создать базу в текущем каталоге",
                 'action': function () {
                     window.location.href = '${createLink(controller: 'base', action: 'create')}' + '/?node.id=' + id;
                 }
@@ -21,13 +22,14 @@
             'openNode': {
                 "separator_before": false,
                 "separator_after": false,
-                'label': "Open node",
+                'label': "Просмотр категории",
                 'action': function () {
                     window.location.href = '${createLink(controller: 'node', action: 'show')}' + '/' + id;
                 }
             },
+            </sec:ifAnyGranted>
             'openBase': {
-                'label': "Open base",
+                'label': "Открыть базу",
                 'action': function () {
                     window.location.href = '${createLink(controller: 'base', action: 'show')}' + '/' + id;
                 }
@@ -43,6 +45,10 @@
         }
 
         return items;
+    }
+
+    function downloadBase(id) {
+        window.location.href = "${createLink(controller: 'base', action: 'download')}/" + id;
     }
 
     $(function () {
