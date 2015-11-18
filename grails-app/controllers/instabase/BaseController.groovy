@@ -25,7 +25,8 @@ class BaseController {
     @Secured(['ROLE_USER'])
     def show(Base baseInstance) {
         Person person = springSecurityService.currentUser as Person
-        if (PersonBase.exists(person.id, baseInstance.id) || SecUserSecRole.where { secUser == person && secRole.authority == 'ROLE_ADMIN' }.count() > 0) {
+
+        if (hasAccessToBase(person, baseInstance)) {
             respond baseInstance
         } else {
             render(status: FORBIDDEN, view: 'error', model: [text: 'You can not open base because you did not purchase it yet.'])
@@ -35,7 +36,8 @@ class BaseController {
     @Secured(['ROLE_USER'])
     def download(Base baseInstance) {
         Person person = springSecurityService.currentUser as Person
-        if (PersonBase.exists(person.id, baseInstance.id)) {
+
+        if (hasAccessToBase(person, baseInstance)) {
             File baseFile = contentService.getBaseFile(baseInstance)
             if (baseFile.exists()) {
                 response.setCharacterEncoding("UTF-8")
@@ -49,7 +51,13 @@ class BaseController {
         } else {
             render(status: FORBIDDEN, view: 'error', model: [text: 'You can not download base because you did not purchase it yet.'])
         }
+    }
 
+    private boolean hasAccessToBase(Person p, Base b) {
+        def hasAccess = false
+        hasAccess = hasAccess || PersonBase.exists(p.id, b.id)
+        hasAccess = hasAccess || SecUserSecRole.where { secUser == p && secRole.authority == 'ROLE_ADMIN' }.count() > 0
+        hasAccess
     }
 
     def create() {
