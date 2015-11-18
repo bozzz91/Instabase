@@ -42,7 +42,7 @@
 		<g:message code="payment.state.label" default="State" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:select name="state" from="${Payment$State?.values()}" keys="${Payment$State.values()*.name()}" required="" value="${paymentInstance?.state?.name()}" />
+	<g:select name="state" from="${instabase.Payment$State?.values()}" keys="${instabase.Payment$State.values()*.name()}" required="" value="${paymentInstance?.state?.name()}" />
 
 </div>
 
