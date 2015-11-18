@@ -11,21 +11,16 @@ class Base extends Node {
         length(nullable: false, min: 0l, max: 5000000l)
     }
 
-    Integer ver
+    Integer ver = 1
     Date creationDate
-    Double cost = 1.0d
+    Double cost = 0.0d
     String filePath
     Long length = 0l
     String contentName = "unknown"
 
     def beforeInsert() {
+        super.beforeInsert()
         creationDate = new Date()
-    }
-
-    def beforeDelete() {
-        /*Base.withSession {
-            PersonBase.removeAll(this, true)
-        }*/
     }
 
     def afterDelete() {
@@ -44,6 +39,6 @@ class Base extends Node {
 
     @Override
     String toString() {
-        "База - $name"
+        "База - ${name}[id=$id, level=$level]"
     }
 }

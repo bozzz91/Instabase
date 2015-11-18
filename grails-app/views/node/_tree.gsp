@@ -8,7 +8,7 @@
                 "separator_after": false,
                 'label': "Добавить категорию",
                 'action': function () {
-                    window.location.href = '${createLink(controller: 'node', action: 'create')}' + '/?node.id=' + id;
+                    window.location.href = '${createLink(controller: 'node', action: 'create')}' + '/?parent=' + id;
                 }
             },
             'createBase': {
@@ -16,7 +16,7 @@
                 "separator_after": false,
                 'label': "Создать базу в текущем каталоге",
                 'action': function () {
-                    window.location.href = '${createLink(controller: 'base', action: 'create')}' + '/?node.id=' + id;
+                    window.location.href = '${createLink(controller: 'base', action: 'create')}' + '/?parent=' + id;
                 }
             },
             'openNode': {

@@ -25,53 +25,67 @@
 			
 				<g:if test="${paymentInstance?.owner}">
 				<li class="fieldcontain">
-					<span id="owner-label" class="property-label"><g:message code="payment.owner.label" default="Owner" /></span>
-					
-						<span class="property-value" aria-labelledby="owner-label"><g:link controller="person" action="show" id="${paymentInstance?.owner?.id}">${paymentInstance?.owner?.encodeAsHTML()}</g:link></span>
-					
+					<span id="owner-label" class="property-label">
+                        <g:message code="payment.owner.label" default="Owner" />
+                    </span>
+                    <span class="property-value" aria-labelledby="owner-label">
+                        <g:link controller="person" action="show" id="${paymentInstance?.owner?.id}">
+                            ${paymentInstance?.owner?.encodeAsHTML()}
+                        </g:link>
+                    </span>
 				</li>
 				</g:if>
 			
 				<g:if test="${paymentInstance?.amount}">
 				<li class="fieldcontain">
-					<span id="amount-label" class="property-label"><g:message code="payment.amount.label" default="Amount" /></span>
-					
-						<span class="property-value" aria-labelledby="amount-label"><g:fieldValue bean="${paymentInstance}" field="amount"/></span>
-					
+					<span id="amount-label" class="property-label">
+                        <g:message code="payment.amount.label" default="Amount" />
+                    </span>
+                    <span class="property-value" aria-labelledby="amount-label">
+                        <g:fieldValue bean="${paymentInstance}" field="amount"/>
+                    </span>
 				</li>
 				</g:if>
 			
 				<g:if test="${paymentInstance?.creationDate}">
 				<li class="fieldcontain">
-					<span id="creationDate-label" class="property-label"><g:message code="payment.creationDate.label" default="Creation Date" /></span>
-					
-						<span class="property-value" aria-labelledby="creationDate-label"><g:formatDate date="${paymentInstance?.creationDate}" /></span>
-					
+					<span id="creationDate-label" class="property-label">
+                        <g:message code="payment.creationDate.label" default="Creation Date" />
+                    </span>
+                    <span class="property-value" aria-labelledby="creationDate-label">
+                        <g:formatDate date="${paymentInstance?.creationDate}" />
+                    </span>
 				</li>
 				</g:if>
 			
 				<g:if test="${paymentInstance?.payDate}">
 				<li class="fieldcontain">
-					<span id="payDate-label" class="property-label"><g:message code="payment.payDate.label" default="Pay Date" /></span>
-					
-						<span class="property-value" aria-labelledby="payDate-label"><g:formatDate date="${paymentInstance?.payDate}" /></span>
-					
+					<span id="payDate-label" class="property-label">
+                        <g:message code="payment.payDate.label" default="Pay Date" />
+                    </span>
+                    <span class="property-value" aria-labelledby="payDate-label">
+                        <g:formatDate date="${paymentInstance?.payDate}" />
+                    </span>
 				</li>
 				</g:if>
 			
 				<g:if test="${paymentInstance?.state}">
 				<li class="fieldcontain">
-					<span id="state-label" class="property-label"><g:message code="payment.state.label" default="State" /></span>
-					
-						<span class="property-value" aria-labelledby="state-label"><g:fieldValue bean="${paymentInstance}" field="state"/></span>
-					
+					<span id="state-label" class="property-label">
+                        <g:message code="payment.state.label" default="State" />
+                    </span>
+                    <span class="property-value" aria-labelledby="state-label">
+                        <g:fieldValue bean="${paymentInstance}" field="state"/>
+                    </span>
 				</li>
 				</g:if>
 			
 			</ol>
 			<g:form url="[resource:paymentInstance, action:'delete']" method="DELETE">
 				<fieldset class="buttons">
-					<g:link class="edit" action="edit" resource="${paymentInstance}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
+					<g:link class="edit" action="edit" resource="${paymentInstance}">
+                        <g:message code="default.button.edit.label" default="Edit" />
+                    </g:link>
 					<g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
 				</fieldset>
 			</g:form>

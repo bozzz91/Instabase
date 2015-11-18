@@ -26,7 +26,7 @@
 					
 						<g:sortableColumn property="name" title="${message(code: 'base.name.label', default: 'Name')}" />
 					
-						<g:sortableColumn property="type" title="${message(code: 'base.type.label', default: 'Type')}" />
+						<g:sortableColumn property="level" title="${message(code: 'base.level.label', default: 'Level')}" />
 					
 						<th><g:message code="base.parent.label" default="Parent" /></th>
 					
@@ -44,9 +44,9 @@
 					
 						<td><g:link action="show" id="${baseInstance.id}">${fieldValue(bean: baseInstance, field: "name")}</g:link></td>
 					
-						<td>${fieldValue(bean: baseInstance, field: "type")}</td>
+						<td>${fieldValue(bean: baseInstance, field: "level")}</td>
 					
-						<td>${fieldValue(bean: baseInstance, field: "parent")}</td>
+						<td>${fieldValue(bean: baseInstance, field: "parent.name")}</td>
 					
 						<td><g:formatDate date="${baseInstance.creationDate}" /></td>
 					

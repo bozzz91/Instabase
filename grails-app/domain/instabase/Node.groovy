@@ -4,7 +4,7 @@ class Node {
 
     static constraints = {
         name(nullable: false, blank: false)
-        type(nullable: false, inList: ['root','Страна','Регион','Город', 'Категория', 'База'])
+        level(nullable: false, min: 0)
         parent(nullable: true)
     }
 
@@ -12,16 +12,29 @@ class Node {
     static belongsTo = [parent: Node]
 
     Node parent
-
     String name
-    String type
+    Integer level = 0
 
     boolean isEmpty() {
         nodes?.isEmpty()
     }
 
+    def beforeInsert() {
+        calcLevel()
+    }
+
+    def beforeUpdate() {
+        calcLevel()
+    }
+
+    private void calcLevel() {
+        if (parent) {
+            this.level = parent.level +1
+        }
+    }
+
     @Override
     String toString() {
-        "Узел - $name"
+        "Узел - ${name}[id=$id, level=$level]"
     }
 }

@@ -13,10 +13,12 @@ class GenerateNodeTreeService {
         String nodeId = params.nodeId
         String category = params.category
 
+        Node currentNode
         if (!nodeId || nodeId == "#") {
-            return nodesToJson(Node.findAll("from Node n where n.type = 'root' and n.name = ?", [category]), null, viewMode)
+            currentNode = Node.findByLevelAndName(0, category)
+        } else {
+            currentNode = Node.get(nodeId as Integer)
         }
-        Node currentNode = Node.get(nodeId as Integer)
 
         def boughtBases = [] as Set
         if (personOwner) {
@@ -79,7 +81,7 @@ class GenerateNodeTreeService {
                 id: idPrefix + node.id,
                 text: text,
                 state : [
-                        'opened' : node.type == 'root' || node.type == 'Страна',
+                        'opened' : node.level in  [0,1],
                         'selected' : false,
                         'disabled' : disabled
                 ],

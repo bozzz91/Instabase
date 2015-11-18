@@ -25,7 +25,7 @@ class BaseController {
     @Secured(['ROLE_USER'])
     def show(Base baseInstance) {
         Person person = springSecurityService.currentUser as Person
-        if (PersonBase.exists(person.id, baseInstance.id)) {
+        if (PersonBase.exists(person.id, baseInstance.id) || SecUserSecRole.where { secUser == person && secRole.authority == 'ROLE_ADMIN' }.count() > 0) {
             respond baseInstance
         } else {
             render(status: FORBIDDEN, view: 'error', model: [text: 'You can not open base because you did not purchase it yet.'])
@@ -53,7 +53,6 @@ class BaseController {
     }
 
     def create() {
-        params.type = 'База'
         respond new Base(params)
     }
 

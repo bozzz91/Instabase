@@ -1,5 +1,4 @@
-<%@ page import="instabase.Payment" %>
-
+<%@ page import="instabase.Person; instabase.Payment" %>
 
 
 <div class="fieldcontain ${hasErrors(bean: paymentInstance, field: 'owner', 'error')} required">
@@ -7,7 +6,7 @@
 		<g:message code="payment.owner.label" default="Owner" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:select id="owner" name="owner.id" from="${instabase.Person.list()}" optionKey="id" required="" value="${paymentInstance?.owner?.id}" class="many-to-one"/>
+	<g:select id="owner" name="owner.id" from="${Person.list()}" optionKey="id" required="" value="${paymentInstance?.owner?.id}" class="many-to-one"/>
 
 </div>
 
@@ -43,7 +42,7 @@
 		<g:message code="payment.state.label" default="State" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:select name="state" from="${instabase.Payment$State?.values()}" keys="${instabase.Payment$State.values()*.name()}" required="" value="${paymentInstance?.state?.name()}" />
+	<g:select name="state" from="${Payment$State?.values()}" keys="${Payment$State.values()*.name()}" required="" value="${paymentInstance?.state?.name()}" />
 
 </div>
 

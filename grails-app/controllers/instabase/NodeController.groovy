@@ -36,28 +36,13 @@ class NodeController {
     @Secured(['ROLE_ADMIN'])
     def show(Node nodeInstance) {
         if (nodeInstance instanceof Base) {
-            redirect ([controller: 'base', action: 'show', params: [id: nodeInstance.id]])
+            redirect ([controller: 'base', action: 'show', id: nodeInstance.id])
         }
         respond nodeInstance
     }
 
     @Secured(['ROLE_ADMIN'])
     def create() {
-        def type = params.type
-        if (!type) {
-            def parentId = params.node?.id as Long
-            if (parentId) {
-                Node parent = Node.get(parentId as Long)
-                type = parent.type
-            }
-        }
-        switch (type) {
-            case 'root': type = 'Страна'; break;
-            case 'Страна': type = 'Регион'; break;
-            case 'Регион': type = 'Город'; break;
-            case 'Город': type = 'Категория'; break;
-        }
-        params.type = type
         respond new Node(params)
     }
 

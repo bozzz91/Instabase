@@ -9,19 +9,21 @@
 	<g:textField name="name" required="" value="${baseInstance?.name}"/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: baseInstance, field: 'type', 'error')} required">
-	<label for="type">
-		<g:message code="base.type.label" default="Type" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:select name="type" from="${baseInstance.constraints.type.inList}" required="" value="${baseInstance?.type}" valueMessagePrefix="base.type"/>
+<div class="fieldcontain">
+    <label for="level">
+        <g:message code="node.level.label" default="Level" />
+    </label>
+
+    <span id="level" class="property-value" aria-labelledby="level-label">
+        <g:fieldValue bean="${nodeInstance}" field="level"/>
+    </span>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: baseInstance, field: 'parent', 'error')} ">
 	<label for="parent">
 		<g:message code="base.parent.label" default="Parent" />
 	</label>
-	<g:select id="parent" name="parent.id" from="${Node.findById(params.node?.id as Long)}" optionKey="id" value="${baseInstance?.parent?.id ?: params.node?.id as Long}" class="many-to-one" noSelection="['null': '']"/>
+	<g:select id="parent" name="parent.id" from="${Node.findById(params.parent as Long)}" optionValue="name" optionKey="id" value="${baseInstance?.parent?.id ?: params.parent as Long}" class="many-to-one" noSelection="['null': '']"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: baseInstance, field: 'creationDate', 'error')} ">
@@ -39,7 +41,7 @@
 	<g:field type="number" name="cost" value="${fieldValue(bean: baseInstance, field: 'cost')}" required=""/>
 </div>
 
-<div class="fieldcontain  required">
+<div class="fieldcontain ${hasErrors(bean: baseInstance, field: 'filePath', 'error')} required">
 	<label for="filePath">
 		<g:message code="base.content.label" default="Content" />
 		<span class="required-indicator">*</span>
