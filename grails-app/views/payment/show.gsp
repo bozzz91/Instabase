@@ -1,5 +1,5 @@
-
 <%@ page import="instabase.Payment" %>
+
 <!DOCTYPE html>
 <html>
 	<head>
@@ -79,8 +79,15 @@
                     </span>
 				</li>
 				</g:if>
-			
+
+                <g:if test="${paymentInstance?.state == Payment.State.WAIT}">
+                <li class="fieldcontain">
+                    <iframe frameborder="0" allowtransparency="true" scrolling="no" src="https://money.yandex.ru/embed/shop.xml?account=410013703278079&label=${paymentInstance.id}&quickpay=shop&payment-type-choice=on&writer=seller&targets=Пополнение+баланса&default-sum=100&button-text=01&mail=on&successURL=" width="450" height="198">
+                    </iframe>
+                </li>
+                </g:if>
 			</ol>
+            <sec:ifAllGranted roles="ROLE_ADMIN">
 			<g:form url="[resource:paymentInstance, action:'delete']" method="DELETE">
 				<fieldset class="buttons">
 					<g:link class="edit" action="edit" resource="${paymentInstance}">
@@ -89,6 +96,7 @@
 					<g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
 				</fieldset>
 			</g:form>
+            </sec:ifAllGranted>
 		</div>
 	</body>
 </html>
