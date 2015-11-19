@@ -36,7 +36,7 @@ class NodeController {
     @Secured(['ROLE_ADMIN'])
     def show(Node nodeInstance) {
         if (nodeInstance instanceof Base) {
-            redirect ([controller: 'base', action: 'show', id: nodeInstance.id])
+            redirect (controller: 'base', action: 'show', id: nodeInstance.id)
         }
         respond nodeInstance
     }

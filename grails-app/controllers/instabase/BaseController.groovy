@@ -60,6 +60,13 @@ class BaseController {
         hasAccess
     }
 
+    @Transactional
+    def init() {
+        contentService.initFromStorage()
+        this.flash.message = 'Инициализация прошла успешно'
+        redirect(controller: 'base', action: 'index')
+    }
+
     def create() {
         respond new Base(params)
     }
@@ -68,12 +75,10 @@ class BaseController {
         def req = request as MultipartHttpServletRequest
         def upload = req.getFile('filePath') as CommonsMultipartFile
         if (!upload.isEmpty()) {
-            log.info "not empty file"
             inst.contentName = upload.originalFilename
             inst.length = upload.size
             params.filePath = inst.filePath
         } else {
-            log.info "empty file"
             inst.filePath = null
         }
         inst.clearErrors()
