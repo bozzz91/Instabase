@@ -79,7 +79,11 @@ class BaseController {
             inst.length = upload.size
             params.filePath = inst.filePath
         } else {
-            inst.filePath = null
+            if (inst.filePath instanceof String) {
+                params.filePath = inst.filePath
+            } else {
+                params.filePath = null
+            }
         }
         inst.clearErrors()
         return upload

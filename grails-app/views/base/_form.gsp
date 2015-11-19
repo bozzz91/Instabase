@@ -14,9 +14,7 @@
         <g:message code="node.level.label" default="Level" />
     </label>
 
-    <span id="level" class="property-value" aria-labelledby="level-label">
-        <g:fieldValue bean="${nodeInstance}" field="level"/>
-    </span>
+    <g:fieldValue id="level" bean="${baseInstance}" field="level"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: baseInstance, field: 'parent', 'error')} ">
