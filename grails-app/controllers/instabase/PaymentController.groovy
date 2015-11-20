@@ -31,7 +31,7 @@ class PaymentController {
                 params.label;
         mySha1 = mySha1.encodeAsSHA1();
         if (sha1 == mySha1) {
-            Payment pay = Payment.findById(params.label as Long ?: 0l)
+            Payment pay = Payment.findById(params.label ? (params.label as Long) : 0l)
             if (pay) {
                 if (params.withdraw_amount) {
                     pay.amount = params.withdraw_amount as Double
