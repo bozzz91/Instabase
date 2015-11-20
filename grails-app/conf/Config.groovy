@@ -95,8 +95,8 @@ environments {
     development {
         grails.logging.jul.usebridge = true
         grails.server.port.https=8443
-        grails.server.host="73042.dyn.ufanet.ru"
-        grails.serverURL = "http://73042.dyn.ufanet.ru:8080"
+        grails.server.host="localhost"
+        grails.serverURL = "http://localhost:8080"
         grails.plugin.springsecurity.secureChannel.useHeaderCheckChannelSecurity = true
         grails.plugin.springsecurity.portMapper.httpPort = 8080
         grails.plugin.springsecurity.portMapper.httpsPort = 8443

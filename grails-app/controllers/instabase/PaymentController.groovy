@@ -73,16 +73,25 @@ class PaymentController {
         respond payments, model: [paymentInstanceCount: payments.size()]
     }
 
+    @Secured(['ROLE_ADMIN'])
+    def list(Integer max) {
+        params.max = Math.min(max ?: 10, 100)
+        respond Payment.list(params), model: [paymentInstanceCount: Payment.count()]
+    }
+
     def show(Payment paymentInstance) {
         if (hasAccessToPayment(paymentInstance)) {
-            respond paymentInstance
+            respond paymentInstance, [user: springSecurityService.currentUser as Person]
         } else {
             render(status: FORBIDDEN, view: 'error', model: [text: 'Access denied.'])
         }
     }
 
     def create() {
-        respond new Payment(params)
+        Payment payment = new Payment(params)
+        payment.owner = springSecurityService.currentUser as Person
+        params.owner = payment.owner
+        respond payment
     }
 
     @Transactional
@@ -92,6 +101,7 @@ class PaymentController {
             return
         }
 
+        paymentInstance.owner = springSecurityService.currentUser as Person
         if (paymentInstance.hasErrors()) {
             respond paymentInstance.errors, view: 'create'
             return
@@ -108,11 +118,13 @@ class PaymentController {
         }
     }
 
+    @Secured(['ROLE_ADMIN'])
     def edit(Payment paymentInstance) {
         respond paymentInstance
     }
 
     @Transactional
+    @Secured(['ROLE_ADMIN'])
     def update(Payment paymentInstance) {
         if (paymentInstance == null) {
             notFound()

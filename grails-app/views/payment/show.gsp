@@ -22,7 +22,8 @@
 			<div class="message" role="status">${flash.message}</div>
 			</g:if>
 			<ol class="property-list payment">
-			
+
+                <sec:ifAllGranted roles="ROLE_ADMIN">
 				<g:if test="${paymentInstance?.owner}">
 				<li class="fieldcontain">
 					<span id="owner-label" class="property-label">
@@ -35,6 +36,7 @@
                     </span>
 				</li>
 				</g:if>
+                </sec:ifAllGranted>
 			
 				<g:if test="${paymentInstance?.amount}">
 				<li class="fieldcontain">
@@ -80,7 +82,7 @@
 				</li>
 				</g:if>
 
-                <g:if test="${paymentInstance?.state == Payment.State.WAIT}">
+                <g:if test="${paymentInstance?.state == Payment.State.WAIT && paymentInstance.owner == user}">
                 <li class="fieldcontain">
                     <iframe frameborder="0" allowtransparency="true" scrolling="no" src="https://money.yandex.ru/embed/shop.xml?account=410013703278079&label=${paymentInstance.id}&quickpay=shop&payment-type-choice=on&writer=seller&targets=Пополнение+баланса&default-sum=${paymentInstance.amount}&button-text=01&mail=on&successURL=" width="450" height="198">
                     </iframe>
