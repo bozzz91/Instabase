@@ -36,10 +36,10 @@ class PersonController {
         respond personInstance
     }
 
-    private static boolean hasAccessToPerson(Person current, Person p) {
-        def hasAccess = false
-        hasAccess = hasAccess || current.id == p.id
-        hasAccess = hasAccess || SecUserSecRole.where { secUser == current && secRole.authority == 'ROLE_ADMIN' }.count() > 0
+    private boolean hasAccessToPerson(Person p) {
+        Person currentUser = springSecurityService.currentUser as Person
+        def hasAccess = request.isUserInRole('ROLE_ADMIN')
+        hasAccess = hasAccess || currentUser.id == p.id
         hasAccess
     }
 
@@ -113,8 +113,7 @@ class PersonController {
 
     @Secured(['ROLE_USER'])
     def edit(Person personInstance) {
-        Person user = springSecurityService.currentUser as Person
-        if (hasAccessToPerson(user, personInstance)) {
+        if (hasAccessToPerson(personInstance)) {
             respond personInstance
         } else {
             render(status: FORBIDDEN, view: 'error', model: [text: 'You can not edit other accounts.'])
@@ -129,8 +128,7 @@ class PersonController {
             return
         }
 
-        Person user = springSecurityService.currentUser as Person
-        if (!hasAccessToPerson(user, personInstance)) {
+        if (!hasAccessToPerson(personInstance)) {
             render(status: FORBIDDEN, view: 'error', model: [text: 'You can not update other accounts.'])
         } else {
             if (personInstance.hasErrors()) {

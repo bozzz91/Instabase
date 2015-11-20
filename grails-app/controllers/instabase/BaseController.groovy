@@ -1,7 +1,6 @@
 package instabase
 
 import grails.plugin.springsecurity.annotation.Secured
-import org.springframework.web.multipart.MultipartFile
 import org.springframework.web.multipart.MultipartHttpServletRequest
 import org.springframework.web.multipart.commons.CommonsMultipartFile
 
@@ -24,9 +23,7 @@ class BaseController {
 
     @Secured(['ROLE_USER'])
     def show(Base baseInstance) {
-        Person person = springSecurityService.currentUser as Person
-
-        if (hasAccessToBase(person, baseInstance)) {
+        if (hasAccessToBase(baseInstance)) {
             respond baseInstance
         } else {
             render(status: FORBIDDEN, view: 'error', model: [text: 'You can not open base because you did not purchase it yet.'])
@@ -35,9 +32,7 @@ class BaseController {
 
     @Secured(['ROLE_USER'])
     def download(Base baseInstance) {
-        Person person = springSecurityService.currentUser as Person
-
-        if (hasAccessToBase(person, baseInstance)) {
+        if (hasAccessToBase(baseInstance)) {
             File baseFile = contentService.getBaseFile(baseInstance)
             if (baseFile.exists()) {
                 response.setCharacterEncoding("UTF-8")
@@ -53,10 +48,10 @@ class BaseController {
         }
     }
 
-    private static boolean hasAccessToBase(Person p, Base b) {
-        def hasAccess = false
-        hasAccess = hasAccess || PersonBase.exists(p.id, b.id)
-        hasAccess = hasAccess || SecUserSecRole.where { secUser == p && secRole.authority == 'ROLE_ADMIN' }.count() > 0
+    private boolean hasAccessToBase(Base b) {
+        Person user = springSecurityService.currentUser as Person
+        def hasAccess = request.isUserInRole('ROLE_ADMIN')
+        hasAccess = hasAccess || PersonBase.exists(user.id, b.id)
         hasAccess
     }
 

@@ -67,6 +67,8 @@ class BootStrap {
 
         PersonBase.create(user, base5)
         PersonBase.create(user, base6)
+
+        new Payment(state: Payment.State.WAIT, amount: 10d, owner: user).save()
     }
 
     def destroy = {

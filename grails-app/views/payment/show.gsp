@@ -82,7 +82,7 @@
 
                 <g:if test="${paymentInstance?.state == Payment.State.WAIT}">
                 <li class="fieldcontain">
-                    <iframe frameborder="0" allowtransparency="true" scrolling="no" src="https://money.yandex.ru/embed/shop.xml?account=410013703278079&label=${paymentInstance.id}&quickpay=shop&payment-type-choice=on&writer=seller&targets=Пополнение+баланса&default-sum=100&button-text=01&mail=on&successURL=" width="450" height="198">
+                    <iframe frameborder="0" allowtransparency="true" scrolling="no" src="https://money.yandex.ru/embed/shop.xml?account=410013703278079&label=${paymentInstance.id}&quickpay=shop&payment-type-choice=on&writer=seller&targets=Пополнение+баланса&default-sum=${paymentInstance.amount}&button-text=01&mail=on&successURL=" width="450" height="198">
                     </iframe>
                 </li>
                 </g:if>
