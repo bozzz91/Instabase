@@ -32,7 +32,7 @@ class GenerateNodeTreeService {
                 }
             }
         }
-        Set<Node> nodes = currentNode.nodes
+        Set<Node> nodes = currentNode?.nodes
         if (nodes) {
             if (personOwner && viewMode) {
                 nodes = nodes.findAll { it.id in boughtBases }
