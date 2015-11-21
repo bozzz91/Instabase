@@ -16,6 +16,7 @@
         <br/>
         <g:render template="/layouts/tabs"/>
 
+        <div>${params.category}</div>
         <div id="introspection_tree"></div>
 
         <div id="dialog" title="Information" style="display: none"></div>

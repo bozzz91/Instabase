@@ -46,7 +46,7 @@
                 </span>
             </div>
             <div class="navigation-info with-shadow-box">
-                <ul>
+                <ul type="none">
                     <li><a href="${createLink(controller:'node', action: 'index')}">Список баз</a></li>
                     <li><a href="${createLink(controller:'person', action: 'index')}">Мои базы</a></li>
                     <li><a href="${createLink(controller:'payment', action: 'index')}">Мои платежи</a></li>

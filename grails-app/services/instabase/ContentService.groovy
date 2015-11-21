@@ -80,10 +80,11 @@ class ContentService {
                 }
                 Base.findByNameAndLevelAndVerAndParent(baseName, parent.level + 1, version, parent) ?:
                         new Base(
-                                name: baseName,
+                            name: baseName,
                             ver: version,
                             level: parent.level + 1,
                             parent: parent,
+                            cost: Metadata.getCurrent().get("instabase.base.default.cost") as Double,
                             contentName: baseName,
                             filePath: f.absolutePath.replace(getStorageRoot(), ROOT)
                         ).save()

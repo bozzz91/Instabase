@@ -16,7 +16,10 @@ class NodeController {
     def springSecurityService
 
     def index() {
-        String category = params.category ?: "Instagram"
+        if (!params.category) {
+            params.category = "Instagram"
+        }
+        String category = params.category
         render (view: 'index', model: [category: category])
     }
 
