@@ -41,15 +41,12 @@ class PersonController {
 
     private boolean hasAccessToPerson(Person p) {
         Person currentUser = springSecurityService.currentUser as Person
-        def hasAccess = request.isUserInRole('ROLE_ADMIN')
-        hasAccess = hasAccess || currentUser.id == p.id
-        hasAccess
+        return request.isUserInRole('ROLE_ADMIN') || currentUser.id == p.id
     }
 
     @Secured(['IS_AUTHENTICATED_ANONYMOUSLY'])
     def create() {
-        Person user = springSecurityService.currentUser as Person
-        if (!springSecurityService.isLoggedIn() || user?.authorities?.any{ it.authority == 'ROLE_ADMIN'}) {
+        if (!springSecurityService.isLoggedIn() || request.isUserInRole('ROLE_ADMIN')) {
             respond new Person(params)
         } else {
             redirect action: 'index'
