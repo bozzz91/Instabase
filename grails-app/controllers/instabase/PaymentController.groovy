@@ -59,9 +59,7 @@ class PaymentController {
 
     private boolean hasAccessToPayment(Payment payment) {
         Person user = springSecurityService.currentUser as Person
-        def hasAccess = request.isUserInRole('ROLE_ADMIN')
-        hasAccess = hasAccess || user.id == payment.owner.id
-        hasAccess
+        return request.isUserInRole('ROLE_ADMIN') || user.id == payment.owner.id
     }
 
     def index(Integer max) {
