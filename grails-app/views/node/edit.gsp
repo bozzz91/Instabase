@@ -26,7 +26,8 @@
 					<g:render template="form"/>
 				</fieldset>
 				<fieldset class="buttons">
-					<g:actionSubmit class="save" action="update" value="${message(code: 'default.button.update.label', default: 'Update')}" />
+                    <g:actionSubmit class="save" action="update" value="${message(code: 'default.button.update.label', default: 'Update')}" />
+                    <g:link controller="node" action="show" id="${nodeInstance.id}">${message(code: 'default.button.close.label', default: 'Close')}</g:link>
 				</fieldset>
 			</g:form>
 		</div>

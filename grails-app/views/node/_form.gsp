@@ -32,10 +32,15 @@
         <g:each in="${nodeInstance?.nodes?}" var="n">
             <li><g:link controller="node" action="show" id="${n.id}">${n?.name?.encodeAsHTML()}</g:link></li>
         </g:each>
+        <g:if test="${nodeInstance?.id}">
         <li class="add">
             <g:link controller="node" action="create" params="['parent': nodeInstance?.id]">
                 ${message(code: 'default.add.label', args: [message(code: 'node.label', default: 'Node')])}
             </g:link>
         </li>
+        </g:if>
+        <g:else>
+            <li>No nodes</li>
+        </g:else>
     </ul>
 </div>

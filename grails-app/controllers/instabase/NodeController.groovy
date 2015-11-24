@@ -64,13 +64,15 @@ class NodeController {
 
         nodeInstance.save flush:true
 
-        request.withFormat {
+        /*request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.created.message', args: [message(code: 'node.label', default: 'Node'), nodeInstance.id])
                 redirect nodeInstance
             }
             '*' { respond nodeInstance, [status: CREATED] }
-        }
+        }*/
+
+        redirect controller: 'node', action: 'edit', id: nodeInstance.id, params: [parent: nodeInstance.parent.id]
     }
 
     @Secured(['ROLE_ADMIN'])
