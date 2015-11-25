@@ -7,10 +7,10 @@
 
         <g:if test="${user?.username}">
             <li>
-                <g:message code="person.username.label" default="Login"/> : <g:fieldValue bean="${user}" field="username"/>
+                <g:message code="person.username.short.label" default="Login"/> : <g:fieldValue bean="${user}" field="username"/>
             </li>
         </g:if>
-
+		<br>
         <g:if test="${user?.cash}">
             <li>
                 <g:message code="person.cash.label" default="Cash"/> : <g:fieldValue bean="${user}" field="cash"/>

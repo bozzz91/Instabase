@@ -7,7 +7,7 @@ input, select, textarea {
 h1, h2, h3, h4, h5, h6 {
 	line-height: 1.1;
 }
-
+ul{list-style:none;}
 /* BASE LAYOUT */
 
 html {
@@ -34,24 +34,132 @@ html.no-cssgradients {
 
 html * {
 	margin: 0;
+	padding:0;
 }
 
 body {
 	background: #ffffff;
 	color: #333333;
 	margin: 0 auto;
+	padding:0;
 	max-width: 960px;
-	overflow-x: hidden; /* prevents box-shadow causing a horizontal scrollbar in firefox when viewport < 960px wide */
+	overflow-x: scroll; /* prevents box-shadow causing a horizontal scrollbar in firefox when viewport < 960px wide */
 	   -moz-box-shadow: 0 0 0.3em #255b17;
 	-webkit-box-shadow: 0 0 0.3em #255b17;
 	        box-shadow: 0 0 0.3em #255b17;
 }
-
+/*!!!*/
 #grailsLogo {
     /*background-color: #abbf78;*/
     background-color: white;
 }
+	#grailsLogo img{
+		width:400px;
+	}
+	.btn-order-top{
+		display:inline-block;
+		background:#FFD700;
+		color:#000;
+		font-size:14pt;
+		font-weight:400;
+		padding:7px 12px 7px 12px;
+		border-radius:12px;
+		margin-left:30px;
+		position:relative;
+		top:-20px;
+		-webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+		-moz-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+        box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+		-webkit-box-shadow: 0 15px 10px -10px rgba(0, 0, 0, 0.5), 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+		-moz-box-shadow: 0 15px 10px -10px rgba(0, 0, 0, 0.5), 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+        box-shadow: 0 15px 10px -10px rgba(0, 0, 0, 0.5), 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+	}
+	
+.btn-action{
+	background:#1E90FF;
+	width:97%;
+	margin:0 auto;
+	margin:5px 3px 5px 3px;
+	text-align:center;
+	color:#fff;
+	text-decoration:none;
+	padding:8px 0 8px 0;
+	border-radius:9px;
+	-webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+       -moz-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+            box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+}
+	.btn-action:hover{
+		background:#4169E1;
+	}
+	.btn-action a{
+		text-decoration:none;
+	}
+.left-panel a{
+	text-decoration:none;
+}
+.wrap{
+	width:97%;
+	min-height:400px;
+	margin:0 auto;
+}
+	.wrap h2{
+		text-align:center;
+		font-size:19pt;
+		font-weight:600;
+		color:#000;
+	}
+	.wrap p{
+		text-align:left;
+		font-size:14pt;
+		font-weight:400;
+		margin:20px 0 20px 0;
+	}
+.divider1{
+	width:95%;
+	height:1px;
+	background:rgba(25,25,25,0.2);
+	margin:0 auto;
+}
+.categoty-title{
+	text-align:center;
+	margin-top:25px;
+	font-size:18pt;
+	font-weight:600;
+}
 
+.purchaseLink,.downloadLink{
+	padding:5px 15px 5px 15px;
+	margin-left:12px;
+	background:#76EE00;
+	color:#fff;
+	border-radius:9px;
+	-webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+       -moz-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+            box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+}
+	.jstree-children li a{
+		color:#fff;
+		text-decoration:none;
+		font-weight:400;
+	}
+.person-info  .buttons{
+	box-shadow:none;
+}
+.person-info  .buttons  [type="submit"]{
+	background:#66CD00;
+	width:97%;
+	padding:8px 0 8px 0;
+	color:#fff;
+	font-weight:400;
+}
+	.person-info  .buttons  [type="submit"]:hover{
+		background:#458B00;
+	}
+#show-person ul{
+	padding:9px;
+}
+/*!!!*/
 /* replace with .no-boxshadow body if you have modernizr available */
 .ie6 body,
 .ie7 body,
@@ -116,10 +224,12 @@ img {
 	margin-top: 1.5em;
 	padding: 1em;
 	min-height: 1em;
+	text-align:center;
+	border-top:1px solid rgba(25,25,25,0.5);
 }
 
 .footer a {
-	color: #255b17;
+	color: #000;
 }
 
 .spinner {
@@ -201,6 +311,7 @@ img {
 
 .nav a.create {
 	background-image: url(../images/skin/database_add.png);
+	border:3px solid #00CD00;
 }
 
 /* CREATE/EDIT FORMS AND SHOW PAGES */

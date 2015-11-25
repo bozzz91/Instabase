@@ -25,7 +25,7 @@
 					<tr>
                         <g:sortableColumn property="amount" title="${message(code: 'payment.amount.label', default: 'Amount')}" />
 
-						<g:sortableColumn property="operationId" title="${message(code: 'payment.operationId.label', default: 'Operation ID')}" />
+						<!--<g:sortableColumn property="operationId" title="${message(code: 'payment.operationId.label', default: 'Operation ID')}" />-->
 					
 						<th><g:message code="payment.owner.label" default="Owner" /></th>
 					
@@ -39,7 +39,7 @@
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 						<td><g:link action="show" id="${paymentInstance.id}">${fieldValue(bean: paymentInstance, field: "amount")}</g:link></td>
 
-						<td>${fieldValue(bean: paymentInstance, field: "operationId")}</td>
+						<!--<td>${fieldValue(bean: paymentInstance, field: "operationId")}</td>-->
 					
 						<td>${fieldValue(bean: paymentInstance, field: "owner.fullName")}</td>
 					

@@ -24,24 +24,23 @@ body {
 .left-panel {
     display: block;
     float: left;
-    width: 150px;
+    width: 183px;
     margin: 0 10px;
 }
 
 .person-info {
     display: block;
     float: left;
-    width: 150px;
-    height: 200px;
+    width: 183px;
+    height: 250px;
     margin-bottom: 10px;
     background-color: #efefef;
 }
-
 .navigation-info {
     display: block;
     float: left;
-    width: 150px;
-    height: 200px;
+    width: 183px;
+    height: 250px;
     background-color: #efefef;
     margin-bottom: 10px;
 }
@@ -49,7 +48,7 @@ body {
 .workspace {
     display: block;
     float: left;
-    width: 765px;
+    width: 725px;
     background-color: #efefef;
     padding: 0.5em 0.75em;
 }
@@ -58,4 +57,56 @@ body {
     -moz-box-shadow: 0 0 3px 1px #aaaaaa;
     -webkit-box-shadow: 0 0 3px 1px #aaaaaa;
     box-shadow: 0 0 3px 1px #aaaaaa;
+}
+
+@media only screen and (min-width:800px) and (max-width: 950px) {
+	.workspace {
+		width: 645px;
+	}
+}
+
+@media only screen and (min-width:750px) and (max-width: 800px) {
+	.workspace {
+		width: 525px;
+	}
+	#introspection_tree{
+		padding:5px;
+		
+	}
+}
+
+@media only screen and (min-width:640px) and (max-width: 750px) {
+	.workspace {
+		width: 435px;
+	}
+	#introspection_tree{
+		
+	}
+}
+
+@media only screen and (min-width:480px) and (max-width: 640px) {
+	.left-panel{
+		width:156px;
+	}
+		.person-info{
+			width:156px;
+		}
+		.navigation-info{
+			width:156px;
+		}
+	.workspace {
+		width: 325px;
+	}
+	
+	tr>td:first-child, tr>th:first-child{
+		padding:3px;
+	}
+	th.sortable a{
+		padding:0;
+		width:55px;
+		font-size:8pt;
+	}
+	#introspection_tree{
+		
+	}
 }

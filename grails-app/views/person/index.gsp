@@ -18,7 +18,8 @@
         <br/>
         <g:render template="/layouts/tabs"/>
 
-        <div>Мои базы ${params.category}</div>
+        <div class="categoty-title">Мои базы ${params.category}</div>
+		<div class="divider1"></div>
         <div id="introspection_tree"></div>
 
         <div id="dialog" title="<g:message code='dialog.info.title'/>" style="display: none"></div>

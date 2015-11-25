@@ -14,11 +14,13 @@
 	<body>
 		<g:render template="nav"/>
         <br/>
+		<h3>Категории баз</h3>
         <g:render template="/layouts/tabs"/>
 
-        <div>${params.category}</div>
+        <div class="categoty-title">${params.category}</div>
+		<div class="divider1"></div>
         <div id="introspection_tree"></div>
 
-        <div id="dialog" title="Information" style="display: none"></div>
+        <div id="dialog" title="Подтверждение" style="display: none"></div>
 	</body>
 </html>
