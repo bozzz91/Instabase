@@ -8,6 +8,7 @@ class ContentService {
 
     private static String ROOT = '${root}'
     private static String VERSION = '_version_'
+    private static String COST = '_cost_'
 
     private static String getStorageRoot() {
         String path = Metadata.getCurrent().get('instabase.storage.root')
@@ -51,25 +52,32 @@ class ContentService {
 
     void initFromStorage() {
         String root = getStorageRoot()
+        String defaultCost = Metadata.getCurrent().getProperty("instabase.base.default.cost")
         File rootDir = new File(root)
-        processFolder(rootDir)
+        processFolder(rootDir, defaultCost)
     }
 
-    private void processFolder(File folder, Node parent = null) {
+    private void processFolder(File folder, String defCost, Node parent = null) {
         folder.listFiles().each { f ->
             if (f.isDirectory()) {
                 int currentLevel = 0
                 if (parent) {
                     currentLevel = parent.level + 1
                 }
-                Node node = Node.findByNameAndLevelAndParent(f.name, currentLevel, parent) ?:
+                def nodeName = f.name
+                def nodeDefCost = defCost
+                if (f.name.contains(COST)) {
+                    nodeName    = f.name.split(COST)[0]
+                    nodeDefCost = f.name.split(COST)[1]
+                }
+                Node node = Node.findByNameAndLevelAndParent(nodeName, currentLevel, parent) ?:
                         new Node(
-                                name: f.name,
+                                name: nodeName,
                                 level: currentLevel,
                                 parent: parent
                         ).save()
 
-                processFolder(f, node)
+                processFolder(f, nodeDefCost, node)
             } else {
                 String fileName = f.getName()
                 String baseName = fileName
@@ -84,7 +92,7 @@ class ContentService {
                             ver: version,
                             level: parent.level + 1,
                             parent: parent,
-                            cost: Metadata.getCurrent().get("instabase.base.default.cost") as Double,
+                            cost: defCost as Double,
                             contentName: baseName,
                             filePath: f.absolutePath.replace(getStorageRoot(), ROOT)
                         ).save()
