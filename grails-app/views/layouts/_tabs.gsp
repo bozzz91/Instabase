@@ -7,7 +7,7 @@
             <a class="a-category-tab tab-vk" href="${createLink(action: 'index', params: ['category':'VK'])}">VK</a>
         </li>
         <li class="category-tab">
-            <a class="a-category-tab tab-unknown" href="${createLink(action: 'index', params: ['category':'Unknown'])}">Unknown</a>
+            <a class="a-category-tab tab-geo" href="${createLink(action: 'index', params: ['category':'Геолокация'])}">Геолокация</a>
         </li>
     </ul>
 </div>
