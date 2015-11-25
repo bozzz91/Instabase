@@ -65,8 +65,10 @@
             <div class="navigation-info with-shadow-box">
                 <ul type="none">
                     <li><a href="${createLink(controller:'node', action: 'index')}"><div class="btn-action">Список баз</div></a></li>
-                    <li><a href="${createLink(controller:'person', action: 'index')}"><div class="btn-action">Мои базы</div></a></li>
-                    <li><a href="${createLink(controller:'payment', action: 'index')}"><div class="btn-action">Мои платежи</div></a></li>
+                    <sec:ifAllGranted roles="ROLE_USER">
+                        <li><a href="${createLink(controller:'person', action: 'index')}"><div class="btn-action">Мои базы</div></a></li>
+                        <li><a href="${createLink(controller:'payment', action: 'index')}"><div class="btn-action">Мои платежи</div></a></li>
+                    </sec:ifAllGranted>
                     <sec:ifAllGranted roles="ROLE_ADMIN">
                         <li>
                             <br/>Admin menu<br/>
