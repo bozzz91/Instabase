@@ -74,6 +74,7 @@
                             <br/>Admin menu<br/>
                             <a href="${createLink(controller:'payment', action: 'list')}"><div class="btn-action">Все платежи</div></a>
                             <a href="${createLink(controller:'base', action: 'init')}"><div class="btn-action">Инициализация</div></a>
+                            <a href="${createLink(uri: '/monitoring')}"><div class="btn-action">Мониторинг</div></a>
                         </li>
                     </sec:ifAllGranted>
                 </ul>
