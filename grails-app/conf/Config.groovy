@@ -107,7 +107,8 @@ environments {
     }
     production {
         grails.logging.jul.usebridge = false
-        // TODO: grails.serverURL = "http://www.changeme.com"
+        grails.server.host="instabase.su"
+        grails.serverURL = "http://instabase.su"
     }
 }
 
@@ -152,7 +153,9 @@ log4j.main = {
 grails.plugin.springsecurity.userLookup.userDomainClassName = 'instabase.SecUser'
 grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'instabase.SecUserSecRole'
 grails.plugin.springsecurity.authority.className = 'instabase.SecRole'
-grails.plugin.springsecurity.securityConfigType = "Annotation"
+grails.plugin.springsecurity.securityConfigType = 'Annotation'
+grails.plugin.springsecurity.logout.postOnly = false
+grails.plugin.springsecurity.logout.afterLogoutUrl='/'
 grails.plugin.springsecurity.roleHierarchy = 'ROLE_ADMIN > ROLE_USER'
 grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	'/':                              ['permitAll'],
