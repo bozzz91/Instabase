@@ -1,6 +1,7 @@
 package instabase
 
 import grails.plugin.springsecurity.annotation.Secured
+import org.codehaus.groovy.grails.web.mapping.LinkGenerator
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
@@ -11,6 +12,7 @@ class PersonController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
+    LinkGenerator grailsLinkGenerator
     def generateNodeTreeService
     def springSecurityService
     def mailService
@@ -81,10 +83,12 @@ class PersonController {
         )
         activation.save()
 
+        String link = grailsLinkGenerator.link(controller: 'person', action: 'activate', params: [activateCode: code], absolute: true)
         mailService.sendMail {
+            async true
             to personInstance.username
-            subject "Account activation"
-            body "your code ${code}"
+            subject "Instabase Account Activation"
+            html g.render(template: "/mail/activate", model: [link:link])
         }
         log.info("your code ${code}")
 
@@ -104,6 +108,7 @@ class PersonController {
                 activation.save()
                 activation.person.enabled = true
                 activation.person.save()
+                SecUserSecRole.create(activation.person, SecRole.findByAuthority('ROLE_USER'))
                 render(view: 'success', model: ['text': "Activation success!"])
             } else {
                 render(view: 'error', model: ['text': "Wrong activation code"])
