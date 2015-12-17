@@ -83,10 +83,12 @@ class PersonController {
         )
         activation.save()
 
+        String link = grailsLinkGenerator.link(controller: 'person', action: 'activate', params: [activateCode: code], absolute: true)
         mailService.sendMail {
+            async true
             to personInstance.username
             subject "Instabase Account Activation"
-            body "Your activate link ${grailsLinkGenerator.link(controller: 'person', action: 'activate', params: [activateCode: code])}"
+            html g.render(template: "/mail/activate", model: [link:link])
         }
         log.info("your code ${code}")
 
