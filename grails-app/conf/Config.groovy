@@ -93,6 +93,8 @@ grails.assets.excludes = ["mixins/*.scss"]
 
 environments {
     development {
+        grails.mail.disabled = true
+
         grails.logging.jul.usebridge = true
         grails.server.port.https=8443
         grails.server.host="localhost"
@@ -122,7 +124,6 @@ grails {
     }
 }
 
-grails.mail.disabled = true
 grails.mail.default.from="noreply@instabase.com"
 
 // log4j configuration
