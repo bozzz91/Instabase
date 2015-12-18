@@ -50,14 +50,14 @@ class PurchaseService {
                 basesToBuy << base.id
             }
         }
-        if (count == 0) {
-            return [
-                state: 0,
-                text: "Все выбранные базы уже куплены"
-            ] as JSON
-        }
 
         if (validate) {
+            if (count == 0) {
+                return [
+                    state: 0,
+                    text: "Все выбранные базы уже куплены"
+                ] as JSON
+            }
             if (!pre) {
                 p.cash -= totalCost
                 p.save(failOnError: true);
