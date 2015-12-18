@@ -108,7 +108,9 @@ class PersonController {
                 activation.save()
                 activation.person.enabled = true
                 activation.person.save()
-                SecUserSecRole.create(activation.person, SecRole.findByAuthority('ROLE_USER'))
+                if (!activation.person.authorities.contains(SecRole.findByAuthority('ROLE_USER'))) {
+                    SecUserSecRole.create(activation.person, SecRole.findByAuthority('ROLE_USER'))
+                }
                 render(view: 'success', model: ['text': "Activation success!"])
             } else {
                 render(view: 'error', model: ['text': "Wrong activation code"])
