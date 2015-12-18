@@ -52,8 +52,8 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="grails-2.5.2" level="application" />
-    <orderEntry type="module-library" exported="">
+    <orderEntry type="library" exported="" name="grails-2.5.2" level="application" />
+    <orderEntry type="module-library">
       <library name="Grails User Library (Instabase)">
         <CLASSES>
           <root url="file://$MODULE_DIR$/lib" />

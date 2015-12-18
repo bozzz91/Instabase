@@ -1,0 +1,41 @@
+#feedbackform{
+	width:90%;
+	padding:20px;
+	margin:0 auto;
+}
+	#feedbackform span{
+		color:orange;
+		font-size:23pt;
+		font-weight:400;
+	}
+#feedbackform input{
+	width:60%;
+	margin:5px;
+	padding:16px;
+	border-radius:15px;
+	box-shadow:1px 1px 2px 1px grey;
+}
+#feedbackform select{
+	width:66%;
+	margin:10px;
+	padding:16px;
+	border-radius:15px;
+	box-shadow:1px 1px 2px 1px grey;
+}
+#feedbackform textarea{
+	width:60%;
+	padding:16px;
+	border-radius:15px;
+	box-shadow:1px 1px 2px 1px grey;
+}
+#feedbackform #send{
+	width:65%;
+	padding:16px;
+	border-radius:15px;
+	box-shadow:1px 1px 2px 1px grey;
+	background:#1E90FF;
+	margin-top:20px;
+	font-size:17pt;
+	font-weight:600;
+	color:#fff;
+}

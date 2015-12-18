@@ -36,7 +36,7 @@
 	<body>
 		<div id="grailsLogo" role="banner">
 			<a href="${createLink(url:'/')}"><img src="${createLinkTo(dir: "images", file: "logo.png")}"/></a>
-			<a href="http://xn----8sbaagidjaivcc3dhegrtosw.xn--p1ai/" title="Заказать продвижение в Instagram" alt="Заказать продвижение в Instagram" target="_blank"><div class="btn-order-top">Заказать продвижение аккаунта Instargam</div></a>
+			<a href="/" title="Заказать продвижение в Instagram" alt="Заказать продвижение в Instagram" target="_blank"><div class="btn-order-top">Заказать продвижение аккаунта Instargam</div></a>
 		</div>
         <div class="left-panel">
             <div class="person-info with-shadow-box">
