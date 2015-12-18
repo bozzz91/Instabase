@@ -67,7 +67,7 @@ class GenerateNodeTreeService {
             if (viewMode) {
                 text += " <a class='downloadLink' onclick='downloadBase(${node.id})' href='#'>Скачать</a>"
             } else {
-                if (boughtBases) {
+                if (boughtBases != null) {
                     if (boughtBases.contains(node.id)) {
                         text += " <a class='downloadLink boughtBase' onclick='downloadBase(${node.id})' href='#'>(Куплено) Скачать</a>"
                         disabled = true
