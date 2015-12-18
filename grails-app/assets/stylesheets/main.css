@@ -78,7 +78,6 @@ body {
 .btn-action{
 	background:#1E90FF;
 	width:97%;
-	margin:0 auto;
 	margin:5px 3px 5px 3px;
 	text-align:center;
 	color:#fff;
@@ -95,6 +94,27 @@ body {
 	.btn-action a{
 		text-decoration:none;
 	}
+
+.btn-action-admin{
+    background: #ff5b52;
+    width:97%;
+    margin:5px 3px 5px 3px;
+    text-align:center;
+    color:#fff;
+    text-decoration:none;
+    padding:8px 0 8px 0;
+    border-radius:9px;
+    -webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+       -moz-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+            box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+}
+    .btn-action-admin:hover{
+        background: #b70001;
+    }
+    .btn-action-admin a{
+        text-decoration:none;
+    }
+
 .left-panel a{
 	text-decoration:none;
 }

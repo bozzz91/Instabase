@@ -70,11 +70,14 @@
                         <li><a href="${createLink(controller:'payment', action: 'index')}"><div class="btn-action">Мои платежи</div></a></li>
                     </sec:ifAllGranted>
                     <sec:ifAllGranted roles="ROLE_ADMIN">
-                        <li>
-                            <br/>Admin menu<br/>
+                        <li style="text-align: center;">
+                            <hr/><br/>Меню админа<br/>
                             <a href="${createLink(controller:'payment', action: 'list')}"><div class="btn-action">Все платежи</div></a>
-                            <a href="${createLink(controller:'base', action: 'init')}"><div class="btn-action">Инициализация</div></a>
-                            <a href="${createLink(uri: '/monitoring')}"><div class="btn-action">Мониторинг</div></a>
+                            <a href="${createLink(controller:'base', action: 'index')}"><div class="btn-action">Все базы</div></a>
+                            <hr/>
+                            <br/>Управление<br/>
+                            <a href="${createLink(controller:'base', action: 'init')}"><div class="btn-action-admin">Инициализация</div></a>
+                            <a href="${createLink(uri: '/monitoring')}"><div class="btn-action-admin">Мониторинг</div></a>
                         </li>
                     </sec:ifAllGranted>
                 </ul>
