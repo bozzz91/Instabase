@@ -11,7 +11,7 @@
             </li>
         </g:if>
 		<br>
-        <g:if test="${user?.cash}">
+        <g:if test="${user?.cash != null}">
             <li>
                 <g:message code="person.cash.label" default="Cash"/> : <g:fieldValue bean="${user}" field="cash"/>
             </li>
