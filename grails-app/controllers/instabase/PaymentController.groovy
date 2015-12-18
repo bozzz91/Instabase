@@ -100,6 +100,8 @@ class PaymentController {
         }
 
         paymentInstance.owner = springSecurityService.currentUser as Person
+        paymentInstance.clearErrors()
+        paymentInstance.validate()
         if (paymentInstance.hasErrors()) {
             respond paymentInstance.errors, view: 'create'
             return

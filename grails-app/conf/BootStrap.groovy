@@ -23,7 +23,7 @@ class BootStrap {
 
         if (Environment.current == Environment.DEVELOPMENT) {
             Person user = Person.findByUsername('user@user.com') ?: new Person(
-                    cash: 100.0d, fullName: 'user',
+                    cash: 0.0d, fullName: 'user',
                     username: 'user@user.com',
                     password: 'user',
                     enabled: false).save(failOnError: true)
