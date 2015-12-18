@@ -86,7 +86,7 @@ class ContentService {
                     baseName = fileName.split(VERSION)[0]
                     version = fileName.split(VERSION)[1] as Integer
                 }
-                Base.findByNameAndLevelAndVerAndParent(baseName, parent.level + 1, version, parent) ?:
+                Base.findByNameAndLevelAndParent(baseName, parent.level + 1, parent) ?:
                         new Base(
                             name: baseName,
                             ver: version,
