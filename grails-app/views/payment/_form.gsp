@@ -29,13 +29,13 @@
 </sec:ifAllGranted>
 <sec:ifNotGranted roles="ROLE_ADMIN">
     <sec:ifAllGranted roles="ROLE_USER">
-        <div class="fieldcontain ${hasErrors(bean: paymentInstance, field: 'state', 'error')} required">
+        <!--div class="fieldcontain ${hasErrors(bean: paymentInstance, field: 'state', 'error')} required">
             <label for="state">
                 <g:message code="payment.state.label" default="State" />
                 <span class="required-indicator">*</span>
             </label>
             <g:fieldValue id="state" bean="${paymentInstance}" field="state"/>
-        </div>
+        </div-->
     </sec:ifAllGranted>
 </sec:ifNotGranted>
 
