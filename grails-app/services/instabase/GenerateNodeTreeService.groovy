@@ -63,6 +63,9 @@ class GenerateNodeTreeService {
         if (isBase) {
             idPrefix = 'base_'
             icon = grailsLinkGenerator.resource(dir: 'images', file: 'db.png')
+            if (text.endsWith('.txt') || text.endsWith('.dat')) {
+                text = text.substring(0, text.lastIndexOf('.'));
+            }
             text += ' (' + (node as Base).updateDate.format("dd-MM-yyyy") + ')'
             if (viewMode) {
                 text += " <a class='downloadLink' onclick='downloadBase(${node.id})' href='#'>Скачать</a>"
