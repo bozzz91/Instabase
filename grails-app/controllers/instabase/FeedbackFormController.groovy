@@ -61,7 +61,7 @@ class FeedbackFormController {
             String msg = "Заказ продвижения аккаунта\n";
             msg += "E-mail: ${params.email}\n";
             msg += "Аккаунты: ${params.account}\n";
-            msg += "Желаемый результат: ${params.wresult}\n";
+            msg += "Телефон: ${params.phone}\n";
             msg += "Доп. информация: ${params.addinfo}\n";
             mailService.sendMail {
                 to Metadata.getCurrent().getProperty("instabase.admin.email")

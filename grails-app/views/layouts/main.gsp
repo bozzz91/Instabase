@@ -75,7 +75,7 @@
 						<form action="/feedbackForm/orderPromotion" method="post" class="order-base-form">
 							<input type="email" name="email" placeholder="Ваш email *" required pattern="^([a-z0-9\._\-]+)@([a-z0-9\.\-]+)(\.[a-z]{2,})$" title="xxx@xxx.xx"><br>
 							<input type="text" name="account" placeholder="Укажите аккаунты через запятую *" required><br>
-							<input type="text" name="wresult" placeholder="Желаемый результат по итогам" pattern="^[А-Яа-яЁё\s]+$" title="Только русские символы"><br><br>
+                            <input id="phone" name="phone" type="text" placeholder="Телефон для связи" x-autocompletetype="phone" pattern="^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$" title="Введите телефон правильно">
 							<textarea rows="5" name="addinfo" placeholder="Дополнительная информация"></textarea>
 							<input type="hidden" name="info-form" value="Форма заказа продвижения">
 							<input type="submit" value="Отправить заказ" title="Отправить заказ">
