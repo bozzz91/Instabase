@@ -3,7 +3,7 @@ package instabase
 class Person extends SecUser {
 
     static constraints = {
-        fullName(nullable: false, blank: false)
+        fullName(nullable: true)
         cash(nullable: false, blank: false, min: 0.0d)
         created(nullable: true)
     }

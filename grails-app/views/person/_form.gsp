@@ -26,11 +26,12 @@
 </div>
 </g:if>
 
-<div class="fieldcontain ${hasErrors(bean: personInstance, field: 'fullName', 'error')} required">
+<g:if test="${personInstance?.id}">
+<div class="fieldcontain ${hasErrors(bean: personInstance, field: 'fullName', 'error')}">
     <label for="fullName">
         <g:message code="person.fullName.label" default="Full Name"/>
         <span class="required-indicator">*</span>
     </label>
     <g:textField name="fullName" required="" value="${personInstance?.fullName}"/>
 </div>
-
+</g:if>
