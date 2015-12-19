@@ -55,7 +55,7 @@
 						<div id="wrap">
 							<div class="utp">
 								<h1>Блог</h1>
-								<div class="sale inline-block"><p>Базы <br>от 9 руб.</p></div>
+                                <g:render template="sale"/>
 							</div>
 							<div class="divider1"></div>
 							<div class="main-content">

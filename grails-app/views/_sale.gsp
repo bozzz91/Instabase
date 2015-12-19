@@ -1,0 +1,1 @@
+<div class="sale inline-block"><p>Базы <br>от 15 руб.</p></div>
