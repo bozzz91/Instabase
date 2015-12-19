@@ -20,7 +20,7 @@ class PersonController {
     @Secured(['ROLE_USER'])
     def index() {
         if (!params.category) {
-            params.category = "Instagram"
+            params.category = "Геолокация"
         }
         String category = params.category
         render (view: 'index', model: [category: category])
