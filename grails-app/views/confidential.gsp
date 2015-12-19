@@ -95,5 +95,9 @@
     <script type="text/javascript" src="/js/jquery.slitslider.js"></script>
     <script type="text/javascript" src="/js/classie.js"></script>
     <script type="text/javascript" src="/js/menu.js"></script>
+
+    <!-- metric -->
+    <g:render template="metric"/>
+    <!-- metric -->
 </body>
 </html>

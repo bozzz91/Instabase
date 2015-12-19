@@ -163,7 +163,11 @@ grails.plugin.springsecurity.auth.loginFormUrl = '/login/auth'
 grails.plugin.springsecurity.successHandler.defaultTargetUrl = '/node'
 grails.plugin.springsecurity.roleHierarchy = 'ROLE_ADMIN > ROLE_USER'
 grails.plugin.springsecurity.controllerAnnotations.staticRules = [
-	'/':                              ['permitAll'],
+    '/':                              ['permitAll'],
+    '/robots.txt':                    ['permitAll'],
+    '/sitemap.xml':                   ['permitAll'],
+    '/google*':                       ['permitAll'],
+    '/yandex*':                       ['permitAll'],
 	'/index':                         ['permitAll'],
     '/index.gsp':                     ['permitAll'],
     '/feedback':                      ['permitAll'],
