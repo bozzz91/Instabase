@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
-    <title>Обратная связь</title>
+    <title>${title}</title>
 </head>
 
 <body>

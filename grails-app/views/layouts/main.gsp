@@ -45,9 +45,9 @@
 					<div class="popup">
 						<h2>Заказать Базу</h2>
 						<p>На указанный Вами Email будет выслан файл базы, а также будет приходить информация о деталях заказа.</p>
-						<form action="" class="order-base-form">
+						<form action="/feedbackForm/orderBase" method="post" class="order-base-form">
 							<input type="email" name="email" placeholder="Ваш email *" required pattern="^([a-z0-9\._\-]+)@([a-z0-9\.\-]+)(\.[a-z]{2,})$" title="xxx@xxx.xx"><br>
-							<select name="type-order">
+							<select name="type_order">
 								<option>Выберите тип нужной базы</option>
 								<option>Сбор по геолокации</option>
 								<option>Сбор из Вконтакте</option>
@@ -72,7 +72,7 @@
 					<div class="popup">
 						<h2>Заказать продвижение Instargam</h2>
 						<p>На указанный Вами Email будет приходить информация о деталях заказа.</p>
-						<form action="" class="order-base-form">
+						<form action="/feedbackForm/orderPromotion" method="post" class="order-base-form">
 							<input type="email" name="email" placeholder="Ваш email *" required pattern="^([a-z0-9\._\-]+)@([a-z0-9\.\-]+)(\.[a-z]{2,})$" title="xxx@xxx.xx"><br>
 							<input type="text" name="account" placeholder="Укажите аккаунты через запятую *" required><br>
 							<input type="text" name="wresult" placeholder="Желаемый результат по итогам" pattern="^[А-Яа-яЁё\s]+$" title="Только русские символы"><br><br>
