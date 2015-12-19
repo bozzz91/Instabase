@@ -103,12 +103,22 @@ ul {
 			.nav-enter:hover{
 				background:#48BEDA;
 			}
+
+        .nav-logged{
+            background:#1E90FF;
+            padding:15px 15px 15px 30px;
+            border-right:2px solid rgba(250,250,250,0.5);
+            border-radius: 30px;
+        }
+            .nav-logged:hover{
+                background:#48BEDA;
+            }
 		.nav-reg{
 			background:#1E90FF;
 			padding:15px 30px 15px 15px;
 			border-top-right-radius:30px;
-			border-bottom-right-radius:30px;	
-		}
+            border-bottom-right-radius:30px;
+        }
 			.nav-reg:hover{
 				background:#48BEDA;
 			}
@@ -249,7 +259,7 @@ ul {
 		margin:-5px 0 0 0;
 		height:32px;
 	}
-	.nav-enter{
+	    .nav-enter{
 			padding:7px 7px 7px 16px;
 			font-size:9pt;
 			border-top-left-radius:100px;
@@ -259,6 +269,15 @@ ul {
 			.nav-enter:hover{
 				
 			}
+        .nav-logged{
+            padding:7px 7px 7px 16px;
+            font-size:9pt;
+            border-radius:100px;
+            border-right:1px solid rgba(250,250,250,0.5);
+        }
+            .nav-logged:hover{
+
+            }
 		.nav-reg{
 			padding:7px 16px 7px 7px;
 			font-size:9pt;	
@@ -322,7 +341,7 @@ ul {
 	.nav-login{
 		margin:25px 0 0 0;
 	}
-	.nav-enter{
+	    .nav-enter{
 			padding:10px 10px 10px 20px;
 			font-size:14pt;
 			border-top-left-radius:100px;
@@ -331,6 +350,14 @@ ul {
 			.nav-enter:hover{
 				
 			}
+        .nav-logged{
+            padding:10px 10px 10px 20px;
+            font-size:14pt;
+            border-radius:100px;
+        }
+            .nav-logged:hover{
+
+            }
 		.nav-reg{
 			padding:10px 20px 10px 10px;
 			font-size:14pt;	
@@ -410,7 +437,7 @@ ul {
 	.nav-login{
 		margin:45px 0 0 0;
 	}
-	.nav-enter{
+	    .nav-enter{
 			padding:25px 25px 25px 40px;
 			font-size:25pt;
 			border-top-left-radius:100px;
@@ -419,6 +446,14 @@ ul {
 			.nav-enter:hover{
 				
 			}
+        .nav-logged{
+            padding:25px 25px 25px 40px;
+            font-size:25pt;
+            border-radius:100px;
+        }
+            .nav-logged:hover{
+
+            }
 		.nav-reg{
 			padding:25px 40px 25px 25px;
 			font-size:25pt;	
@@ -471,7 +506,7 @@ ul {
 	.nav-login{
 		margin:70px 0 0 0;
 	}
-	.nav-enter{
+	    .nav-enter{
 			padding:25px 25px 25px 40px;
 			font-size:50pt;
 			border-top-left-radius:100px;
@@ -480,6 +515,14 @@ ul {
 			.nav-enter:hover{
 				
 			}
+        .nav-logged{
+            padding:25px 25px 25px 40px;
+            font-size:50pt;
+            border-radius:100px;
+        }
+            .nav-logged:hover{
+
+            }
 		.nav-reg{
 			padding:25px 40px 25px 25px;
 			font-size:50pt;	

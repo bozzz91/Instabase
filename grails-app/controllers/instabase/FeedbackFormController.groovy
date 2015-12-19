@@ -1,12 +1,12 @@
 package instabase
 
 import grails.plugin.springsecurity.annotation.Secured
-import grails.transaction.Transactional
 import grails.util.Metadata
 
 @Secured(['permitAll'])
-@Transactional(readOnly = true)
 class FeedbackFormController {
+
+    static allowedMethods = [index: "POST"]
 
     def mailService
 

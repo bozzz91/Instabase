@@ -36,7 +36,54 @@
 	<body>
 		<div id="grailsLogo" role="banner">
 			<a href="${createLink(url:'/')}"><img src="${createLinkTo(dir: "images", file: "logo.png")}"/></a>
-			<a href="/" title="Заказать продвижение в Instagram" alt="Заказать продвижение в Instagram" target="_blank"><div class="btn-order-top">Заказать продвижение аккаунта Instargam</div></a>
+			<div class="header-right">
+				<div class="hr-1">
+					<p>Не нашли необходимую Вам базу? <br>Тогда мы соберем ее для Вас!</p>
+					<a href="#win1" class="btn-order-top" style="color:#000;" title="Заказать базу">Заказать Базу</a>
+					<!-- Модальное окно 1 -->
+					<a href="#x" class="overlay" id="win1" style="margin:0;"></a>
+					<div class="popup">
+						<h2>Заказать Базу</h2>
+						<p>На указанный Вами Email будет выслан файл базы, а также будет приходить информация о деталях заказа.</p>
+						<form action="" class="order-base-form">
+							<input type="email" name="email" placeholder="Ваш email *" required pattern="^([a-z0-9\._\-]+)@([a-z0-9\.\-]+)(\.[a-z]{2,})$" title="xxx@xxx.xx"><br>
+							<select name="type-order">
+								<option>Выберите тип нужной базы</option>
+								<option>Сбор по геолокации</option>
+								<option>Сбор из Вконтакте</option>
+								<option>Сбор по геолокации + фильтр</option>
+								<option>Сбор по хэштегам</option>
+							</select><br>
+							<input type="text" name="city" placeholder="Укажите города/хэштеги через запятую *" pattern="^[А-Яа-яЁё,\s]+$" title="Только русские символы" required><br>
+							<input type="text" name="filter" placeholder="Укажите критерии фильтров(если необходимо)" pattern="^[А-Яа-яЁё\s]+$" title="Только русские символы"><br><br>
+							К какому времени необходима база?
+							<input type="date" name="date"><br>
+							<input type="hidden" name="info-form" value="Форма заказа базы">
+							<input type="submit" value="Отправить заказ" title="Отправить заказ">
+						</form>
+						<a class="close" title="Закрыть" href="#close"></a>
+					</div>
+				</div>
+				<div class="hr-2">
+					<p>Вы можете заказать продвижение аккаунтов Instagram</p>
+					<a href="#win2" class="btn-order-top" style="color:#000;" title="Заказать продвижение">Заказать продвижение</a>
+					<!-- Модальное окно 2 -->
+					<a href="#x" class="overlay" id="win2" style="margin:0;"></a>
+					<div class="popup">
+						<h2>Заказать продвижение Instargam</h2>
+						<p>На указанный Вами Email будет приходить информация о деталях заказа.</p>
+						<form action="" class="order-base-form">
+							<input type="email" name="email" placeholder="Ваш email *" required pattern="^([a-z0-9\._\-]+)@([a-z0-9\.\-]+)(\.[a-z]{2,})$" title="xxx@xxx.xx"><br>
+							<input type="text" name="account" placeholder="Укажите аккаунты через запятую *" required><br>
+							<input type="text" name="wresult" placeholder="Желаемый результат по итогам" pattern="^[А-Яа-яЁё\s]+$" title="Только русские символы"><br><br>
+							<textarea rows="5" name="addinfo" placeholder="Дополнительная информация"></textarea>
+							<input type="hidden" name="info-form" value="Форма заказа продвижения">
+							<input type="submit" value="Отправить заказ" title="Отправить заказ">
+						</form>
+						<a class="close" title="Закрыть" href="#close"></a>
+					</div>
+				</div>
+			</div>
 		</div>
         <div class="left-panel">
             <div class="person-info with-shadow-box">
@@ -88,7 +135,7 @@
         </div>
 		<div class="footer" role="contentinfo">
 			<p>InstaBase.su &#169; 2015. Все права защищены.</p>
-			<p><a href="#">ПОЛИТИКА КОНФИДЕНЦИАЛЬНОСТИ</a></p>
+			<p><a href="/confidential">ПОЛИТИКА КОНФИДЕНЦИАЛЬНОСТИ</a></p>
 		</div>
 		<div id="spinner" class="spinner" style="display:none;">
             <g:message code="spinner.alt" default="Loading&hellip;"/>
