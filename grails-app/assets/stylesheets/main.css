@@ -301,13 +301,6 @@ img {
 	color: #666666;
 }
 
-.nav a:focus, .nav a:hover {
-	background-color: #999999;
-	color: #ffffff;
-	outline: none;
-	text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.8);
-}
-
 .no-borderradius .nav a:focus, .no-borderradius .nav a:hover {
 	background-color: transparent;
 	color: #444444;
@@ -331,6 +324,13 @@ img {
 .nav a.create {
 	background-image: url(../images/skin/database_add.png);
 	border:3px solid #00CD00;
+}
+
+.nav a:focus, .nav a:hover {
+    background-color: #999999;
+    color: #ffffff;
+    outline: none;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.8);
 }
 
 /* CREATE/EDIT FORMS AND SHOW PAGES */
