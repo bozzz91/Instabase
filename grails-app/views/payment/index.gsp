@@ -24,7 +24,7 @@
 			<thead>
 					<tr>
 					
-						<th><g:message code="payment.owner.label" default="Owner" /></th>
+						<th></th>
 					
 						<g:sortableColumn property="amount" title="${message(code: 'payment.amount.label', default: 'Amount')}" />
 					
@@ -40,7 +40,7 @@
 				<g:each in="${paymentInstanceList}" status="i" var="paymentInstance">
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 					
-						<td><g:link action="show" id="${paymentInstance.id}">${fieldValue(bean: paymentInstance, field: "owner")}</g:link></td>
+						<td><g:link action="show" id="${paymentInstance.id}">Оплатить</g:link></td>
 					
 						<td>${fieldValue(bean: paymentInstance, field: "amount")}</td>
 					
