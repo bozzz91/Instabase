@@ -14,15 +14,28 @@
             'success': function(data) {
                 console.log('success pre purchasing. ' + data);
                 if (data.state != 1) {
-                    openDialog(data.text);
+                    //если нет денег на счету то errorType == 0
+                    if (data.errorType == 0) {
+                        $("#dialog").text(data.text).dialog({
+                            modal: true,
+                            buttons: {
+                                'Ok': function() {
+                                    $(this).dialog("close");
+                                },
+                                'Пополнить баланс' : function() {
+                                    window.location.href = '${createLink(uri: '/payment/create')}'
+                                }
+                            }
+                        });
+                    } else {
+                        openDialog(data.text);
+                    }
                 } else {
-                    //$(this).dialog("close");
-
                     var text = "Купить базы (" + data.count + " шт) за " + data.cost + "р?";
                     $("#dialog").text(text).dialog({
                         modal: true,
                         buttons: {
-                            'OK': function() {
+                            'Да': function() {
                                 $.ajax({
                                     'url': '${createLink(action: 'purchase', params: ['pre': false])}',
                                     'data': { 'ids': data.text},
@@ -44,7 +57,7 @@
                                     }
                                 });
                             },
-                            'Cancel' : function() {
+                            'Отмена' : function() {
                                 $(this).dialog("close");
                             }
                         }
