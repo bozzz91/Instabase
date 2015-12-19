@@ -159,6 +159,7 @@ grails.plugin.springsecurity.authority.className = 'instabase.SecRole'
 grails.plugin.springsecurity.securityConfigType = 'Annotation'
 grails.plugin.springsecurity.logout.postOnly = false
 grails.plugin.springsecurity.logout.afterLogoutUrl='/'
+grails.plugin.springsecurity.auth.loginFormUrl = '/login/auth'
 grails.plugin.springsecurity.successHandler.defaultTargetUrl = '/node'
 grails.plugin.springsecurity.roleHierarchy = 'ROLE_ADMIN > ROLE_USER'
 grails.plugin.springsecurity.controllerAnnotations.staticRules = [
