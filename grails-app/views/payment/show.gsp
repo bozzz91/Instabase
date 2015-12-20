@@ -55,7 +55,7 @@
                         <g:message code="payment.creationDate.label" default="Creation Date" />
                     </span>
                     <span class="property-value" aria-labelledby="creationDate-label">
-                        <g:formatDate date="${paymentInstance?.creationDate}" />
+                        <g:formatDate date="${paymentInstance?.creationDate}" format="dd-MM-yyyy HH-mm-ss"/>
                     </span>
 				</li>
 				</g:if>
