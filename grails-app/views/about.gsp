@@ -28,7 +28,7 @@
 	<link rel="stylesheet" href="/css/menu-1.css">
 	<link rel="stylesheet" type="text/css" href="/css/normalize.css" />
 	<link rel="stylesheet" type="text/css" href="/css/component.css" />
-	<script src="/js/modernizr.custom.25376.js" type="type/javascript"></script>
+	<script src="/js/modernizr.custom.25376.js" type="text/javascript"></script>
 	<!--slider-->
 	<link rel="stylesheet" type="text/css" href="/css/slider-1.css" />
     <link rel="stylesheet" type="text/css" href="/css/slider-2.css" />
