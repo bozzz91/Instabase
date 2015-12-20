@@ -41,6 +41,7 @@ class BaseController {
                 response.outputStream << new FileInputStream(baseFile)
                 response.outputStream.flush()
             } else {
+                log.error('path not exists: ' + baseFile.absolutePath)
                 render(status: INTERNAL_SERVER_ERROR, view: 'error', model: [text: "Base doesn't exists"])
             }
         } else {
@@ -50,7 +51,7 @@ class BaseController {
 
     private boolean hasAccessToBase(Base b) {
         Person user = springSecurityService.currentUser as Person
-        return request.isUserInRole('ROLE_ADMIN') || PersonBase.exists(user.id, b?.id)
+        return request.isUserInRole('ROLE_ADMIN') || (b?.id && PersonBase.exists(user.id, b.id))
     }
 
     @Transactional
