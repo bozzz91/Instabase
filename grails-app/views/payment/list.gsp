@@ -43,7 +43,7 @@
 					
 						<td>${fieldValue(bean: paymentInstance, field: "owner.username")}</td>
 					
-						<td><g:formatDate date="${paymentInstance.creationDate}" /></td>
+						<td><g:formatDate date="${paymentInstance.creationDate}" format="dd-MM-yyyy HH-mm-ss"/></td>
 					
 						<td>${fieldValue(bean: paymentInstance, field: "state")}</td>
 					</tr>

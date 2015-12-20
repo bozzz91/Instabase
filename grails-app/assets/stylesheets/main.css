@@ -933,6 +933,15 @@ embed {
     box-shadow: 1px 1px 3px 0 grey;
 }
 
+.show-btn-list {
+    background: #609fcd;
+    padding: 5px;
+    text-decoration: none;
+    color: #fff !important;
+    border-radius: 4px;
+    box-shadow: 1px 1px 3px 0 grey;
+}
+
 /*auth.gsp*/
 #login {
 		margin: 15px 0;

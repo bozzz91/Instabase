@@ -74,7 +74,11 @@ class BootStrap {
             PersonBase.create(user, base5)
             PersonBase.create(user, base6)
 
-            new Payment(state: Payment.State.WAIT, amount: 10d, owner: user).save()
+            new Payment(state: Payment.State.DONE, amount: 15d, owner: adminUser).save()
+            new Payment(state: Payment.State.WAIT, amount: 17d, owner: adminUser).save()
+
+            new Payment(state: Payment.State.DONE, amount: 10d, owner: user).save()
+            new Payment(state: Payment.State.WAIT, amount: 20d, owner: user).save()
         }
     }
 

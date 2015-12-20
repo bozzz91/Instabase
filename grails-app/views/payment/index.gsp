@@ -39,14 +39,19 @@
 				<tbody>
 				<g:each in="${paymentInstanceList}" status="i" var="paymentInstance">
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
-					
-						<td><g:link action="show" class="pay-btn-list" id="${paymentInstance.id}">Оплатить</g:link></td>
+
+                        <g:if test="${paymentInstance?.state == Payment.State.WAIT}">
+						    <td><g:link action="show" class="pay-btn-list" id="${paymentInstance.id}">Оплатить</g:link></td>
+                        </g:if>
+                        <g:else>
+                            <td><g:link action="show" class="show-btn-list" id="${paymentInstance.id}">Просмотр</g:link></td>
+                        </g:else>
 					
 						<td>${fieldValue(bean: paymentInstance, field: "amount")}</td>
 					
-						<td><g:formatDate date="${paymentInstance.creationDate}" /></td>
+						<td><g:formatDate date="${paymentInstance.creationDate}" format="dd-MM-yyyy HH-mm-ss"/></td>
 					
-						<td><g:formatDate date="${paymentInstance.payDate}" /></td>
+						<td><g:formatDate date="${paymentInstance.payDate}" format="dd-MM-yyyy HH-mm-ss"/></td>
 					
 						<td>${fieldValue(bean: paymentInstance, field: "state")}</td>
 					
