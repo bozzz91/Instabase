@@ -6,6 +6,9 @@ class PaymentService {
 
     def getSecret() {
         String path = Metadata.getCurrent().get("instabase.yandex.secret.file.path")
-        return new File(path).text
+        Properties props = new Properties()
+        File propsFile = new File(path)
+        props.load(propsFile.newDataInputStream())
+        return props
     }
 }

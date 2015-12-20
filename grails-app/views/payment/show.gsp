@@ -66,7 +66,7 @@
                         <g:message code="payment.payDate.label" default="Pay Date" />
                     </span>
                     <span class="property-value" aria-labelledby="payDate-label">
-                        <g:formatDate date="${paymentInstance?.payDate}" />
+                        <g:formatDate date="${paymentInstance?.payDate}" format="dd-MM-yyyy HH-mm-ss" />
                     </span>
 				</li>
 				</g:if>
@@ -84,8 +84,7 @@
 
                 <g:if test="${paymentInstance?.state == Payment.State.WAIT && paymentInstance.owner == user}">
                 <li class="fieldcontain">
-                    <iframe frameborder="0" allowtransparency="true" scrolling="no" src="https://money.yandex.ru/embed/shop.xml?account=410013703278079&label=${paymentInstance.id}&quickpay=shop&payment-type-choice=on&writer=seller&targets=Пополнение+баланса&default-sum=${paymentInstance.amount}&button-text=01&mail=on&successURL=" width="450" height="198">
-                    </iframe>
+                    <script type="text/javascript" src="https://auth.robokassa.ru/Merchant/PaymentForm/FormL.js?MerchantLogin=InstaBase&OutSum=${paymentInstance.amount}&InvoiceID=${paymentInstance.id}&Description=Пополнение+баланса&SignatureValue=${crc}&IsTest=${test}"></script>
                 </li>
                 </g:if>
 			</ol>

@@ -17,44 +17,36 @@ class PaymentController {
     @Transactional
     @Secured(['permitAll'])
     def notification() {
-        log.error("new notification: ${params}")
-        def sha1 = params.sha1_hash
-        def secret = paymentService.getSecret()
-        String mySha1 = params.notification_type + '&' +
-                params.operation_id + '&' +
-                params.amount + '&' +
-                params.currency + '&' +
-                params.datetime + '&' +
-                params.sender + '&' +
-                params.codepro + '&' +
-                secret + '&' +
-                params.label;
-        mySha1 = mySha1.encodeAsSHA1();
-        if (sha1 == mySha1) {
-            Payment pay = Payment.findById(params.label ? (params.label as Long) : 0l)
-            if (pay) {
-                if (params.withdraw_amount) {
-                    pay.amount = params.withdraw_amount as Double
-                } else {
-                    pay.amount = params.amount as Double
-                }
-                pay.payDate = Date.parse("yyyy-MM-dd'T'HH:mm:ss'Z'", params.datetime as String)
-                pay.operationId = params.operation_id
-                Boolean unaccepted = params.unaccepted ? Boolean.valueOf("${params.unaccepted}") : false
-                Boolean codePro = params.codepro ? Boolean.valueOf("${params.codepro}") : false
-                if (unaccepted || codePro) {
-                    pay.state = Payment.State.PROCESS
-                } else {
+        log.error("new payment notification: ${params}")
+        String crc = params.SignatureValue
+        def invId = params.InvId
+        def outSum = params.OutSum
+        def test = params.IsTest
+        Properties secret = paymentService.getSecret()
+        String myCrc = "${outSum}:${invId}:${secret.pass2}".encodeAsMD5()
+        if (crc.toUpperCase() == myCrc.toUpperCase()) {
+            if (test == "1") {
+                render status: OK, text: "OK${invId}"
+            } else {
+                Payment pay = Payment.findById(invId ? (invId as Long) : 0l)
+                if (pay) {
+                    if (outSum) {
+                        pay.amount = outSum as Double
+                    }
+                    pay.payDate = new Date()
                     pay.state = Payment.State.DONE
+                    pay.save()
+                    pay.owner.cash += pay.amount
+                    pay.owner.save()
+                    render status: OK, text: "OK${invId}"
+                } else {
+                    render status: INTERNAL_SERVER_ERROR, text: "Платеж не найден"
                 }
-                pay.save()
-                pay.owner.cash += pay.amount
-                pay.owner.save()
             }
         } else {
-            log.error(sha1 + "!=" + mySha1)
+            log.error(crc + " != " + myCrc)
+            render status: INTERNAL_SERVER_ERROR, text: "CRC not equals"
         }
-        render status: OK, text: "OK"
     }
 
     private boolean hasAccessToPayment(Payment payment) {
@@ -79,7 +71,9 @@ class PaymentController {
 
     def show(Payment paymentInstance) {
         if (hasAccessToPayment(paymentInstance)) {
-            respond paymentInstance, [user: springSecurityService.currentUser as Person]
+            Properties secret = paymentService.getSecret()
+            String crc = "InstaBase:${paymentInstance.amount}:${paymentInstance.id}:${secret.pass1}".encodeAsMD5().toUpperCase()
+            respond (paymentInstance, [user: springSecurityService.currentUser, model: [crc: crc, test: secret.test]])
         } else {
             render(status: FORBIDDEN, view: 'error', model: [text: 'Access denied.'])
         }
