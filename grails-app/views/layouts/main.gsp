@@ -44,7 +44,7 @@
 					<a href="#x" class="overlay" id="win1" style="margin:0;"></a>
 					<div class="popup">
 						<h2>Заказать Базу</h2>
-						<p>На указанный Вами Email будет выслан файл базы, а также будет приходить информация о деталях заказа.</p>
+						<p>На указанный Вами Email будет выслано уведомление, когда интересующая Вас база станет доступна для скачивания.</p>
 						<form action="/feedbackForm/orderBase" method="post" class="order-base-form">
 							<input type="email" name="email" placeholder="Ваш email *" required pattern="^([a-z0-9\._\-]+)@([a-z0-9\.\-]+)(\.[a-z]{2,})$" title="xxx@xxx.xx"><br>
 							<select name="type_order">
