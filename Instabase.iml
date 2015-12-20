@@ -38,6 +38,7 @@
       <sourceFolder url="file://$MODULE_DIR$/grails-app/services" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/grails-app/taglib" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/grails-app/conf" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/grails-app/jobs" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/target/classes" />
       <excludeFolder url="file://$MODULE_DIR$/target/test-classes" />
       <excludeFolder url="file://$MODULE_DIR$/target/work/gspcompile" />
@@ -101,10 +102,9 @@
           <root url="jar://$MAVEN_REPOSITORY$/javax/mail/javax.mail-api/1.5.1/javax.mail-api-1.5.1.jar!/" />
           <root url="jar://$MAVEN_REPOSITORY$/javax/activation/activation/1.1/activation-1.1.jar!/" />
           <root url="jar://$MAVEN_REPOSITORY$/com/sun/mail/javax.mail/1.5.1/javax.mail-1.5.1.jar!/" />
-          <root url="jar://$MAVEN_REPOSITORY$/net/bull/javamelody/javamelody-core/1.57.0/javamelody-core-1.57.0.jar!/" />
-          <root url="jar://$MAVEN_REPOSITORY$/org/jrobin/jrobin/1.5.9/jrobin-1.5.9.jar!/" />
-          <root url="jar://$MAVEN_REPOSITORY$/com/lowagie/itext/2.1.7/itext-2.1.7.jar!/" />
           <root url="jar://$MAVEN_REPOSITORY$/org/postgresql/postgresql/9.4-1205-jdbc42/postgresql-9.4-1205-jdbc42.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/c3p0/c3p0/0.9.1.1/c3p0-0.9.1.1.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/org/quartz-scheduler/quartz/2.2.1/quartz-2.2.1.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

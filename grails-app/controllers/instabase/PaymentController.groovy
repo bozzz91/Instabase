@@ -59,14 +59,14 @@ class PaymentController {
 
     private boolean hasAccessToPayment(Payment payment) {
         Person user = springSecurityService.currentUser as Person
-        return request.isUserInRole('ROLE_ADMIN') || user.id == payment.owner.id
+        return request.isUserInRole('ROLE_ADMIN') || (user.id == payment.owner.id && payment.state != Payment.State.DELETE)
     }
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         List<Payment> payments = Payment.findAll(
-                "from Payment as p where p.owner=? order by p.creationDate desc",
-                [springSecurityService.currentUser as Person]
+                "from Payment as p where p.owner=? and p.state<>? order by p.creationDate desc",
+                [springSecurityService.currentUser as Person, Payment.State.DELETE]
         )
         respond payments, model: [paymentInstanceCount: payments.size()]
     }

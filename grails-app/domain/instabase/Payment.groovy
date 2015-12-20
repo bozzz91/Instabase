@@ -15,7 +15,8 @@ class Payment {
         WAIT("Ожидается оплата"),
         PROCESS("Обрабатывается"),
         DONE("Принят"),
-        ERROR("Ошибка")
+        ERROR("Ошибка"),
+        DELETE("Ожидает удаления")
 
         final String value
 
