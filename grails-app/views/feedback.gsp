@@ -69,7 +69,7 @@
 												<input type="text" name="email" required placeholder="Ваш email/логин *" x-autocompletetype="email" pattern="^([a-z0-9\._\-]+)@([a-z0-9\.\-]+)(\.[a-z]{2,})$" title="Введите email/логин правильно"><br>
 												<select name="type_mes">
 													<option>По какому вопросу?</option>
-													<option>Техниченая поддержка</option>
+													<option>Технические вопросы</option>
 													<option>Общие вопросы</option>
 													<option>Предложение</option>
 													<option>Другое</option>
