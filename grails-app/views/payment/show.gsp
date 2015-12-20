@@ -83,7 +83,7 @@
 				</g:if>
 
                 <g:if test="${paymentInstance?.state == Payment.State.WAIT && paymentInstance.owner == user}">
-                <li class="fieldcontain">
+                <li class="fieldcontain" style="text-align: center;">
                     <script type="text/javascript" src="https://auth.robokassa.ru/Merchant/PaymentForm/FormL.js?MerchantLogin=InstaBase&OutSum=${paymentInstance.amount}&InvoiceID=${paymentInstance.id}&Description=Пополнение+баланса&SignatureValue=${crc}&IsTest=${test}"></script>
                 </li>
                 </g:if>
