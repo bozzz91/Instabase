@@ -8,9 +8,9 @@ class BootStrap {
         SecRole adminRole = SecRole.findByAuthority('ROLE_ADMIN') ?: new SecRole(authority: 'ROLE_ADMIN').save(failOnError: true)
         SecRole userRole = SecRole.findByAuthority('ROLE_USER') ?: new SecRole(authority: 'ROLE_USER').save(failOnError: true)
 
-        Person adminUser = Person.findByUsername('admin@admin.com') ?: new Person(
-                cash: 100.0d, fullName: 'admin',
-                username: 'admin@admin.com',
+        Person adminUser = Person.findByUsername('admin@instabase.su') ?: new Person(
+                cash: 100.0d, fullName: 'Instabase Admin',
+                username: 'admin@instabase.su',
                 password: 'admin',
                 enabled: true).save(failOnError: true)
 
