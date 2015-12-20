@@ -43,7 +43,7 @@ class PersonController {
 
     private boolean hasAccessToPerson(Person p) {
         Person currentUser = springSecurityService.currentUser as Person
-        return request.isUserInRole('ROLE_ADMIN') || currentUser.id == p.id
+        return request.isUserInRole('ROLE_ADMIN') || currentUser.id == p?.id
     }
 
     @Secured(['IS_AUTHENTICATED_ANONYMOUSLY'])

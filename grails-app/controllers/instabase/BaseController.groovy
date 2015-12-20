@@ -50,7 +50,7 @@ class BaseController {
 
     private boolean hasAccessToBase(Base b) {
         Person user = springSecurityService.currentUser as Person
-        return request.isUserInRole('ROLE_ADMIN') || PersonBase.exists(user.id, b.id)
+        return request.isUserInRole('ROLE_ADMIN') || PersonBase.exists(user.id, b?.id)
     }
 
     @Transactional
