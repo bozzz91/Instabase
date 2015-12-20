@@ -1,9 +1,7 @@
 package instabase
 
-import grails.transaction.Transactional
 import grails.util.Metadata
 
-@Transactional
 class PaymentService {
 
     def getSecret() {
