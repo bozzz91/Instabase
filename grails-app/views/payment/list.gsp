@@ -41,7 +41,7 @@
 
 						<!--<td>${fieldValue(bean: paymentInstance, field: "operationId")}</td>-->
 					
-						<td>${fieldValue(bean: paymentInstance, field: "owner.fullName")}</td>
+						<td>${fieldValue(bean: paymentInstance, field: "owner.email")}</td>
 					
 						<td><g:formatDate date="${paymentInstance.creationDate}" /></td>
 					
