@@ -37,7 +37,35 @@
 		<link rel="stylesheet" type="text/css" href="/css/slider-styleNoJS.css" />
 	</noscript>
     <!--Раскрывающийся список-->
-    <script type="text/javascript" src="/js/slide-down-main.js"></script>
+    <script type="text/javascript">
+        var show;
+        function hidetxt(type){
+            param = document.getElementById(type);
+            if(param.style.display == "none") {
+                if(show) show.style.display = "none";
+                param.style.display = "block";
+                show = param;
+            }else param.style.display = "none"
+        }
+    </script>
+    <style>
+        .slide-h{
+            width:90%;
+            display:block;
+            border:2px solid #1E90FF;
+            border-radius:4px;
+            background:#fff;
+            margin:0 auto;
+            font-size:17pt;
+            font-family:Zippelin33;
+            font-weight:600;
+            margin-top:10px;
+        }
+        .slide-h a{
+            display:block;
+            padding:12px;
+        }
+    </style>
 </head>
 <body>
 	<div id="all">
@@ -60,97 +88,104 @@
                                 <g:render template="sale"/>
 							</div>
 							<div class="divider1"></div>
-							<div class="main-content">
-								<div class="main-content-items faq">
-                                    <div id="slider">
-                                        <div class="header" id="1-header">Как зарегистрироваться в системе?</div>
-                                        <div class="content" id="1-content">
-                                            <div class="inline-block margin0">
-                                                <h2>1. Кнопка регистрации</h2><br>
-                                                <p>Выберите в правом верхнем углу кнопку "Регистрация"</p>
-                                                <img src="/img/faq/1.jpg"/>
-                                            </div>
-                                            <div class="inline-block margin0">
-                                                <h2>2. Заполните все поля формы</h2><br>
-                                                <p>Необходимо заполнить все поля формы регистрации. Поле "Ваше имя" также является обязательным, оно будет использовано для удобства обращения к Вам. Вы можете ввести в это поле Ваш псевдоним.</p>
-                                                <img src="/img/faq/2.jpg"/>
-                                            </div>
-                                            <div class="inline-block margin0">
-                                                <h2>3. Все готово.</h2><br>
-                                                <p>Вы можете начинать работу с сервисом.</p>
-                                                <img src="/img/faq/3.jpg"/>
-                                            </div>
-                                        </div>
-
-                                        <div class="header" id="6-header">Обзор личного кабинета</div>
-                                        <div class="content" id="6-content">
-                                            <div class="inline-block margin0">
-                                                <h2>Левая колонка</h2><br>
-                                                <img src="/img/faq/4.jpg"/>
-                                                <h2>Область отображения баз</h2><br>
-                                                <img src="img/faq/5.jpg"/>
+                            <div class="main-content">
+                                <div class="main-content-items faq">
+                                    <div class="slide-domw-mibile">
+                                        <div class="slide-h">
+                                            <a onclick="hidetxt('div1'); return false;" href="#" rel="nofollow">Как зарегистрироваться в системе?</a>
+                                            <div style="display:none;" id="div1" class="text-slide-h">
+                                                <div class="inline-block margin0">
+                                                    <h2>1. Кнопка регистрации</h2><br>
+                                                    <p>Выберите в правом верхнем углу кнопку "Регистрация"</p>
+                                                    <img src="img/faq/1.jpg"/>
+                                                </div>
+                                                <div class="inline-block margin0">
+                                                    <h2>2. Заполните все поля формы</h2><br>
+                                                    <p>Необходимо заполнить все поля формы регистрации. Поле "Ваше имя" также является обязательным, оно будет использовано для удобства обращения к Вам. Вы можете ввести в это поле Ваш псевдоним.</p>
+                                                    <img src="img/faq/2.jpg"/>
+                                                </div>
+                                                <div class="inline-block margin0">
+                                                    <h2>3. Все готово.</h2><br>
+                                                    <p>Вы можете начинать работу с сервисом.</p>
+                                                    <img src="img/faq/3.jpg"/>
+                                                </div>
                                             </div>
                                         </div>
-
-                                        <div class="header" id="2-header">Как пополнить баланс моего аккаунта?</div>
-                                        <div class="content" id="2-content">
-                                            <div class="inline-block margin0">
-                                                <h2>1. В личном кабинете выбрать пункт "Пополнить баланс"</h2><br>
-                                                <p>Вы попадете на страницу "создания" платежа, где Вам необходимо будет ввети <b>СУММУ</b> и нажать <b>СОЗДАТЬ</b></p>
-                                                <img src="/img/faq/6.jpg"/>
-                                            </div>
-                                            <div class="inline-block margin0">
-                                                <h2>2. Далее Вы будете перемещены на страницу информации.</h2><br>
-                                                <p>Вы должны выбрать <b>Оплатить</b>. Поддерживается более, чем 40 способов оплаты, через систему ROBOKASSA: <ins>Visa, Master Card, WEBMONEY, YandexMoney  и др.</ins><br>Вы также можете изменить сумму, выбрав в левом нижнем углу кнопку "изменить".</p>
-                                                <img src="/img/faq/7.jpg"/>
-                                            </div>
-                                            <div class="inline-block margin0">
-                                                <h2>3. Далее Вы будете перемещены на страницу оплаты ROBOKASSA.</h2><br>
-                                                <p>Нужно выбрать удобный для Вас способ оплаты, произвести и операцию.</p>
-                                                <img src="/img/faq/8.jpg"/>
-                                            </div>
-                                            <div class="inline-block margin0">
-                                                <h2>4. Все готово.</h2><br>
-                                                <p>Денежные средства должны зачислиться на Ваш аккаунт по окончании операции пополнения баланса.</p>
+                                        <div class="slide-h">
+                                            <a onclick="hidetxt('div2'); return false;" href="#" rel="nofollow">Обзор личного кабинета</a>
+                                            <div style="display:none;" id="div2" class="text-slide-h">
+                                                <div class="inline-block margin0">
+                                                    <h2>Левая колонка</h2><br>
+                                                    <img src="img/faq/4.jpg"/>
+                                                    <h2>Область отображения баз</h2><br>
+                                                    <img src="img/faq/5.jpg"/>
+                                                </div>
                                             </div>
                                         </div>
-
-                                        <div class="header" id="3-header">Как покупать/скачивать базы?</div>
-                                        <div class="content" id="3-content">
-                                            <div class="inline-block margin0">
-                                                <h2>1. Необходимо перейти в раздел "Список баз"</h2><br>
-                                                <img src="img/faq/9.jpg"/>
-                                            </div>
-                                            <div class="inline-block margin0">
-                                                <h2>2. Чтобы купить одну базу.</h2><br>
-                                                <p>Необходимо выбрать нужную базу и кликнуть по кнопке "купить" справа. После чего у Вас спишуться средства со счета аккаунта и сможете сразу же скачать приобретенную базу. Также она станет доступна для скачивания в разделе "Мои базы".</p>
-                                                <img src="img/faq/10.jpg"/>
-                                            </div>
-                                            <div class="inline-block margin0">
-                                                <h2>3. Чтобы купить две или более баз.</h2><br>
-                                                <p>Необходимо выбрать нужные базы и кликнуть по кнопке "Купить выбранные базы", которая находится над рабочей областью (она выделена зеленой рамкой). После чего у Вас спишуться средства со счета аккаунта и сможете сразу же скачать приобретенные базы. Также они станут доступны для скачивания в разделе "Мои базы".</p>
-                                                <img src="/img/faq/11.jpg"/>
-                                            </div>
-                                        </div>
-
-                                        <div class="header" id="4-header">Как узнать, какие базы я уже купил?</div>
-                                        <div class="content" id="4-content">
-                                            <div class="inline-block margin0">
-                                                <h2>Весь список купленных Вами баз доступен в разделе "Мои базы"</h2><br>
-                                                <img src="img/faq/13.jpg"/>
+                                        <div class="slide-h">
+                                            <a onclick="hidetxt('div3'); return false;" href="#" rel="nofollow">Как пополнить баланс моего аккаунта?</a>
+                                            <div style="display:none;" id="div3" class="text-slide-h">
+                                                <div class="inline-block margin0">
+                                                    <h2>1. В личном кабинете выбрать пункт "Пополнить баланс"</h2><br>
+                                                    <p>Вы попадете на страницу "создания" платежа, где Вам необходимо будет ввети <b>СУММУ</b> и нажать <b>СОЗДАТЬ</b></p>
+                                                    <img src="img/faq/6.jpg"/>
+                                                </div>
+                                                <div class="inline-block margin0">
+                                                    <h2>2. Далее Вы будете перемещены на страницу информации.</h2><br>
+                                                    <p>Вы должны выбрать <b>Оплатить</b>. Поддерживается более, чем 40 способов оплаты, через систему ROBOKASSA: <ins>Visa, Master Card, WEBMONEY, YandexMoney  и др.</ins><br>Вы также можете изменить сумму, выбрав в левом нижнем углу кнопку "изменить".</p>
+                                                    <img src="img/faq/7.jpg"/>
+                                                </div>
+                                                <div class="inline-block margin0">
+                                                    <h2>3. Далее Вы будете перемещены на страницу оплаты ROBOKASSA.</h2><br>
+                                                    <p>Нужно выбрать удобный для Вас способ оплаты, произвести и операцию.</p>
+                                                    <img src="img/faq/8.jpg"/>
+                                                </div>
+                                                <div class="inline-block margin0">
+                                                    <h2>4. Все готово.</h2><br>
+                                                    <p>Денежные средства должны зачислиться на Ваш аккаунт по окончании операции пополнения баланса.</p>
+                                                </div>
                                             </div>
                                         </div>
-
-                                        <div class="header" id="5-header">Как узнать актуальность базы?</div>
-                                        <div class="content" id="5-content">
-                                            <div class="inline-block margin0">
-                                                <h2>Справа от каждой базы написана дата последнего ее обновления.</h2><br>
-                                                <img src="/img/faq/14.jpg"/>
+                                        <div class="slide-h">
+                                            <a onclick="hidetxt('div4'); return false;" href="#" rel="nofollow">Как покупать/скачивать базы?</a>
+                                            <div style="display:none;" id="div4" class="text-slide-h">
+                                                <div class="inline-block margin0">
+                                                    <h2>1. Необходимо перейти в раздел "Список баз"</h2><br>
+                                                    <img src="img/faq/9.jpg"/>
+                                                </div>
+                                                <div class="inline-block margin0">
+                                                    <h2>2. Чтобы купить одну базу.</h2><br>
+                                                    <p>Необходимо выбрать нужную базу и кликнуть по кнопке "купить" справа. После чего у Вас спишуться средства со счета аккаунта и сможете сразу же скачать приобретенную базу. Также она станет доступна для скачивания в разделе "Мои базы".</p>
+                                                    <img src="img/faq/10.jpg"/>
+                                                </div>
+                                                <div class="inline-block margin0">
+                                                    <h2>3. Чтобы купить две или более баз.</h2><br>
+                                                    <p>Необходимо выбрать нужные базы и кликнуть по кнопке "Купить выбранные базы", которая находится над рабочей областью (она выделена зеленой рамкой). После чего у Вас спишуться средства со счета аккаунта и сможете сразу же скачать приобретенные базы. Также они станут доступны для скачивания в разделе "Мои базы".</p>
+                                                    <img src="img/faq/11.jpg"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="slide-h">
+                                            <a onclick="hidetxt('div5'); return false;" href="#" rel="nofollow">Как узнать, какие базы я уже купил?</a>
+                                            <div style="display:none;" id="div5" class="text-slide-h">
+                                                <div class="inline-block margin0">
+                                                    <h2>Весь список купленных Вами баз доступен в разделе "Мои базы"</h2><br>
+                                                    <img src="img/faq/13.jpg"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="slide-h">
+                                            <a onclick="hidetxt('div6'); return false;" href="#" rel="nofollow">Как узнать актуальность базы?</a>
+                                            <div style="display:none;" id="div6" class="text-slide-h">
+                                                <div class="inline-block margin0">
+                                                    <h2>Справа от каждой базы написана дата последнего ее обновления.</h2><br>
+                                                    <img src="img/faq/14.jpg"/>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-							    </div>
-						    </div>
+                                </div>
+                            </div>
                         </div>
                     </div><!-- wrapper -->
                 </div><!-- /container -->
