@@ -10,6 +10,9 @@
         <sec:ifLoggedIn>
             <g:render template="purchase"/>
         </sec:ifLoggedIn>
+        <sec:ifNotLoggedIn>
+            <g:render template="needLoginToPurchase"/>
+        </sec:ifNotLoggedIn>
 	</head>
 	<body>
         <div class="nav" role="navigation">
