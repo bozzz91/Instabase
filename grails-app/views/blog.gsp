@@ -62,7 +62,7 @@
 								<div class="main-content-items">
 									<a href="#" title="" alt="">
 										<div class="item-blog block">
-											<h2>Открытие сервиса InstaBase.su 18.12.2015</h2>
+											<h2>Открытие сервиса InstaBase.su 21.12.2015</h2>
 											<p>
 												Мы рады сообщить Вам, что сегодня в 12.00 по МСК состоялся запуск сервиса InstaBase.su и открыт доступ к Базам аккаунтов Instagram.<br><br>InstaBase.su - только правильное продвижение в Instagram, только качественные и полные базы пользователей.
 											</p>
