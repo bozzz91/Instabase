@@ -4,7 +4,7 @@ class Payment {
 
     static constraints = {
         owner(nullable: false)
-        amount(nullable: false, min: 0.0d)
+        amount(nullable: false, min: 10.0d)
         creationDate(nullable: true)
         payDate(nullable: true)
         state()
