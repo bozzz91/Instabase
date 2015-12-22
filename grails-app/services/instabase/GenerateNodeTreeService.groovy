@@ -61,21 +61,22 @@ class GenerateNodeTreeService {
         def disabled = false
         def isBase = node instanceof Base
         if (isBase) {
+            Base base = (Base) node
             idPrefix = 'base_'
             icon = grailsLinkGenerator.resource(dir: 'images', file: 'db.png')
             if (text.endsWith('.txt') || text.endsWith('.dat')) {
                 text = text.substring(0, text.lastIndexOf('.'));
             }
-            text += ' (' + (node as Base).updateDate.format("dd-MM-yyyy") + ')'
+            text += ' (' + base.updateDate.format("dd-MM-yyyy") + ')'
             if (viewMode) {
-                text += " <a class='downloadLink' onclick='downloadBase(${node.id})' href='#'>Скачать</a>"
+                text += " <a class='downloadLink' onclick='downloadBase(${base.id})' href='#'>Скачать</a>"
             } else {
                 if (boughtBases != null) {
-                    if (boughtBases.contains(node.id)) {
-                        text += " <a class='downloadLink boughtBase' onclick='downloadBase(${node.id})' href='#'>(Куплено) Скачать</a>"
+                    if (boughtBases.contains(base.id)) {
+                        text += " <a class='downloadLink boughtBase' onclick='downloadBase(${base.id})' href='#'>(Куплено) Скачать</a>"
                         disabled = true
                     } else {
-                        text += " <a class='purchaseLink' onclick='submitPurchase(\"${idPrefix}${node.id}\")' href='#'>Купить</a>"
+                        text += " <a class='purchaseLink' onclick='submitPurchase(\"${idPrefix}${base.id}\")' href='#'>Купить (${base.cost}р)</a>"
                     }
                 }
             }
