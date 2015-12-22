@@ -4,6 +4,8 @@ import grails.converters.JSON
 import grails.transaction.Transactional
 import org.codehaus.groovy.grails.web.mapping.LinkGenerator
 
+import java.text.DecimalFormat
+
 @Transactional
 class GenerateNodeTreeService {
 
@@ -76,7 +78,8 @@ class GenerateNodeTreeService {
                         text += " <a class='downloadLink boughtBase' onclick='downloadBase(${base.id})' href='#'>(Куплено) Скачать</a>"
                         disabled = true
                     } else {
-                        text += " <a class='purchaseLink' onclick='submitPurchase(\"${idPrefix}${base.id}\")' href='#'>Купить (${base.cost}р)</a>"
+                        DecimalFormat df = new DecimalFormat("##.##")
+                        text += " <a class='purchaseLink' onclick='submitPurchase(\"${idPrefix}${base.id}\")' href='#'>Купить (${df.format(base.cost)}р)</a>"
                     }
                 }
             }
