@@ -9,5 +9,8 @@
         <li class="category-tab">
             <a class="a-category-tab tab-insta" href="${createLink(action: 'index', params: ['category':'Instagram'])}">Instagram</a>
         </li>
+        <li class="category-tab">
+            <a class="a-category-tab tab-filter" href="${createLink(action: 'index', params: ['category':'Фильтры'])}">Фильтры</a>
+        </li>
     </ul>
 </div>
