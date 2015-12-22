@@ -38,7 +38,11 @@ class PersonController {
 
     @Secured(['ROLE_USER'])
     def show(Person personInstance) {
-        respond personInstance
+        if (hasAccessToPerson(personInstance)) {
+            respond personInstance
+        } else {
+            render(status: FORBIDDEN, view: 'error', model: [text: 'You can not view other accounts.'])
+        }
     }
 
     private boolean hasAccessToPerson(Person p) {
