@@ -121,6 +121,7 @@
                             <hr/><br/>Меню админа<br/>
                             <a href="${createLink(controller:'payment', action: 'list')}"><div class="btn-action">Все платежи</div></a>
                             <a href="${createLink(controller:'base', action: 'index')}"><div class="btn-action">Все базы</div></a>
+                            <a href="${createLink(controller:'person', action: 'list')}"><div class="btn-action">Все пользователи</div></a>
                             <hr/>
                             <br/>Управление<br/>
                             <a href="${createLink(controller:'base', action: 'init')}"><div class="btn-action-admin">Инициализация</div></a>
