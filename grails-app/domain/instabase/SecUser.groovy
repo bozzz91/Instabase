@@ -6,7 +6,7 @@ class SecUser {
 
 	String username
 	String password
-	boolean enabled = false
+	boolean enabled = true
 	boolean accountExpired = false
 	boolean accountLocked = false
 	boolean passwordExpired = false
