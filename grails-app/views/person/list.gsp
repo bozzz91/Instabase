@@ -24,13 +24,13 @@
 					<tr>
 
                         <g:sortableColumn property="username" title="${message(code: 'person.username.label', default: 'Username')}" />
-
-                        <g:sortableColumn property="fullName" title="${message(code: 'person.fullName.list.label', default: 'Full Name')}" />
 					
 						<g:sortableColumn property="created" title="${message(code: 'person.created.label', default: 'Creation Date')}" />
 					
 						<g:sortableColumn property="cash" title="${message(code: 'person.cash.label', default: 'Cash')}" />
-					
+
+                        <th>${message(code: 'person.bases.count.label', default: 'Base count')}</th>
+
 						<g:sortableColumn property="enabled" title="${message(code: 'person.enabled.label', default: 'Enabled')}" />
 					
 					</tr>
@@ -41,11 +41,12 @@
 
                         <td><g:link action="show" class="person-btn-list" id="${personInstance.id}">${fieldValue(bean: personInstance, field: "username")}</g:link></td>
 					
-						<td>${fieldValue(bean: personInstance, field: "fullName")}</td>
-					
 						<td><g:formatDate date="${personInstance.created}" format="dd-MM-yyyy HH-mm-ss"/></td>
 
                         <td>${fieldValue(bean: personInstance, field: "cash")}</td>
+
+                        <g:set var="baseCount" value="${personInstance.bases?.size()}"/>
+                        <td>${baseCount}</td>
 					
 						<td>${fieldValue(bean: personInstance, field: "enabled")}</td>
 					
