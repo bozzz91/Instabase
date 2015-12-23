@@ -5,7 +5,12 @@
         <g:message code="person.username.label" default="Email (login)"/>
         <span class="required-indicator">*</span>
     </label>
-    <g:field type="email" name="username" required="" value="${personInstance?.username}"/>
+    <g:if test="${personInstance?.id}">
+        <g:fieldValue bean="${personInstance}" field="username"/>
+    </g:if>
+    <g:else>
+        <g:field type="email" name="username" required="" value="${personInstance?.username}"/>
+    </g:else>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: personInstance, field: 'password', 'error')} required">
@@ -27,11 +32,11 @@
 </g:if>
 
 <g:if test="${personInstance?.id}">
-<div class="fieldcontain ${hasErrors(bean: personInstance, field: 'fullName', 'error')}">
-    <label for="fullName">
-        <g:message code="person.fullName.label" default="Full Name"/>
+<div class="fieldcontain required">
+    <label for="enabled">
+        <g:message code="person.enabled.label" default="Confirm Password"/>
         <span class="required-indicator">*</span>
     </label>
-    <g:textField name="fullName" required="" value="${personInstance?.fullName}"/>
+    <g:select from="${['true','false']}" name="enabled" required="" value="${personInstance?.enabled}"/>
 </div>
 </g:if>
