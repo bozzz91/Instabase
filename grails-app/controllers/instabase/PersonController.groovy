@@ -27,6 +27,13 @@ class PersonController {
     }
 
     def list() {
+        if (!params.sort) {
+            params.sort = 'created'
+        }
+        if (!params.order) {
+            params.order = 'desc'
+        }
+        params.max = 25
         respond Person.list(params), model: [personInstanceCount: Person.count()]
     }
 
