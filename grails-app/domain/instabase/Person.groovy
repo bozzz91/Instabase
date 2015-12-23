@@ -8,7 +8,12 @@ class Person extends SecUser {
         created(nullable: true)
     }
 
-    static hasMany = [payments: Payment]
+    static hasMany = [payments: Payment, activations: Activation]
+
+    static mapping = {
+        payments cascade: 'all-delete-orphan'
+        activations cascade: 'all-delete-orphan'
+    }
 
     String fullName
     Date created

@@ -45,8 +45,7 @@
 
                         <td>${fieldValue(bean: personInstance, field: "cash")}</td>
 
-                        <g:set var="baseCount" value="${personInstance.bases?.size()}"/>
-                        <td>${baseCount}</td>
+                        <td>${personInstance.bases?.size()}</td>
 					
 						<td>${fieldValue(bean: personInstance, field: "enabled")}</td>
 					

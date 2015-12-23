@@ -94,9 +94,9 @@ class PersonController {
             subject "Instabase Account Activation"
             html g.render(template: "/mail/activate", model: [link:link])
         }
-        log.info("your code ${code}")
 
-        render (view: 'success', model: ['text': "Activation link was sent on ${personInstance.username}"])
+        //render (view: 'success', model: ['text': "Activation link was sent on ${personInstance.username}"])
+        render (view: 'success', model: ['text': "Регистрация успешно завершена!"])
     }
 
     @Transactional
@@ -147,7 +147,6 @@ class PersonController {
                 return
             }
 
-            Activation.where { person == personInstance }.deleteAll()
             personInstance.save flush: true
 
             request.withFormat {
@@ -168,12 +167,20 @@ class PersonController {
             return
         }
 
+        if (springSecurityService.currentUser == personInstance) {
+            flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'Person.label', default: 'Person'), personInstance.id])
+            redirect action: "list", method: "GET"
+            return
+        }
+
+        Activation.where { person == personInstance }.deleteAll()
+        SecUserSecRole.removeAll(personInstance)
         personInstance.delete flush: true
 
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.deleted.message', args: [message(code: 'Person.label', default: 'Person'), personInstance.id])
-                redirect action: "index", method: "GET"
+                redirect action: "list", method: "GET"
             }
             '*' { render status: NO_CONTENT }
         }
