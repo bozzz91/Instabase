@@ -94,6 +94,10 @@ class PersonController {
         )
         activation.save()
 
+        if (!activation.person.authorities.contains(SecRole.findByAuthority('ROLE_USER'))) {
+            SecUserSecRole.create(activation.person, SecRole.findByAuthority('ROLE_USER'))
+        }
+
         String link = grailsLinkGenerator.link(controller: 'person', action: 'activate', params: [activateCode: code], absolute: true)
         mailService.sendMail {
             async true
