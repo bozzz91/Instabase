@@ -155,7 +155,7 @@ body {
 }
 
 .purchaseLink,.downloadLink{
-	padding:5px 15px 5px 15px;
+	padding:2px 15px 2px 15px;
 	margin-left:12px;
 	background:#76EE00;
 	color:#fff;
@@ -163,6 +163,9 @@ body {
 	-webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
        -moz-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
             box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+}
+.boughtBase {
+    background:#1D8CF9;
 }
 	.jstree-children li a{
 		color:#fff;
