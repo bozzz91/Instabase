@@ -29,6 +29,7 @@
 
         <div class="categoty-title">${params.category}</div>
 		<div class="divider1"></div>
+        <div id="cat-empty-div" style="display: none" class="categoty-empty">К сожалению, данная категория пока пуста</div>
         <div id="introspection_tree"></div>
 
         <div id="dialog" title="Подтверждение" style="display: none"></div>
