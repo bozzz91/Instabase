@@ -9,7 +9,7 @@ class Base extends Node {
         ver(nullable: false, min: 1)
         filePath(nullable: false)
         contentName(nullable: true)
-        length(nullable: false, min: 0l, max: 5000000l)
+        length(nullable: false, min: 0l, max: 100000000l)
     }
 
     Integer ver = 1
