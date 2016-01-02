@@ -15,7 +15,7 @@
 		<g:message code="payment.amount.label" default="Amount" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:field type="number" name="amount" value="${fieldValue(bean: paymentInstance, field: 'amount')}" required=""/>
+	<g:field type="number" name="amount" value="${fieldValue(bean: paymentInstance, field: 'amount') ?: ((params.defaultAmount as Integer) > 10 ? params.defaultAmount : 10)}" required=""/>
 </div>
 
 <sec:ifAllGranted roles="ROLE_ADMIN">

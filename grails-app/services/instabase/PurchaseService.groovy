@@ -19,6 +19,7 @@ class PurchaseService {
      *    {
      *      state: 0, -- 0 is error
      *      errorType: 1, -- 0 is low balance, 1 is all bases already bought
+     *      count: 234.3, -- how much cash is not enough
      *      text: "Все выбранные базы уже куплены" -- msg about error to show user
      *    }
      * 3) successfully buy:
@@ -30,7 +31,7 @@ class PurchaseService {
      *    }
      * */
     def purchaseBases(Map params, Person p) {
-        def bases = [] as Set
+        def bases = [] as Set<Long>
         def usedNodes = [] as Set
         String ids = params.ids
         Boolean pre = params.pre ? Boolean.valueOf("${params.pre}") : true
@@ -56,21 +57,26 @@ class PurchaseService {
         def totalCost = 0.0
         def count = 0
         def basesToBuy = []
-        def validate = bases.every { Long baseId ->
-            Base base = Base.findById(baseId)
-            if (p.bases.contains(base)) {
-                return true
-            }
 
+        bases = bases.findAll { Long baseId ->
+            !PersonBase.exists(p.id, baseId)
+        }.collect { Long baseId ->
+            Base.load(baseId)
+        }
+        bases.each { Base base ->
             totalCost += base.cost
-            if (p.cash < totalCost) {
-                return false
-            }
             count++
-            if (!pre) {
-                PersonBase.create(p, base)
-            } else {
-                basesToBuy << base.id
+        }
+
+        def validate = p.cash > totalCost
+
+        if (validate) {
+            validate = bases.every { Base base ->
+                if (!pre) {
+                    PersonBase.create(p, base)
+                } else {
+                    basesToBuy << base.id
+                }
             }
         }
 
@@ -103,7 +109,8 @@ class PurchaseService {
             return  [
                 state: 0, //error
                 errorType: 0, //low balance
-                text: "Недостаточно средств"
+                count: totalCost-p.cash, //need balance
+                text: "Недостаточно средств<br>Не хватает ${totalCost-p.cash} р."
             ] as JSON
         }
     }

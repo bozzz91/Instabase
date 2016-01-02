@@ -5,7 +5,6 @@ class Base extends Node {
     static constraints = {
         creationDate(nullable: true)
         updateDate(nullable: true)
-        cost(nullable: false, min: 0.0d)
         ver(nullable: false, min: 1)
         filePath(nullable: false)
         contentName(nullable: true)
@@ -15,7 +14,6 @@ class Base extends Node {
     Integer ver = 1
     Date creationDate
     Date updateDate
-    Double cost = 0.0d
     String filePath
     Long length = 0l
     String contentName = "unknown"

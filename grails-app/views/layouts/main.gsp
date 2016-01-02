@@ -125,6 +125,7 @@
                             <hr/>
                             <br/>Управление<br/>
                             <a href="${createLink(controller:'base', action: 'init')}"><div class="btn-action-admin">Инициализация</div></a>
+                            <a href="${createLink(controller:'base', action: 'initCost')}"><div class="btn-action-admin">Расчет всех цен в категориях</div></a>
                             <a href="${createLink(uri: '/monitoring')}"><div class="btn-action-admin">Мониторинг</div></a>
                         </li>
                     </sec:ifAllGranted>

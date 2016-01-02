@@ -61,6 +61,7 @@ class GenerateNodeTreeService {
         def icon = grailsLinkGenerator.resource(dir: 'images', file: 'folder.png')
         def text = node.name
         def disabled = false
+        DecimalFormat df = new DecimalFormat("##.##")
         def isBase = node instanceof Base
         if (isBase) {
             Base base = (Base) node
@@ -78,10 +79,13 @@ class GenerateNodeTreeService {
                         text += " <a class='downloadLink boughtBase' onclick='downloadBase(${base.id})' href='#'>(Куплено) Скачать</a>"
                         disabled = true
                     } else {
-                        DecimalFormat df = new DecimalFormat("##.##")
                         text += " <a class='purchaseLink' onclick='submitPurchase(\"${idPrefix}${base.id}\")' href='#'>Купить (${df.format(base.cost)}р)</a>"
                     }
                 }
+            }
+        } else {
+            if (!viewMode) {
+                text += " [Базы: ${node.totalBaseCount} шт. на ${df.format(node.cost)} р]"
             }
         }
 

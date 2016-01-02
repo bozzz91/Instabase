@@ -57,8 +57,16 @@ class BaseController {
     @Transactional
     def init() {
         contentService.initFromStorage()
-        this.flash.message = 'Инициализация прошла успешно'
-        redirect(controller: 'base', action: 'index')
+        contentService.recalculateNodes()
+        flash.message = 'Инициализация прошла успешно'
+        render(view: 'index')
+    }
+
+    @Transactional
+    def initCost() {
+        contentService.recalculateNodes()
+        flash.message = 'Обновление цен и количества баз в категориях прошло успешно'
+        render(view: 'index')
     }
 
     def create() {
@@ -106,6 +114,7 @@ class BaseController {
 
         saveUpload(baseInstance, upload)
         baseInstance.save flush: true
+        contentService.updateBaseParents(baseInstance, baseInstance.cost, true)
 
         request.withFormat {
             form multipartForm {
@@ -133,8 +142,10 @@ class BaseController {
             return
         }
 
+        Double oldCost = Base.load(baseInstance.id).cost
         saveUpload(baseInstance, upload)
         baseInstance.save flush: true
+        contentService.updateBaseParents(baseInstance, baseInstance.cost - oldCost)
 
         request.withFormat {
             form multipartForm {

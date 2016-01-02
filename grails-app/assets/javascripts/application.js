@@ -19,12 +19,15 @@ if (typeof jQuery !== 'undefined') {
 	})(jQuery);
 }
 
-function openDialog(text) {
+function openDialog(text, refresh) {
     $("#dialog").text(text).dialog({
         modal: true,
         buttons: {
             'Ok': function() {
                 $(this).dialog("close");
+                if (refresh) {
+                    window.location.reload();
+                }
             }
         }
     });

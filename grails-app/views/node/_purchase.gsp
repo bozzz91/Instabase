@@ -23,7 +23,7 @@
                                     $(this).dialog("close");
                                 },
                                 'Пополнить баланс' : function() {
-                                    window.location.href = '${createLink(uri: '/payment/create')}'
+                                    window.location.href = '${createLink(uri: '/payment/create')}' + '?defaultAmount=' + data.count
                                 }
                             }
                         });
@@ -44,8 +44,8 @@
                                         if (data.state != 2) {
                                             openDialog(data);
                                         } else {
-                                            openDialog(data.text);
-                                            $("#introspection_tree").jstree(true).refresh();
+                                            openDialog(data.text, true);
+                                            //$("#introspection_tree").jstree(true).refresh();
                                         }
                                     },
                                     'error': function(data) {

@@ -86,7 +86,7 @@ class ContentService {
                     baseName = fileName.split(VERSION)[0]
                     version = fileName.split(VERSION)[1] as Integer
                 }
-                Base.findByNameAndLevelAndParent(baseName, parent.level + 1, parent) ?:
+                Base b = Base.findByNameAndLevelAndParent(baseName, parent.level + 1, parent) ?:
                         new Base(
                             name: baseName,
                             ver: version,
@@ -96,7 +96,49 @@ class ContentService {
                             contentName: baseName,
                             filePath: f.absolutePath.replace(getStorageRoot(), ROOT)
                         ).save()
+                parent.addToNodes(b)
             }
+        }
+    }
+
+    public def recalculateNodes() {
+        Node.list().findAll {!(it instanceof Base)}.each { node ->
+            node.cost = 0
+            node.totalBaseCount = 0
+            node.save()
+        }
+        List<Node> roots = Node.findAllByLevel(0)
+        roots.each { node ->
+            recalculateOneNode(node)
+        }
+    }
+
+    private Map recalculateOneNode(Node node) {
+        if (node instanceof Base) {
+            return [count: 1, cost: node.cost]
+        } else {
+            node.nodes.each { innerNode ->
+                def res = recalculateOneNode(innerNode)
+                node.cost += res.cost
+                node.totalBaseCount += res.count
+            }
+            node.save(flush: true)
+            return [count: node.totalBaseCount, cost: node.cost]
+        }
+    }
+
+    public void updateBaseParents(Base base, Double costDiff, boolean isNew = false) {
+        if (!isNew && costDiff < 0.000001) {
+            return
+        }
+        def parentNode = base.parent
+        while (parentNode) {
+            parentNode.cost += costDiff
+            if (isNew) {
+                parentNode.totalBaseCount++
+            }
+            parentNode.save()
+            parentNode = parentNode.parent
         }
     }
 }
