@@ -10,6 +10,10 @@ class Node {
         totalBaseCount(nullable: false, min: 0)
     }
 
+    static mapping = {
+        totalBaseCount defaultValue: "0"
+    }
+
     static hasMany = [nodes: Node]
     static belongsTo = [parent: Node]
 
