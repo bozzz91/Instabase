@@ -75,7 +75,8 @@ class ContentService {
                                 name: nodeName,
                                 level: currentLevel,
                                 parent: parent
-                        ).save()
+                        ).save(flush: true)
+                parent?.addToNodes(node)?.save(flush: true)
 
                 processFolder(f, nodeDefCost, node)
             } else {
@@ -96,7 +97,7 @@ class ContentService {
                             contentName: baseName,
                             filePath: f.absolutePath.replace(getStorageRoot(), ROOT)
                         ).save()
-                parent.addToNodes(b)
+                parent.addToNodes(b).save(flush: true)
             }
         }
     }
