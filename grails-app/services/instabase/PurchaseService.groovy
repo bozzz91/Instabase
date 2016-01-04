@@ -3,6 +3,8 @@ package instabase
 import grails.converters.JSON
 import grails.transaction.Transactional
 
+import java.text.DecimalFormat
+
 @Transactional
 class PurchaseService {
 
@@ -106,11 +108,12 @@ class PurchaseService {
                 ] as JSON
             }
         } else {
+            DecimalFormat df = new DecimalFormat("##.##")
             return  [
                 state: 0, //error
                 errorType: 0, //low balance
                 count: totalCost-p.cash, //need balance
-                text: "Недостаточно средств<br>Не хватает ${totalCost-p.cash} р."
+                text: "Недостаточно средств<br/>Не хватает ${df.format(totalCost-p.cash)} р."
             ] as JSON
         }
     }

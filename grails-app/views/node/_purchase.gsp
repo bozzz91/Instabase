@@ -16,7 +16,7 @@
                 if (data.state != 1) {
                     //если нет денег на счету то errorType == 0
                     if (data.errorType == 0) {
-                        $("#dialog").text(data.text).dialog({
+                        $("#dialog").html(data.text).dialog({
                             modal: true,
                             buttons: {
                                 'Ok': function() {
