@@ -70,19 +70,15 @@ class PurchaseService {
             count++
         }
 
-        def validate = p.cash > totalCost
-
-        if (validate) {
-            validate = bases.every { Base base ->
-                if (!pre) {
-                    PersonBase.create(p, base)
-                } else {
+        if (p.cash >= totalCost) {
+            bases.each { Base base ->
+                if (pre) {
                     basesToBuy << base.id
+                } else {
+                    PersonBase.create(p, base)
                 }
             }
-        }
 
-        if (validate) {
             if (count == 0) {
                 return [
                     state: 0, //error
