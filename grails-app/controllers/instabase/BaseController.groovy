@@ -30,7 +30,7 @@ class BaseController {
         }
     }
 
-    @Secured(['ROLE_USER'])
+    @Secured(['IS_AUTHENTICATED_ANONYMOUSLY'])
     def download(Base baseInstance) {
         if (hasAccessToBase(baseInstance)) {
             File baseFile = contentService.getBaseFile(baseInstance)
@@ -51,13 +51,12 @@ class BaseController {
 
     private boolean hasAccessToBase(Base b) {
         Person user = springSecurityService.currentUser as Person
-        return request.isUserInRole('ROLE_ADMIN') || (b?.id && PersonBase.exists(user.id, b.id))
+        return request.isUserInRole('ROLE_ADMIN') || b.cost < 0.000001d || (b?.id && user?.id && PersonBase.exists(user.id, b.id))
     }
 
     @Transactional
     def init() {
         contentService.initFromStorage()
-        contentService.recalculateNodes()
         flash.message = 'Инициализация прошла успешно'
         render(view: 'index')
     }

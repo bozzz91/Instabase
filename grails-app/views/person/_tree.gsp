@@ -49,7 +49,10 @@
                 'data': {
                     'url': "${createLink(action: 'generateFileList', params: ['category': category])}",
                     'data': function (node) {
-                        return {'nodeId': node.id.substring(5)};
+                        return {
+                            'nodeId': node.id.substring(5),
+                            'free' : ${free}
+                        };
                     }
                 }
             }

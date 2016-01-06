@@ -36,6 +36,15 @@
                     </span>
 				</li>
 				</g:if>
+
+                <li class="fieldcontain">
+                    <span id="cost-label" class="property-label">
+                        <g:message code="base.cost.label" default="Cost" />
+                    </span>
+                    <span class="property-value" aria-labelledby="cost-label">
+                        <g:fieldValue bean="${nodeInstance}" field="cost"/>
+                    </span>
+                </li>
 			
 				<g:if test="${nodeInstance?.parent}">
 				<li class="fieldcontain">

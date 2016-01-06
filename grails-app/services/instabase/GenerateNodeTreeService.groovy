@@ -11,7 +11,7 @@ class GenerateNodeTreeService {
 
     LinkGenerator grailsLinkGenerator
 
-    def generateTree(Map params, Person personOwner = null, boolean viewMode = false) {
+    def generateTree(Map params, Person personOwner = null, def viewMode = false, def free = false) {
         String nodeId = params.nodeId
         String category = params.category
 
@@ -23,9 +23,18 @@ class GenerateNodeTreeService {
         }
 
         def boughtBases = [] as Set
-        if (personOwner) {
+        if (personOwner && !free) {
             personOwner = Person.get(personOwner.id)
             personOwner.bases.each { Base base ->
+                boughtBases << base.id
+                Node parent = base.parent
+                while (parent) {
+                    boughtBases << parent.id
+                    parent = Node.get(parent.id).parent
+                }
+            }
+        } else if (free) {
+            Base.findAllByCost(0.0d).each { Base base ->
                 boughtBases << base.id
                 Node parent = base.parent
                 while (parent) {
@@ -36,16 +45,19 @@ class GenerateNodeTreeService {
         }
         Set<Node> nodes = currentNode?.nodes
         if (nodes) {
-            if (personOwner && viewMode) {
+            if (personOwner && viewMode || free) {
                 nodes = nodes.findAll { it.id in boughtBases }
+            }
+            if (!free) {
+                nodes = nodes.findAll { it.cost > 0.0d }
             }
             nodes = nodes.sort { it.name }
         }
 
-        return nodesToJson(nodes, boughtBases, viewMode)
+        return nodesToJson(nodes, boughtBases, viewMode || free)
     }
 
-    private def nodesToJson(def nodes, Set boughtBases = null, boolean viewMode = false) {
+    private def nodesToJson(def nodes, Set boughtBases = null, def viewMode = false) {
         if (!nodes) {
             return ([] as JSON)
         }
@@ -56,7 +68,7 @@ class GenerateNodeTreeService {
         return (result as JSON)
     }
 
-    private def nodeToJson (Node node, Set boughtBases = null, boolean viewMode = false) {
+    private def nodeToJson (Node node, Set boughtBases = null, def viewMode = false) {
         def idPrefix = 'node_'
         def icon = grailsLinkGenerator.resource(dir: 'images', file: 'folder.png')
         def text = node.name

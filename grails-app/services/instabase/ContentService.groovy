@@ -55,6 +55,7 @@ class ContentService {
         String defaultCost = Metadata.getCurrent().getProperty("instabase.base.default.cost")
         File rootDir = new File(root)
         processFolder(rootDir, defaultCost)
+        recalculateNodes()
     }
 
     private void processFolder(File folder, String defCost, Node parent = null) {
@@ -102,7 +103,7 @@ class ContentService {
         }
     }
 
-    public def recalculateNodes() {
+    public void recalculateNodes() {
         Node.list().findAll {!(it instanceof Base)}.each { node ->
             node.cost = 0
             node.totalBaseCount = 0
@@ -116,7 +117,7 @@ class ContentService {
 
     private Map recalculateOneNode(Node node) {
         if (node instanceof Base) {
-            return [count: 1, cost: node.cost]
+            return [count: node.cost > 0.0d ? 1 : 0, cost: node.cost]
         } else {
             node.nodes.each { innerNode ->
                 def res = recalculateOneNode(innerNode)

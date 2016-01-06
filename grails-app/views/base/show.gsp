@@ -70,17 +70,6 @@
                     </span>
 				</li>
 				</g:if>
-			
-				<g:if test="${baseInstance?.cost}">
-				<li class="fieldcontain">
-					<span id="cost-label" class="property-label">
-                        <g:message code="base.cost.label" default="Cost" />
-                    </span>
-                    <span class="property-value" aria-labelledby="cost-label">
-                        <g:fieldValue bean="${baseInstance}" field="cost"/>
-                    </span>
-				</li>
-				</g:if>
 
                 <g:if test="${baseInstance?.ver}">
                     <li class="fieldcontain">

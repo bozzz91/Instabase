@@ -16,9 +16,9 @@
 			</ul>
 		</div>
         <br/>
-        <g:render template="/layouts/tabs"/>
+        <g:render template="/layouts/tabs" model="[free: free]"/>
 
-        <div class="categoty-title">Мои базы ${params.category}</div>
+        <div class="categoty-title">${free ? 'Бесплатные' : 'Мои'} базы ${params.category}</div>
 		<div class="divider1"></div>
         <div id="introspection_tree"></div>
 

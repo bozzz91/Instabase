@@ -18,12 +18,19 @@ class PersonController {
     def mailService
 
     @Secured(['ROLE_USER'])
-    def index() {
-        if (!params.category) {
-            params.category = "Геолокация"
+    def index(String category) {
+        if (!category) {
+            category = params.category = "Геолокация"
         }
-        String category = params.category
-        render (view: 'index', model: [category: category])
+        render (view: 'index', model: [category: category, free: false])
+    }
+
+    @Secured(['IS_AUTHENTICATED_ANONYMOUSLY'])
+    def free(String category) {
+        if (!category) {
+            category = params.category = "Геолокация"
+        }
+        render (view: 'index', model: [category: category, free: true])
     }
 
     def list() {
@@ -37,10 +44,10 @@ class PersonController {
         respond Person.list(params), model: [personInstanceCount: Person.count()]
     }
 
-    @Secured(['ROLE_USER'])
-    def generateFileList() {
+    @Secured(['IS_AUTHENTICATED_ANONYMOUSLY'])
+    def generateFileList(boolean free) {
         Person user = springSecurityService.currentUser as Person
-        render generateNodeTreeService.generateTree(params, user, true)
+        render generateNodeTreeService.generateTree(params, user, true, free)
     }
 
     @Secured(['ROLE_USER'])
