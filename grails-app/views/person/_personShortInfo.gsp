@@ -19,7 +19,8 @@
 
         <li>
             <g:set var="baseCount" value="${user.bases?.size()}"/>
-            <g:message code="person.bases.count.label" default="Base count"/> : ${baseCount}
+            <g:message code="person.bases.count.label" default="Base count"/> :
+            <g:link controller="person" action="index" class="link-person-bases">${baseCount}</g:link>
         </li>
     </ul>
     <g:form controller="payment" action="create" method="GET">
