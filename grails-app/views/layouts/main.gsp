@@ -119,12 +119,11 @@
                     </sec:ifAllGranted>
                     <sec:ifAllGranted roles="ROLE_ADMIN">
                         <li style="text-align: center;">
-                            <hr/><br/>Меню админа<br/>
+                            <hr/>Меню админа<br/>
                             <a href="${createLink(controller:'payment', action: 'list')}"><div class="btn-action">Все платежи</div></a>
                             <a href="${createLink(controller:'base', action: 'index')}"><div class="btn-action">Все базы</div></a>
                             <a href="${createLink(controller:'person', action: 'list')}"><div class="btn-action">Все пользователи</div></a>
-                            <hr/>
-                            <br/>Управление<br/>
+                            <hr/>Управление<br/>
                             <a href="${createLink(controller:'base', action: 'init')}"><div class="btn-action-admin">Инициализация</div></a>
                             <a href="${createLink(controller:'base', action: 'initCost')}"><div class="btn-action-admin">Расчет всех цен в категориях</div></a>
                             <a href="${createLink(uri: '/monitoring')}"><div class="btn-action-admin">Мониторинг</div></a>
