@@ -11,8 +11,7 @@ class ContentService {
     private static String COST = '_cost_'
 
     private static String getStorageRoot() {
-        String path = Metadata.getCurrent().get('instabase.storage.root')
-        path
+        Metadata.getCurrent().get('instabase.storage.root')
     }
 
     private static String generateBaseDir(Base base) {
