@@ -34,7 +34,7 @@ class GenerateNodeTreeService {
                 }
             }
         } else if (free) {
-            Base.findAllByCost(0.0d).each { Base base ->
+            Base.findAllByFree(true).each { Base base ->
                 boughtBases << base.id
                 Node parent = base.parent
                 while (parent) {

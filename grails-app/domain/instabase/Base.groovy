@@ -9,6 +9,11 @@ class Base extends Node {
         filePath(nullable: false)
         contentName(nullable: true)
         length(nullable: false, min: 0l, max: 100000000l)
+        free()
+    }
+
+    static mapping = {
+        free defaultValue: "false"
     }
 
     Integer ver = 1
@@ -17,6 +22,7 @@ class Base extends Node {
     String filePath
     Long length = 0l
     String contentName = "unknown"
+    boolean free = false
 
     def beforeInsert() {
         super.beforeInsert()

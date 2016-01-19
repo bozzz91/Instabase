@@ -42,7 +42,13 @@ class PersonBase implements Serializable {
     }
 
     static PersonBase create(Person person, Base base, boolean flush = false) {
-        def instance = new PersonBase(person: person, base: base, baseVersion: base.ver, baseDate: base.updateDate, ext: base.contentName)
+        def instance = new PersonBase(
+                person: person,
+                base: base,
+                baseVersion: base.ver,
+                baseDate: base.updateDate,
+                ext: base.contentName
+        )
         instance.save(flush: flush, insert: true)
         instance
     }
@@ -92,11 +98,12 @@ class PersonBase implements Serializable {
             }
         }
         baseVersion(nullable: false, min: 1)
-        ext(nullable: true, blank: true, maxSize: 10)
+        ext(nullable: false, blank: false, maxSize: 10)
     }
 
     static mapping = {
         id composite: ['base', 'person']
         version false
+        ext defaultValue: "'txt'"
     }
 }

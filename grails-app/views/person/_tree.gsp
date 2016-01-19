@@ -30,7 +30,7 @@
     }
 
     function downloadBase(id) {
-        window.location.href = "${createLink(controller: 'base', action: 'download')}/" + id;
+        window.location.href = "${createLink(controller: 'base', action: 'download')}/" + id + "?free=${free}";
     }
 
     var checkAgain = true;
