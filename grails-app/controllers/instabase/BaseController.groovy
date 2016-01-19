@@ -71,6 +71,13 @@ class BaseController {
         redirect action: 'index'
     }
 
+    @Transactional
+    def migrateStorage() {
+        contentService.migrateStorage()
+        flash.message = 'Миграция хранилища прошла успешно'
+        redirect action: 'index'
+    }
+
     def create() {
         respond new Base(params)
     }

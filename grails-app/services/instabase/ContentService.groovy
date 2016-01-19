@@ -221,4 +221,37 @@ class ContentService {
             parentNode = parentNode.parent
         }
     }
+
+    public void migrateStorage() {
+        String root = getStorageRoot()
+        File rootDir = new File(root)
+        migrateFolder(rootDir)
+    }
+
+    private void migrateFolder(File folder) {
+        folder.listFiles().each { f ->
+            if (f.isDirectory()) {
+                migrateFolder(f)
+            } else {
+                String fileName = f.getName()
+                String baseName = fileName
+                String version = 1
+                if (fileName.contains(VERSION)) {
+                    baseName = fileName.split(VERSION)[0]
+                    version = fileName.split(VERSION)[1]
+                }
+                Map nameData = generateNameAndExt(baseName)
+                baseName = nameData.name
+                File migrDir = new File(f.parentFile, baseName)
+                migrDir.mkdirs()
+                File migrFile = new File(migrDir, "v${version}.dat")
+
+                //upload to storage
+                migrFile.withOutputStream { out ->
+                    out << f.newInputStream()
+                }
+                f.delete()
+            }
+        }
+    }
 }
