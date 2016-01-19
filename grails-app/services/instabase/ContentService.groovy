@@ -14,6 +14,10 @@ class ContentService {
         Metadata.getCurrent().get('instabase.storage.root')
     }
 
+    private static String getStorageInitRoot() {
+        Metadata.getCurrent().get('instabase.storage.init.root')
+    }
+
     private static String generateBaseDir(Base base) {
         String baseDir = ROOT + File.separator
 
@@ -50,9 +54,9 @@ class ContentService {
     }
 
     void initFromStorage() {
-        String root = getStorageRoot()
+        String initRoot = getStorageInitRoot()
         String defaultCost = Metadata.getCurrent().getProperty("instabase.base.default.cost")
-        File rootDir = new File(root)
+        File rootDir = new File(initRoot)
         processFolder(rootDir, defaultCost)
         recalculateNodes()
     }
@@ -95,7 +99,7 @@ class ContentService {
                             parent: parent,
                             cost: defCost as Double,
                             contentName: baseName,
-                            filePath: f.absolutePath.replace(getStorageRoot(), ROOT)
+                            filePath: f.absolutePath.replace(getStorageInitRoot(), ROOT)
                         ).save()
                 parent.addToNodes(b).save(flush: true)
             }

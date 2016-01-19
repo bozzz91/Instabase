@@ -48,7 +48,7 @@ class BootStrap {
             Node region2 = new Node(name: 'Московская обл', parent: country).save();
             Node msc = new Node(name: 'Москва', parent: region2).save();
 
-            Base base1 = new Base(cost: 1d, name: 'base 1', parent: ufa, ver: 1, filePath: 'sdfas', contentName: 'name1').save();
+            /*Base base1 = new Base(cost: 1d, name: 'base 1', parent: ufa, ver: 1, filePath: 'sdfas', contentName: 'name1').save();
             Base base2 = new Base(cost: 2d, name: 'base 2', parent: msc, ver: 1, filePath: 'sdfsf', contentName: 'name2').save();
             Base base3 = new Base(cost: 15d, name: 'base 3', parent: chs, ver: 1, filePath: 'sdfsd', contentName: 'name3').save();
 
@@ -56,7 +56,7 @@ class BootStrap {
             PersonBase.create(adminUser, base2)
 
             PersonBase.create(user, base2)
-            PersonBase.create(user, base3)
+            PersonBase.create(user, base3)*/
 
             Node root2 = new Node(name: 'VK').save();
             Node country2 = new Node(name: 'Россия', parent: root2).save();
@@ -66,7 +66,7 @@ class BootStrap {
             Node region4 = new Node(name: 'Самарская обл', parent: country2).save();
             Node samara = new Node(name: 'Самара', parent: region4).save();
 
-            Base base4 = new Base(cost: 4d, name: 'base 4', parent: kazan,  ver: 1, filePath: 'sdfas', contentName: 'name4').save();
+            /*Base base4 = new Base(cost: 4d, name: 'base 4', parent: kazan,  ver: 1, filePath: 'sdfas', contentName: 'name4').save();
             Base base5 = new Base(cost: 5d, name: 'base 5', parent: nij,    ver: 1, filePath: 'sdfsf', contentName: 'name5').save();
             Base base6 = new Base(cost: 0.0d, name: 'base 6', parent: samara, ver: 1, filePath: 'sdfsd', contentName: 'name6').save();
 
@@ -74,7 +74,7 @@ class BootStrap {
             PersonBase.create(adminUser, base5)
 
             PersonBase.create(user, base5)
-            PersonBase.create(user, base6)
+            PersonBase.create(user, base6)*/
 
             new Payment(state: Payment.State.DONE, amount: 15d, owner: adminUser).save()
             new Payment(state: Payment.State.WAIT, amount: 17d, owner: adminUser).save()
