@@ -80,7 +80,7 @@ class ContentService {
             if (pb) {
                 version = "v${pb.baseVersion}"
                 ext = pb.ext
-            } else if (SecUserSecRole.exists(SecRole.findByAuthority('ROLE_ADMIN').id, person.id)) {
+            } else if (SecUserSecRole.exists(person.id, SecRole.findByAuthority('ROLE_ADMIN').id)) {
                 version = "v${base.ver}"
                 ext = base.contentName
             }
