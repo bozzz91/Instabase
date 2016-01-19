@@ -34,11 +34,13 @@ class BaseController {
     def download(Base baseInstance) {
         if (hasAccessToBase(baseInstance)) {
             Person user = springSecurityService.currentUser as Person
-            File baseFile = contentService.getBaseFile(baseInstance, user)
+            Map fileData = contentService.getBaseFile(baseInstance, user)
+            File baseFile = fileData.file
+            String ext = fileData.ext
             if (baseFile.exists()) {
                 response.setCharacterEncoding("UTF-8")
                 response.setContentType("application/octet-stream")
-                response.setHeader("Content-disposition", "attachment;filename=${URLEncoder.encode(baseInstance.name, "UTF-8")}")
+                response.setHeader("Content-disposition", "attachment;filename=${URLEncoder.encode(baseInstance.name +'.'+ ext, "UTF-8")}")
                 response.outputStream << new FileInputStream(baseFile)
                 response.outputStream.flush()
             } else {
@@ -77,13 +79,9 @@ class BaseController {
         def req = request as MultipartHttpServletRequest
         def upload = req.getFile('filePath') as CommonsMultipartFile
         if (!upload.isEmpty()) {
-            if (upload.originalFilename.endsWith('.txt')) {
-                inst.contentName = upload.originalFilename
-                inst.length = upload.size
-                params.filePath = inst.filePath
-            } else {
-                throw new Exception("Wrong file type. Must be only '.txt'")
-            }
+            inst.contentName = contentService.generateNameAndExt(upload.originalFilename).ext
+            inst.length = upload.size
+            params.filePath = inst.filePath
         } else {
             if (inst.filePath instanceof String) {
                 params.filePath = inst.filePath

@@ -9,6 +9,7 @@ class PersonBase implements Serializable {
     Base base
     Integer baseVersion
     Date baseDate
+    String ext
 
     boolean equals(other) {
         if (!(other instanceof PersonBase)) {
@@ -41,7 +42,7 @@ class PersonBase implements Serializable {
     }
 
     static PersonBase create(Person person, Base base, boolean flush = false) {
-        def instance = new PersonBase(person: person, base: base, baseVersion: base.ver, baseDate: base.updateDate)
+        def instance = new PersonBase(person: person, base: base, baseVersion: base.ver, baseDate: base.updateDate, ext: base.contentName)
         instance.save(flush: flush, insert: true)
         instance
     }
@@ -91,6 +92,7 @@ class PersonBase implements Serializable {
             }
         }
         baseVersion(nullable: false, min: 1)
+        ext(nullable: true, blank: true, maxSize: 10)
     }
 
     static mapping = {

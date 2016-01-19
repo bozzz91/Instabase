@@ -11,6 +11,7 @@ class ContentService {
     private static String VERSION = '_version_'
     private static String COST = '_cost_'
     private static String FREE = '_free_'
+    private static String EXT  = 'dat'
 
     private static String getStorageRoot() {
         Metadata.getCurrent().get('instabase.storage.root')
@@ -23,7 +24,7 @@ class ContentService {
     private static String generateBaseDir(Base base) {
         String baseDir = ROOT + File.separator
 
-        def folders = [base.name-'.txt']
+        def folders = [base.name]
         Node parent = base.parent
         while (parent) {
             Node node = Node.get(parent.id)
@@ -38,36 +39,56 @@ class ContentService {
         return baseDir
     }
 
-    private static String generateVersion(Base base) {
-        return base.cost > 0 ? "v${base.ver}.txt" : "free.txt"
+    private static String generateVersionedName(Base base) {
+        return base.cost > 0 ? "v${base.ver}.${EXT}" : "free.${EXT}"
+    }
+
+    public static Map generateNameAndExt(String path) {
+        String name = path
+        String ext = 'txt'
+        if (path.matches('.*\\.[a-zA-Z]{3,4}')) {
+            int index = path.lastIndexOf('.')
+            name = path.substring(0, index)
+            ext = path.substring(index + 1)
+        }
+        ['name' : name, 'ext': ext]
     }
 
     void saveBaseFile(Base base, CommonsMultipartFile multipartFile) {
         if (!base.name) {
-            base.name = multipartFile.originalFilename
+            Map data = generateNameAndExt(multipartFile.originalFilename)
+            base.name = data.name
+            base.contentName = data.ext
+        } else if (base.name && !base.contentName) {
+            Map data = generateNameAndExt(base.name)
+            base.name = data.name
+            base.contentName = data.ext
         }
         String baseDir = generateBaseDir(base)
         File dir = new File(baseDir.replace(ROOT, getStorageRoot()))
         dir.mkdirs()
-        File uploadedFile = new File(dir, generateVersion(base))
+        File uploadedFile = new File(dir, generateVersionedName(base))
         multipartFile.transferTo(uploadedFile)
         base.filePath = baseDir
     }
 
-    File getBaseFile(Base base, Person person) {
+    Map getBaseFile(Base base, Person person) {
         def version = 'free'
-        if (base.cost > 0 && person) {
+        def ext = EXT
+        if (base.cost > 0 && person?.id) {
             PersonBase pb = PersonBase.get(person.id, base.id)
             if (pb) {
                 version = "v${pb.baseVersion}"
+                ext = pb.ext
             } else if (SecUserSecRole.exists(SecRole.findByAuthority('ROLE_ADMIN').id, person.id)) {
                 version = "v${base.ver}"
+                ext = base.contentName
             }
         }
 
-        String path = base.filePath + File.separator + "${version}" + '.txt'
+        String path = base.filePath + File.separator + "${version}." + EXT
         path = path.replace(ROOT, getStorageRoot())
-        new File(path)
+        [file: new File(path), ext: ext]
     }
 
     void initFromStorage() {
@@ -75,8 +96,9 @@ class ContentService {
         String defaultCost = Metadata.getCurrent().getProperty("instabase.base.default.cost")
         File rootDir = new File(initRoot)
         rootDir.eachFileRecurse {
-            if (it.isFile() && !it.name.split(VERSION)[0].endsWith('.txt')) {
-                throw new Exception('wrong base name: ' + it.absolutePath)
+            if (it.isFile() && !it.name.split(VERSION)[0].matches('.*\\.[a-zA-Z]{3,4}')) {
+                log.error('Wrong base name: ' + it.absolutePath)
+                throw new Exception('Wrong base name: ' + it.absolutePath)
             }
         }
         processFolder(rootDir, defaultCost)
@@ -127,6 +149,9 @@ class ContentService {
                     cost = 0
                     baseName = baseName - FREE
                 }
+                Map nameData = generateNameAndExt(baseName)
+                baseName = nameData.name
+                String ext = nameData.ext
 
                 Base b = Base.findByNameAndLevelAndParent(baseName, parent.level + 1, parent)
                 if (!b) {
@@ -136,7 +161,8 @@ class ContentService {
                             level: parent.level + 1,
                             parent: parent,
                             cost: cost,
-                            contentName: baseName
+                            contentName: ext,
+                            length: f.length()
                     )
                     String path = generateBaseDir(b)
                     b.filePath = path
@@ -146,7 +172,7 @@ class ContentService {
                 parent.addToNodes(b).save(flush: true)
 
                 //upload to storage
-                File uploadedFile = new File(generateBaseDir(b).replace(ROOT, getStorageRoot()), generateVersion(b))
+                File uploadedFile = new File(generateBaseDir(b).replace(ROOT, getStorageRoot()), generateVersionedName(b))
                 uploadedFile.parentFile.mkdirs()
                 uploadedFile.withOutputStream { out ->
                     out << f.newInputStream()

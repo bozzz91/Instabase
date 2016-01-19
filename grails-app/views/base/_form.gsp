@@ -52,6 +52,6 @@
 		<g:message code="base.content.label" default="Content" />
 		<span class="required-indicator">*</span>
 	</label>
-	<input type="file" id="filePath" name="filePath" accept=".txt"/>
+	<input type="file" id="filePath" name="filePath" accept=".txt, .xml"/>
 </div>
 
