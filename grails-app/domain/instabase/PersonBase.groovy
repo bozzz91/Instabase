@@ -8,6 +8,7 @@ class PersonBase implements Serializable {
     Person person
     Base base
     Integer baseVersion
+    Date baseDate
 
     boolean equals(other) {
         if (!(other instanceof PersonBase)) {
@@ -40,7 +41,7 @@ class PersonBase implements Serializable {
     }
 
     static PersonBase create(Person person, Base base, boolean flush = false) {
-        def instance = new PersonBase(person: person, base: base, baseVersion: base.ver)
+        def instance = new PersonBase(person: person, base: base, baseVersion: base.ver, baseDate: base.updateDate)
         instance.save(flush: flush, insert: true)
         instance
     }

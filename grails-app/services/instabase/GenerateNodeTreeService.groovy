@@ -54,21 +54,21 @@ class GenerateNodeTreeService {
             nodes = nodes.sort { it.name }
         }
 
-        return nodesToJson(nodes, boughtBases, viewMode || free)
+        return nodesToJson(nodes, personOwner, boughtBases, viewMode || free)
     }
 
-    private def nodesToJson(def nodes, Set boughtBases = null, def viewMode = false) {
+    private def nodesToJson(def nodes, Person personOwner, Set boughtBases = null, def viewMode = false) {
         if (!nodes) {
             return ([] as JSON)
         }
         List result = []
         nodes.each {
-            result << nodeToJson(it as Node, boughtBases, viewMode)
+            result << nodeToJson(it as Node, personOwner, boughtBases, viewMode)
         }
         return (result as JSON)
     }
 
-    private def nodeToJson (Node node, Set boughtBases = null, def viewMode = false) {
+    private def nodeToJson (Node node, Person personOwner, Set boughtBases = null, def viewMode = false) {
         def idPrefix = 'node_'
         def icon = grailsLinkGenerator.resource(dir: 'images', file: 'folder.png')
         def text = node.name
@@ -79,17 +79,33 @@ class GenerateNodeTreeService {
             Base base = (Base) node
             idPrefix = 'base_'
             icon = grailsLinkGenerator.resource(dir: 'images', file: 'db.png')
-            if (text.endsWith('.txt') || text.endsWith('.dat')) {
-                text = text.substring(0, text.lastIndexOf('.'));
-            }
-            text += ' (' + base.updateDate.format("dd-MM-yyyy") + ')'
+            text = text - '.txt'
+
             if (viewMode) {
-                text += " <a class='downloadLink' onclick='downloadBase(${base.id})' href='#'>Скачать</a>"
+                if (personOwner?.id && PersonBase.exists(personOwner.id, base.id)) {
+                    PersonBase pb = PersonBase.get(personOwner.id, base.id)
+                    if (pb.baseVersion == base.ver) {
+                        text += ' (' + base.updateDate.format("dd-MM-yyyy") + ')'
+                        text += " <a class='downloadLink' onclick='downloadBase(${base.id})' href='#'>Скачать</a>"
+                    } else {
+                        text += ' (' + pb.baseDate.format("dd-MM-yyyy") + ')'
+                        text += " <a class='upgradeLink upgradeBase' onclick='upgradeBase(\"${idPrefix}${base.id}\", ${generateUpgradeInfo(pb, base)})' href='#'>Обновить/Скачать</a>"
+                    }
+                } else {
+                    text += ' (' + base.updateDate.format("dd-MM-yyyy") + ')'
+                    text += " <a class='downloadLink' onclick='downloadBase(${base.id})' href='#'>Скачать</a>"
+                }
             } else {
+                text += ' (' + base.updateDate.format("dd-MM-yyyy") + ')'
                 if (boughtBases != null) {
                     if (boughtBases.contains(base.id)) {
-                        text += " <a class='downloadLink boughtBase' onclick='downloadBase(${base.id})' href='#'>(Куплено) Скачать</a>"
-                        disabled = true
+                        PersonBase pb = PersonBase.get(personOwner.id, base.id)
+                        if (pb.baseVersion == base.ver) {
+                            text += " <a class='downloadLink boughtBase' onclick='downloadBase(${base.id})' href='#'>(Куплено) Скачать</a>"
+                            disabled = true
+                        } else {
+                            text += " <a class='upgradeLink upgradeBase' onclick='upgradeBase(\"${idPrefix}${base.id}\", ${generateUpgradeInfo(pb, base)})' href='#'>Скачать/Обновить</a>"
+                        }
                     } else {
                         text += " <a class='purchaseLink' onclick='submitPurchase(\"${idPrefix}${base.id}\")' href='#'>Купить (${df.format(base.cost)}р)</a>"
                     }
@@ -113,5 +129,9 @@ class GenerateNodeTreeService {
                 children: !node.isEmpty(),
                 file: isBase
         ]
+    }
+
+    private static String generateUpgradeInfo(PersonBase pb, Base base) {
+        return "\"${pb.baseVersion}\", \"${pb.baseDate}\", \"${base.ver}\", \"${base.updateDate}\", \"${base.cost/2}\""
     }
 }

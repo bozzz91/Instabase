@@ -71,6 +71,16 @@
 				</li>
 				</g:if>
 
+
+                <li class="fieldcontain">
+                    <span id="cost-label" class="property-label">
+                        <g:message code="base.cost.label" default="Cost" />
+                    </span>
+                    <span class="property-value" aria-labelledby="cost-label">
+                        <g:fieldValue bean="${baseInstance}" field="cost"/>р.
+                    </span>
+                </li>
+
                 <g:if test="${baseInstance?.ver}">
                     <li class="fieldcontain">
                         <span id="ver-label" class="property-label">
@@ -87,13 +97,24 @@
 					<span id="content-label" class="property-label">
                         <g:message code="base.content.label" default="Content Name" />
                     </span>
-                    <span class="property-value" aria-labelledby="parent-label">
+                    <span class="property-value" aria-labelledby="content-label">
                         <g:link controller="base" action="download" resource="${baseInstance}">
                             ${baseInstance?.contentName?.encodeAsHTML()}
                         </g:link>
                     </span>
 				</li>
 				</g:if>
+
+                <sec:ifAllGranted roles="ROLE_ADMIN">
+                <li class="fieldcontain">
+                    <span id="path-label" class="property-label">
+                        <g:message code="base.path.label" default="Path" />
+                    </span>
+                    <span class="property-value" aria-labelledby="path-label">
+                        <g:fieldValue bean="${baseInstance}" field="filePath"/>
+                    </span>
+                </li>
+                </sec:ifAllGranted>
 			
 			</ol>
             <sec:ifAllGranted roles="ROLE_ADMIN">

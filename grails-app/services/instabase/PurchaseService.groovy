@@ -47,9 +47,8 @@ class PurchaseService {
                         usedNodes.addAll(result.nodes)
                         bases.addAll(result.bases)
                     } else if (it.startsWith('base_')) {
-                        Base base = Base.findById(id)
-                        bases << base.id
-                        usedNodes << base.id
+                        bases << id
+                        usedNodes << id
                     }
                 }
             }
@@ -110,6 +109,88 @@ class PurchaseService {
                 errorType: 0, //low balance
                 count: totalCost-p.cash, //need balance
                 text: "Недостаточно средств<br/>Не хватает ${df.format(totalCost-p.cash)} р."
+            ] as JSON
+        }
+    }
+
+    def upgradeBases(Map params, Person p) {
+        def bases = [] as Set<Long>
+        def usedNodes = [] as Set
+        String ids = params.ids
+        Boolean pre = params.pre ? Boolean.valueOf("${params.pre}") : true
+        if (pre) {
+            ids.split(',').each {
+                Long id = it.substring(5) as Long
+                if (!usedNodes.contains(id)) {
+                    if (it.startsWith('node_')) {
+                        Node node = Node.findById(id)
+                        Map result = collectBasesFromNode(node)
+                        usedNodes.addAll(result.nodes)
+                        bases.addAll(result.bases)
+                    } else if (it.startsWith('base_')) {
+                        bases << id
+                        usedNodes << id
+                    }
+                }
+            }
+        } else {
+            bases = ids.split(',').collect { it as Long }
+        }
+        def totalCost = 0.0
+        def count = 0
+        def basesToUpgrade = []
+
+        bases = bases.findAll { Long baseId ->
+            PersonBase.exists(p.id, baseId)
+        }.collect { Long baseId ->
+            Base.load(baseId)
+        }
+        bases.each { Base base ->
+            totalCost += base.cost/2
+            count++
+        }
+
+        if (p.cash >= totalCost) {
+            bases.each { Base base ->
+                if (pre) {
+                    basesToUpgrade << base.id
+                } else {
+                    PersonBase.remove(p, base, true)
+                    PersonBase.create(p, base, true)
+                }
+            }
+
+            if (count == 0) {
+                return [
+                        state: 0, //error
+                        errorType: 1, //all bases already bought
+                        text: "Все выбранные базы не требуют обновления"
+                ] as JSON
+            }
+            if (!pre) {
+                p.cash -= totalCost
+                p.save(failOnError: true);
+                return [
+                        cost: totalCost,
+                        state: 2, //success bought
+                        count: count,
+                        text: "Базы успешно обновлены"
+                ] as JSON
+            } else {
+                return [
+                        cost: totalCost,
+                        state: 1, //success prepare
+                        count: count,
+                        text: basesToUpgrade.join(',')
+                ] as JSON
+            }
+        } else {
+            DecimalFormat df = new DecimalFormat("##.##")
+            return  [
+                    state: 0, //error
+                    errorType: 0, //low balance
+                    count: totalCost-p.cash, //need balance
+                    text: "Недостаточно средств<br/>Не хватает ${df.format(totalCost-p.cash)} р."
             ] as JSON
         }
     }

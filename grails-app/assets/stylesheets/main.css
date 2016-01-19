@@ -178,6 +178,11 @@ body {
     font-size:18pt;
     font-weight:600;
 }
+.categoty-title-warning{
+    font-size:14pt;
+    color: #ff7a00;
+    font-style: italic;
+}
 
 .categoty-empty{
     text-align:center;
@@ -186,7 +191,7 @@ body {
     font-weight:400;
 }
 
-.purchaseLink,.downloadLink{
+.purchaseLink,.downloadLink,.upgradeLink{
 	padding:2px 15px 2px 15px;
 	margin-left:12px;
 	background:#76EE00;
@@ -198,6 +203,10 @@ body {
 }
 .boughtBase {
     background:#1D8CF9;
+}
+.upgradeBase {
+    background: #ff7a00;
+    color: #343434;
 }
 	.jstree-children li a{
 		color:#fff;
@@ -377,7 +386,7 @@ img {
 	text-decoration: underline;
 }
 
-.nav a.home, .nav a.list, .nav a.create {
+.nav a.home, .nav a.list, .nav a.create, .nav a.upgrade {
     background: no-repeat 0.7em center;
     text-indent: 25px;
     border: 3px solid transparent;
@@ -392,8 +401,13 @@ img {
 }
 
 .nav a.create {
-	background-image: url(../images/skin/database_add.png);
-	border:3px solid #00CD00;
+    background-image: url(../images/skin/database_add.png);
+    border:3px solid #00CD00;
+}
+
+.nav a.upgrade {
+    background-image: url(../images/skin/database_add.png);
+    border:3px solid #ff7a00;
 }
 
 .nav a:focus, .nav a:hover {

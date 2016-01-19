@@ -31,6 +31,14 @@ class NodeController {
         render result
     }
 
+    @Transactional
+    @Secured(['ROLE_USER'])
+    def upgrade() {
+        Person p = springSecurityService.currentUser as Person
+        def result = purchaseService.upgradeBases(params, p)
+        render result
+    }
+
     def generateFileList() {
         Person p = springSecurityService.currentUser as Person
         render generateNodeTreeService.generateTree(params, p)

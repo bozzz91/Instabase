@@ -58,7 +58,6 @@
                         <div id="wrap">
                             <div class="utp">
                                 <h1>Базы аккаунтов Instagram</h1>
-                                <p>Еженедельное обновление всех баз.</p>
                                 <g:render template="sale"/>
                             </div>
                             <div class="slider-wrap">

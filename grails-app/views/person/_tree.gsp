@@ -33,6 +33,8 @@
         window.location.href = "${createLink(controller: 'base', action: 'download')}/" + id;
     }
 
+    var checkAgain = true;
+
     $(function () {
         $("#introspection_tree").jstree({
             "plugins" : ["themes", "json_data", "ui", "wholerow", "contextmenu", "state"],
@@ -53,6 +55,14 @@
                             'nodeId': node.id.substring(5),
                             'free' : ${free}
                         };
+                    },
+                    'success': function(data) {
+                        if (checkAgain) {
+                            if (data.length == 0) {
+                                $('#cat-empty-div').show();
+                            }
+                            checkAgain = false;
+                        }
                     }
                 }
             }

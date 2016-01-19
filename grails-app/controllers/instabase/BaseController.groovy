@@ -33,11 +33,12 @@ class BaseController {
     @Secured(['IS_AUTHENTICATED_ANONYMOUSLY'])
     def download(Base baseInstance) {
         if (hasAccessToBase(baseInstance)) {
-            File baseFile = contentService.getBaseFile(baseInstance)
+            Person user = springSecurityService.currentUser as Person
+            File baseFile = contentService.getBaseFile(baseInstance, user)
             if (baseFile.exists()) {
                 response.setCharacterEncoding("UTF-8")
                 response.setContentType("application/octet-stream")
-                response.setHeader("Content-disposition", "attachment;filename=${URLEncoder.encode(baseInstance.contentName, "UTF-8")}")
+                response.setHeader("Content-disposition", "attachment;filename=${URLEncoder.encode(baseInstance.name, "UTF-8")}")
                 response.outputStream << new FileInputStream(baseFile)
                 response.outputStream.flush()
             } else {
@@ -58,14 +59,14 @@ class BaseController {
     def init() {
         contentService.initFromStorage()
         flash.message = 'Инициализация прошла успешно'
-        render(view: 'index')
+        redirect action: 'index'
     }
 
     @Transactional
     def initCost() {
         contentService.recalculateNodes()
         flash.message = 'Обновление цен и количества баз в категориях прошло успешно'
-        render(view: 'index')
+        redirect action: 'index'
     }
 
     def create() {
@@ -76,9 +77,13 @@ class BaseController {
         def req = request as MultipartHttpServletRequest
         def upload = req.getFile('filePath') as CommonsMultipartFile
         if (!upload.isEmpty()) {
-            inst.contentName = upload.originalFilename
-            inst.length = upload.size
-            params.filePath = inst.filePath
+            if (upload.originalFilename.endsWith('.txt')) {
+                inst.contentName = upload.originalFilename
+                inst.length = upload.size
+                params.filePath = inst.filePath
+            } else {
+                throw new Exception("Wrong file type. Must be only '.txt'")
+            }
         } else {
             if (inst.filePath instanceof String) {
                 params.filePath = inst.filePath

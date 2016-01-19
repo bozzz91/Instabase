@@ -7,6 +7,9 @@
         <script src="<g:createLinkTo dir='js' file='jstree.min.js'/>"></script>
         <link rel="stylesheet" type="text/css" href="<g:createLinkTo dir='css' file='themes/default/style.min.css'/>" />
         <g:render template="tree"/>
+        <sec:ifLoggedIn>
+            <g:render template="../node/upgrade"/>
+        </sec:ifLoggedIn>
 	</head>
 	<body>
 		<div class="nav" role="navigation">
@@ -18,8 +21,24 @@
         <br/>
         <g:render template="/layouts/tabs" model="[free: free]"/>
 
-        <div class="categoty-title">${free ? 'Бесплатные' : 'Мои'} базы ${params.category}</div>
+        <div class="categoty-title">
+            <g:if test="${free}">
+                Бесплатные базы ${params.category}<br/>
+                <div class="categoty-title-warning">Внимание! Размер бесплатных баз во много раз меньше, чем у платных.</div>
+            </g:if>
+            <g:else>
+                Мои базы ${params.category}
+            </g:else>
+        </div>
 		<div class="divider1"></div>
+        <div id="cat-empty-div" style="display: none" class="categoty-empty">
+            <g:if test="${free}">
+                К сожалению, данная категория пока пуста
+            </g:if>
+            <g:else>
+                Нет купленных баз в данной категории
+            </g:else>
+        </div>
         <div id="introspection_tree"></div>
 
         <div id="dialog" title="<g:message code='dialog.info.title'/>" style="display: none"></div>

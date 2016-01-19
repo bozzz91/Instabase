@@ -1,5 +1,6 @@
 package instabase
 import grails.transaction.Transactional
+import grails.util.Environment
 import grails.util.Metadata
 import org.springframework.web.multipart.commons.CommonsMultipartFile
 
@@ -9,6 +10,7 @@ class ContentService {
     private static String ROOT = '${root}'
     private static String VERSION = '_version_'
     private static String COST = '_cost_'
+    private static String FREE = '_free_'
 
     private static String getStorageRoot() {
         Metadata.getCurrent().get('instabase.storage.root')
@@ -21,7 +23,7 @@ class ContentService {
     private static String generateBaseDir(Base base) {
         String baseDir = ROOT + File.separator
 
-        def folders = []
+        def folders = [base.name-'.txt']
         Node parent = base.parent
         while (parent) {
             Node node = Node.get(parent.id)
@@ -36,19 +38,34 @@ class ContentService {
         return baseDir
     }
 
-    void saveBaseFile(Base base, CommonsMultipartFile multipartFile) {
-        String path = generateBaseDir(base)
-
-        File dir = new File(path.replace(ROOT, getStorageRoot()))
-        dir.mkdirs()
-        String fileName = multipartFile.originalFilename + VERSION + base.ver
-        File uploadedFile = new File(dir, fileName)
-        multipartFile.transferTo(uploadedFile)
-        base.filePath = path + File.separator + fileName
+    private static String generateVersion(Base base) {
+        return base.cost > 0 ? "v${base.ver}.txt" : "free.txt"
     }
 
-    File getBaseFile(Base base) {
-        String path = base.filePath
+    void saveBaseFile(Base base, CommonsMultipartFile multipartFile) {
+        if (!base.name) {
+            base.name = multipartFile.originalFilename
+        }
+        String baseDir = generateBaseDir(base)
+        File dir = new File(baseDir.replace(ROOT, getStorageRoot()))
+        dir.mkdirs()
+        File uploadedFile = new File(dir, generateVersion(base))
+        multipartFile.transferTo(uploadedFile)
+        base.filePath = baseDir
+    }
+
+    File getBaseFile(Base base, Person person) {
+        def version = 'free'
+        if (base.cost > 0 && person) {
+            PersonBase pb = PersonBase.get(person.id, base.id)
+            if (pb) {
+                version = "v${pb.baseVersion}"
+            } else if (SecUserSecRole.exists(SecRole.findByAuthority('ROLE_ADMIN').id, person.id)) {
+                version = "v${base.ver}"
+            }
+        }
+
+        String path = base.filePath + File.separator + "${version}" + '.txt'
         path = path.replace(ROOT, getStorageRoot())
         new File(path)
     }
@@ -57,7 +74,21 @@ class ContentService {
         String initRoot = getStorageInitRoot()
         String defaultCost = Metadata.getCurrent().getProperty("instabase.base.default.cost")
         File rootDir = new File(initRoot)
+        rootDir.eachFileRecurse {
+            if (it.isFile() && !it.name.split(VERSION)[0].endsWith('.txt')) {
+                throw new Exception('wrong base name: ' + it.absolutePath)
+            }
+        }
         processFolder(rootDir, defaultCost)
+        if (Environment.current == Environment.PRODUCTION) {
+            rootDir.eachFile {
+                if (it.isDirectory()) {
+                    it.deleteDir()
+                } else if (it.isFile()) {
+                    it.delete()
+                }
+            }
+        }
         recalculateNodes()
     }
 
@@ -87,21 +118,39 @@ class ContentService {
                 String fileName = f.getName()
                 String baseName = fileName
                 int version = 1
+                double cost = defCost as Double
                 if (fileName.contains(VERSION)) {
                     baseName = fileName.split(VERSION)[0]
                     version = fileName.split(VERSION)[1] as Integer
                 }
-                Base b = Base.findByNameAndLevelAndParent(baseName, parent.level + 1, parent) ?:
-                        new Base(
+                if (baseName.startsWith(FREE)) {
+                    cost = 0
+                    baseName = baseName - FREE
+                }
+
+                Base b = Base.findByNameAndLevelAndParent(baseName, parent.level + 1, parent)
+                if (!b) {
+                    b = new Base(
                             name: baseName,
                             ver: version,
                             level: parent.level + 1,
                             parent: parent,
-                            cost: defCost as Double,
-                            contentName: baseName,
-                            filePath: f.absolutePath.replace(getStorageInitRoot(), ROOT)
-                        ).save()
+                            cost: cost,
+                            contentName: baseName
+                    )
+                    String path = generateBaseDir(b)
+                    b.filePath = path
+                    b.save()
+                }
+
                 parent.addToNodes(b).save(flush: true)
+
+                //upload to storage
+                File uploadedFile = new File(generateBaseDir(b).replace(ROOT, getStorageRoot()), generateVersion(b))
+                uploadedFile.parentFile.mkdirs()
+                uploadedFile.withOutputStream { out ->
+                    out << f.newInputStream()
+                }
             }
         }
     }

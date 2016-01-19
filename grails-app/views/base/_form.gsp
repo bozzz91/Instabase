@@ -39,19 +39,19 @@
 	<g:field type="number" name="cost" value="${fieldValue(bean: baseInstance, field: 'cost')}" required=""/>
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: baseInstance, field: 'ver', 'error')} required">
+    <label for="ver">
+        <g:message code="base.ver.label" default="Ver" />
+        <span class="required-indicator">*</span>
+    </label>
+    <g:field name="ver" type="number" value="${baseInstance.ver}" required=""/>
+</div>
+
 <div class="fieldcontain ${hasErrors(bean: baseInstance, field: 'filePath', 'error')} required">
 	<label for="filePath">
 		<g:message code="base.content.label" default="Content" />
 		<span class="required-indicator">*</span>
 	</label>
-	<input type="file" id="filePath" name="filePath" />
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: baseInstance, field: 'ver', 'error')} required">
-	<label for="ver">
-		<g:message code="base.ver.label" default="Ver" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:field name="ver" type="number" value="${baseInstance.ver}" required=""/>
+	<input type="file" id="filePath" name="filePath" accept=".txt"/>
 </div>
 
