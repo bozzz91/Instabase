@@ -64,8 +64,10 @@ class PaymentController {
     }
 
     @Secured(['ROLE_ADMIN'])
-    def list(Integer max) {
+    def list(Integer max, String sort, String order) {
         params.max = Math.min(max ?: 10, 100)
+        params.sort = sort ?: 'creationDate'
+        params.order = order ?: 'desc'
         respond Payment.list(params), model: [paymentInstanceCount: Payment.count()]
     }
 

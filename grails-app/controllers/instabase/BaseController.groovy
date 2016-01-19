@@ -16,8 +16,10 @@ class BaseController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "DELETE"]
 
-    def index(Integer max) {
+    def index(Integer max, String sort, String order) {
         params.max = Math.min(max ?: 10, 100)
+        params.sort = sort ?: 'updateDate'
+        params.order = order ?: 'desc'
         respond Base.list(params), model: [baseInstanceCount: Base.count()]
     }
 
@@ -73,7 +75,7 @@ class BaseController {
 
     @Transactional
     def migrateStorage() {
-        contentService.migrateStorage()
+        //contentService.migrateStorage()
         flash.message = 'Миграция хранилища прошла успешно'
         redirect action: 'index'
     }
