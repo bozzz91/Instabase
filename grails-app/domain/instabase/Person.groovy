@@ -34,6 +34,6 @@ class Person extends SecUser {
 
     @Override
     String toString() {
-        fullName
+        username
     }
 }
