@@ -61,10 +61,10 @@ class PurchaseService {
         def count = 0
         def basesToBuy = []
 
-        bases = bases.findAll { Long baseId ->
-            closures.filterPersonBase.call(p.id, baseId)
-        }.collect { Long baseId ->
+        bases = bases.collect { Long baseId ->
             Base.load(baseId)
+        }.findAll { Base base ->
+            closures.filterPersonBase.call(p, base)
         }
         bases.each { Base base ->
             totalCost += closures.calcCost.call(base.cost)
@@ -117,8 +117,8 @@ class PurchaseService {
 
     def purchaseBases(Map params, Person p) {
         params.closures = [:]
-        params.closures.filterPersonBase = { long personId, long baseId ->
-            !PersonBase.exists(personId, baseId)
+        params.closures.filterPersonBase = { Person person, Base base ->
+            !PersonBase.exists(person.id, base.id)
         }
         params.closures.calcCost = { double cost ->
             cost
@@ -137,8 +137,10 @@ class PurchaseService {
 
     def upgradeBases(Map params, Person p) {
         params.closures = [:]
-        params.closures.filterPersonBase = { long personId, long baseId ->
-            PersonBase.exists(personId, baseId)
+        params.closures.filterPersonBase = { Person u, Base b ->
+            PersonBase.where {
+                person == u && base == b && baseVersion < b.ver
+            }.count() > 0
         }
         params.closures.calcCost = { double cost ->
             cost/2
