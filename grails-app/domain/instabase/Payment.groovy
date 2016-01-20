@@ -40,4 +40,9 @@ class Payment {
     def beforeInsert() {
         creationDate = new Date()
     }
+
+    @Override
+    String toString() {
+        return "${amount}р [${state}]"
+    }
 }

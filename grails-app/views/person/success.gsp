@@ -4,16 +4,10 @@
 <html>
 	<head>
 		<meta name="layout" content="main">
-		<g:set var="entityName" value="${message(code: 'person.label', default: 'Person')}" />
-		<title><g:message code="default.list.label" args="[entityName]" /></title>
+		<title><g:message code="default.list.label"/></title>
 	</head>
 	<body>
-		<div class="nav" role="navigation">
-			<ul>
-                <li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-                <li><a class="list" href="${createLink(controller: 'node')}"><g:message code="node.bases.label"/></a></li>
-			</ul>
-		</div>
+        <g:render template="../node/simpleNav"/>
 
         <div class="message" role="status">${text}</div>
 	</body>

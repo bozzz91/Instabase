@@ -20,16 +20,24 @@ class PersonController {
     @Secured(['ROLE_USER'])
     def index(String category) {
         if (!category) {
-            category = params.category = "Геолокация"
+            category = session['category']
         }
+        if (!category) {
+            category = "Геолокация"
+        }
+        session['category'] = category
         render (view: 'index', model: [category: category, free: false])
     }
 
     @Secured(['IS_AUTHENTICATED_ANONYMOUSLY'])
     def free(String category) {
         if (!category) {
-            category = params.category = "Геолокация"
+            category = session['category']
         }
+        if (!category) {
+            category = "Геолокация"
+        }
+        session['category'] = category
         render (view: 'index', model: [category: category, free: true])
     }
 
@@ -53,7 +61,12 @@ class PersonController {
     @Secured(['ROLE_USER'])
     def show(Person personInstance) {
         if (hasAccessToPerson(personInstance)) {
-            respond personInstance
+            def payments = personInstance.payments.findAll {
+                it.state != Payment.State.DELETE
+            }.sort {
+                it.id
+            }
+            respond personInstance, model: [payments: payments]
         } else {
             render(status: FORBIDDEN, view: 'error', model: [text: 'You can not view other accounts.'])
         }
@@ -169,7 +182,7 @@ class PersonController {
 
             request.withFormat {
                 form multipartForm {
-                    flash.message = message(code: 'default.updated.message', args: [message(code: 'Person.label', default: 'Person'), personInstance.id])
+                    flash.message = message(code: 'default.updated.message', args: [message(code: 'person.label', default: 'Person'), personInstance.id])
                     redirect personInstance
                 }
                 '*' { respond personInstance, [status: OK] }
@@ -186,7 +199,7 @@ class PersonController {
         }
 
         if (springSecurityService.currentUser == personInstance) {
-            flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'Person.label', default: 'Person'), personInstance.id])
+            flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'person.label', default: 'Person'), personInstance.id])
             redirect action: "list", method: "GET"
             return
         }
@@ -197,7 +210,7 @@ class PersonController {
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'Person.label', default: 'Person'), personInstance.id])
+                flash.message = message(code: 'default.deleted.message', args: [message(code: 'person.label', default: 'Person'), personInstance.id])
                 redirect action: "list", method: "GET"
             }
             '*' { render status: NO_CONTENT }

@@ -12,26 +12,21 @@
         </sec:ifLoggedIn>
 	</head>
 	<body>
-		<div class="nav" role="navigation">
-			<ul>
-                <li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-                <li><a class="list" href="${createLink(controller: 'node')}"><g:message code="node.bases.label"/></a></li>
-			</ul>
-		</div>
+        <g:render template="../node/simpleNav"/>
         <br/>
         <g:render template="/layouts/tabs" model="[free: free]"/>
 
-        <div class="categoty-title">
+        <div class="category-title">
             <g:if test="${free}">
-                Бесплатные базы ${params.category}<br/>
-                <div class="categoty-title-warning">Внимание! Размер бесплатных баз во много раз меньше, чем у платных.</div>
+                Бесплатные базы ${category}<br/>
+                <div class="category-title-warning">Внимание! Размер бесплатных баз во много раз меньше, чем у платных.</div>
             </g:if>
             <g:else>
-                Мои базы ${params.category}
+                Мои базы ${category}
             </g:else>
         </div>
 		<div class="divider1"></div>
-        <div id="cat-empty-div" style="display: none" class="categoty-empty">
+        <div id="cat-empty-div" style="display: none" class="category-empty">
             <g:if test="${free}">
                 К сожалению, данная категория пока пуста
             </g:if>

@@ -26,7 +26,7 @@
     <g:form controller="payment" action="create" method="GET">
         <fieldset class="buttons">
             <g:actionSubmit class="create" action="create"
-                            value="${message(code: 'default.button.payment.create.label', default: 'Пополнить баланс')}"/>
+                            value="${message(code: 'payment.button.create.label', default: 'Пополнить баланс')}"/>
         </fieldset>
     </g:form>
 </div>

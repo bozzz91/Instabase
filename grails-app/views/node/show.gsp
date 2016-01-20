@@ -1,18 +1,17 @@
-
 <%@ page import="instabase.Node" %>
+
 <!DOCTYPE html>
 <html>
 	<head>
 		<meta name="layout" content="main">
-		<g:set var="entityName" value="${message(code: 'node.label', default: 'Node')}" />
-		<title><g:message code="default.show.label" args="[entityName]" /></title>
+		<title><g:message code="node.show.label"/></title>
 	</head>
 	<body>
-        <g:render template="nav"/>
+        <g:render template="simpleNav"/>
 		<div id="show-node" class="content scaffold-show" role="main">
-			<h1><g:message code="default.show.label" args="[entityName]" /></h1>
+			<h1><g:message code="node.show.label"/></h1>
 			<g:if test="${flash.message}">
-			<div class="message" role="status">${flash.message}</div>
+			    <div class="message" role="status">${flash.message}</div>
 			</g:if>
 			<ol class="property-list node">
 				<g:if test="${nodeInstance?.name}">

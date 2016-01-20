@@ -172,24 +172,6 @@ body {
 	background:rgba(25,25,25,0.2);
 	margin:0 auto;
 }
-.categoty-title{
-    text-align:center;
-    margin-top:25px;
-    font-size:18pt;
-    font-weight:600;
-}
-.categoty-title-warning{
-    font-size:14pt;
-    color: #ff7a00;
-    font-style: italic;
-}
-
-.categoty-empty{
-    text-align:center;
-    margin-top:25px;
-    font-size:14pt;
-    font-weight:400;
-}
 
 .purchaseLink,.downloadLink,.upgradeLink{
 	padding:2px 15px 2px 15px;
@@ -369,6 +351,7 @@ img {
 .nav a {
 	color: #666666;
 	display: block;
+    border: 2px solid transparent;
 	padding: 0.25em 0.7em;
 	text-decoration: none;
 	   -moz-border-radius: 0.3em;
@@ -389,7 +372,7 @@ img {
 .nav a.home, .nav a.list, .nav a.create, .nav a.upgrade {
     background: no-repeat 0.7em center;
     text-indent: 25px;
-    border: 3px solid transparent;
+    border: 2px solid transparent;
 }
 
 .nav a.home {
@@ -402,12 +385,12 @@ img {
 
 .nav a.create {
     background-image: url(../images/skin/database_add.png);
-    border:3px solid #00CD00;
+    border:2px solid #00CD00;
 }
 
 .nav a.upgrade {
     background-image: url(../images/skin/database_add.png);
-    border:3px solid #ff7a00;
+    border:2px solid #ff7a00;
 }
 
 .nav a:focus, .nav a:hover {
@@ -415,6 +398,33 @@ img {
     color: #ffffff;
     outline: none;
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.8);
+}
+
+.nav a.active, .nav a.active {
+    background-color: #B1E7FF;
+    border: 2px solid #6AB2D2;
+    border-radius: 5px;
+}
+.nav a.active:focus, .nav a.active:hover {
+    background-color: #88D4F5;
+}
+
+.category-title {
+    text-align: center;
+    margin-top: 25px;
+    font-size: 18pt;
+    font-weight: 600;
+}
+.category-title-warning {
+    font-size: 14pt;
+    color: #ff7a00;
+    font-style: italic;
+}
+.category-empty {
+    text-align: center;
+    margin-top: 25px;
+    font-size: 14pt;
+    font-weight: 400;
 }
 
 /* CREATE/EDIT FORMS AND SHOW PAGES */
@@ -467,11 +477,11 @@ input, select, textarea {
 	padding: 0.2em 0.4em;
 }
 .form{
-	margin:0 auto;
+	margin:0 auto 0 20px;
 	width:65%;
 }
 .form input[type=submit]{
-	width:71.5%;
+	width:60%;
 	margin-top:20px;
 }
 
@@ -809,6 +819,11 @@ th:hover, tr:hover {
 
 .buttons .save {
 	background-image: url(../images/skin/database_save.png);
+}
+
+.buttons .closeEdit {
+    text-indent: 25px;
+    background: url(../images/skin/database_close.png) no-repeat 0.7em center;
 }
 
 a.skip {

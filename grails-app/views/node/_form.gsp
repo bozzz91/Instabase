@@ -5,14 +5,18 @@
 		<g:message code="node.name.label" default="Name" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:textField name="name" required="" value="${nodeInstance?.name}"/>
+    <g:if test="${nodeInstance?.id}">
+        <g:fieldValue bean="${nodeInstance}" field="name"/>
+    </g:if>
+    <g:else>
+        <g:field type="text" name="name" required="*" value="${nodeInstance?.name}"/>
+    </g:else>
 </div>
 
 <div class="fieldcontain">
     <label for="level">
         <g:message code="node.level.label" default="Level" />
     </label>
-
     <g:fieldValue id="level" bean="${nodeInstance}" field="level"/>
 </div>
 

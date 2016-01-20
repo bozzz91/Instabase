@@ -4,20 +4,21 @@
 <html>
 	<head>
 		<meta name="layout" content="main">
-		<g:set var="entityName" value="${message(code: 'node.label', default: 'Node')}" />
-		<title><g:message code="default.create.label" args="[entityName]" /></title>
+		<title><g:message code="node.create.label"/></title>
 	</head>
 	<body>
-        <g:render template="nav"/>
+        <g:render template="simpleNav"/>
 		<div id="create-node" class="content scaffold-create" role="main">
-			<h1><g:message code="default.create.label" args="[entityName]" /></h1>
+			<h1><g:message code="node.create.label" /></h1>
 			<g:if test="${flash.message}">
-			<div class="message" role="status">${flash.message}</div>
+			    <div class="message" role="status">${flash.message}</div>
 			</g:if>
 			<g:hasErrors bean="${nodeInstance}">
 			<ul class="errors" role="alert">
 				<g:eachError bean="${nodeInstance}" var="error">
-				<li <g:if test="${error in FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
+				<li <g:if test="${error in FieldError}">data-field-id="${error.field}"</g:if>>
+                    <g:message error="${error}"/>
+                </li>
 				</g:eachError>
 			</ul>
 			</g:hasErrors>

@@ -15,11 +15,14 @@ class NodeController {
     def generateNodeTreeService
     def springSecurityService
 
-    def index() {
-        if (!params.category) {
-            params.category = "Геолокация"
+    def index(String category) {
+        if (!category) {
+            category = session['category']
         }
-        String category = params.category
+        if (!category) {
+            category = "Геолокация"
+        }
+        session['category'] = category
         render (view: 'index', model: [category: category])
     }
 
@@ -97,7 +100,7 @@ class NodeController {
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'Node.label', default: 'Node'), nodeInstance.id])
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'node.label', default: 'Node'), nodeInstance.id])
                 redirect nodeInstance
             }
             '*'{ respond nodeInstance, [status: OK] }
@@ -117,7 +120,7 @@ class NodeController {
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'Node.label', default: 'Node'), nodeInstance.id])
+                flash.message = message(code: 'default.deleted.message', args: [message(code: 'node.label', default: 'Node'), nodeInstance.id])
                 redirect action:"index", method:"GET"
             }
             '*'{ render status: NO_CONTENT }

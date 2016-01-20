@@ -6,7 +6,7 @@
 		<g:message code="payment.owner.label" default="Owner" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:select id="owner" name="owner.id" from="${Person.findById(params.owner.id as Long)}" optionKey="id" optionValue="fullName" required="" value="${paymentInstance?.owner?.id}" class="many-to-one"/>
+	<g:select id="owner" name="owner.id" from="${Person.findById(params.parent as Long)}" optionKey="id" optionValue="fullName" required="" value="${paymentInstance?.owner?.id}" class="many-to-one"/>
 </div>
 </sec:ifAllGranted>
 
