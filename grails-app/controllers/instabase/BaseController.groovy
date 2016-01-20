@@ -33,18 +33,20 @@ class BaseController {
     }
 
     @Secured(['IS_AUTHENTICATED_ANONYMOUSLY'])
-    def download(Base baseInstance) {
+    def download(Base baseInstance, boolean free) {
         if (hasAccessToBase(baseInstance)) {
             Person user = springSecurityService.currentUser as Person
-            Map fileData = contentService.getBaseFile(baseInstance, user)
+            Map fileData = contentService.getBaseFile(baseInstance, user, free)
             File baseFile = fileData.file
             String ext = fileData.ext
             if (baseFile.exists()) {
                 response.setCharacterEncoding("UTF-8")
                 response.setContentType("application/octet-stream")
                 response.setHeader("Content-disposition", "attachment;filename=${URLEncoder.encode(baseInstance.name +'.'+ ext, "UTF-8")}")
-                response.outputStream << new FileInputStream(baseFile)
+                def stream = new FileInputStream(baseFile)
+                response.outputStream << stream
                 response.outputStream.flush()
+                stream.close()
             } else {
                 log.error('path not exists: ' + baseFile.absolutePath)
                 render(status: INTERNAL_SERVER_ERROR, view: 'error', model: [text: "Base doesn't exists"])
@@ -56,7 +58,7 @@ class BaseController {
 
     private boolean hasAccessToBase(Base b) {
         Person user = springSecurityService.currentUser as Person
-        return request.isUserInRole('ROLE_ADMIN') || b.cost < 0.000001d || (b?.id && user?.id && PersonBase.exists(user.id, b.id))
+        return request.isUserInRole('ROLE_ADMIN') || b.cost < 0.000001d || b.free || (b?.id && user?.id && PersonBase.exists(user.id, b.id))
     }
 
     @Transactional

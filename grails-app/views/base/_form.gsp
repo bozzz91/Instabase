@@ -4,9 +4,8 @@
 <div class="fieldcontain ${hasErrors(bean: baseInstance, field: 'name', 'error')} required">
 	<label for="name">
 		<g:message code="base.name.label" default="Name" />
-		<span class="required-indicator">*</span>
 	</label>
-	<g:textField name="name" required="" value="${baseInstance?.name}"/>
+    <g:fieldValue id="name" bean="${baseInstance}" field="name"/>
 </div>
 
 <div class="fieldcontain">

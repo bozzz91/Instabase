@@ -39,7 +39,10 @@ class ContentService {
         return baseDir
     }
 
-    private static String generateVersionedName(Base base) {
+    private static String generateVersionedName(Base base, boolean free = false) {
+        if (free) {
+            return "free.${EXT}"
+        }
         return base.cost > 0 ? "v${base.ver}.${EXT}" : "free.${EXT}"
     }
 
@@ -72,17 +75,16 @@ class ContentService {
         base.filePath = baseDir
     }
 
-    Map getBaseFile(Base base, Person person) {
+    Map getBaseFile(Base base, Person person, boolean free = false) {
         def version = 'free'
-        def ext = EXT
-        if (base.cost > 0 && person?.id) {
+        def ext = base.contentName
+        if (!free && base.cost > 0 && person?.id) {
             PersonBase pb = PersonBase.get(person.id, base.id)
             if (pb) {
                 version = "v${pb.baseVersion}"
                 ext = pb.ext
             } else if (SecUserSecRole.exists(person.id, SecRole.findByAuthority('ROLE_ADMIN').id)) {
                 version = "v${base.ver}"
-                ext = base.contentName
             }
         }
 
@@ -146,7 +148,7 @@ class ContentService {
                     version = fileName.split(VERSION)[1] as Integer
                 }
                 if (baseName.startsWith(FREE)) {
-                    cost = 0
+                    cost = 0.0d
                     baseName = baseName - FREE
                 }
                 Map nameData = generateNameAndExt(baseName)
@@ -161,18 +163,25 @@ class ContentService {
                             level: parent.level + 1,
                             parent: parent,
                             cost: cost,
+                            free: cost == 0.0d,
                             contentName: ext,
                             length: f.length()
                     )
                     String path = generateBaseDir(b)
                     b.filePath = path
                     b.save()
+                } else if (cost == 0.0d) {
+                    b.free = true
+                    b.save()
+                } else if (b.cost == 0.0d && cost > 0.0d) {
+                    b.cost = cost
+                    b.save()
                 }
 
                 parent.addToNodes(b).save(flush: true)
 
                 //upload to storage
-                File uploadedFile = new File(generateBaseDir(b).replace(ROOT, getStorageRoot()), generateVersionedName(b))
+                File uploadedFile = new File(generateBaseDir(b).replace(ROOT, getStorageRoot()), generateVersionedName(b, cost == 0.0d))
                 uploadedFile.parentFile.mkdirs()
                 uploadedFile.withOutputStream { out ->
                     out << f.newInputStream()
