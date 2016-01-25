@@ -77,10 +77,21 @@
                         <g:message code="base.creationDate.label" default="Creation Date" />
                     </span>
                     <span class="property-value" aria-labelledby="creationDate-label">
-                        <g:formatDate date="${baseInstance?.creationDate}" />
+                        <g:formatDate date="${baseInstance?.creationDate}" format="dd-MM-yyyy HH:mm:ss" />
                     </span>
 				</li>
 				</g:if>
+
+                <g:if test="${baseInstance?.updateDate}">
+                    <li class="fieldcontain">
+                        <span id="updateDate-label" class="property-label">
+                            <g:message code="base.updateDate.label" default="Update Date" />
+                        </span>
+                        <span class="property-value" aria-labelledby="updateDate-label">
+                            <g:formatDate date="${baseInstance?.updateDate}" format="dd-MM-yyyy HH:mm:ss" />
+                        </span>
+                    </li>
+                </g:if>
 
                 <li class="fieldcontain">
                     <span id="cost-label" class="property-label">
