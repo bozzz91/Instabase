@@ -63,7 +63,7 @@
                 "three_state": true
             },
             "state" : {
-                "key" : "instabaseTree",
+                "key" : "instabaseNotFreeTree${category}",
                 "ttl": 300000 //5 min to clean state
             },
             "contextmenu" : {

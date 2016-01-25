@@ -39,7 +39,8 @@
         $("#introspection_tree").jstree({
             "plugins" : ["themes", "json_data", "ui", "wholerow", "contextmenu", "state"],
             "state" : {
-                "key" : "instabasePersonTree"
+                "key" : "instabase${free ? 'Free' : 'Person'}Tree${category}",
+                "ttl": 1800000 //30 min to clean state
             },
             "contextmenu" : {
                 "select_node" : false,
