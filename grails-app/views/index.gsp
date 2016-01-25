@@ -71,7 +71,7 @@
                                                 <div class="sl-slide-inner">
                                                     <div class="bg-img bg-img-1"></div>
                                                     <h2>Продвигать с InstaBase - это просто!</h2>
-                                                    <blockquote><p><a href="" class="btn1">Зарегистрируйся</a> и скачивай базы!</p></blockquote>
+                                                    <blockquote><p><a href="/person/create" class="btn1">Зарегистрируйся</a> и скачивай базы!</p></blockquote>
                                                 </div>
                                             </div>
 
