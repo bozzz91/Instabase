@@ -46,6 +46,7 @@
                     if (data.errorType == 0) {
                         $("#dialog").html(data.text).dialog({
                             modal: true,
+                            width: 300,
                             buttons: {
                                 'Ok': function() {
                                     $(this).dialog("close");
@@ -62,6 +63,7 @@
                     var text = "Обновить базы (" + data.count + " шт) за " + data.cost + "р?";
                     $("#dialog").text(text).dialog({
                         modal: true,
+                        width: 300,
                         buttons: {
                             'Да': function() {
                                 $.ajax({

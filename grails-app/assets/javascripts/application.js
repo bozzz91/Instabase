@@ -19,9 +19,10 @@ if (typeof jQuery !== 'undefined') {
 	})(jQuery);
 }
 
-function openDialog(text, refresh) {
+function openDialog(text, refresh, width) {
     $("#dialog").text(text).dialog({
         modal: true,
+        width: width,
         buttons: {
             'Ok': function() {
                 $(this).dialog("close");

@@ -1,10 +1,11 @@
 package instabase
-
 import grails.plugin.springsecurity.annotation.Secured
+import grails.transaction.Transactional
 import org.codehaus.groovy.grails.web.mapping.LinkGenerator
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+import org.springframework.security.core.context.SecurityContextHolder
 
 import static org.springframework.http.HttpStatus.*
-import grails.transaction.Transactional
 
 @Secured(['ROLE_ADMIN'])
 @Transactional(readOnly = true)
@@ -15,6 +16,7 @@ class PersonController {
     LinkGenerator grailsLinkGenerator
     def generateNodeTreeService
     def springSecurityService
+    def authenticationManager
     def mailService
 
     @Secured(['ROLE_USER'])
@@ -114,8 +116,9 @@ class PersonController {
         )
         activation.save()
 
-        if (!activation.person.authorities.contains(SecRole.findByAuthority('ROLE_USER'))) {
-            SecUserSecRole.create(activation.person, SecRole.findByAuthority('ROLE_USER'))
+        SecRole userRole = SecRole.findByAuthority('ROLE_USER')
+        if (!activation.person.authorities.contains(userRole)) {
+            SecUserSecRole.create(activation.person, userRole, true)
         }
 
         String link = grailsLinkGenerator.link(controller: 'person', action: 'activate', params: [activateCode: code], absolute: true)
@@ -126,8 +129,14 @@ class PersonController {
             html g.render(template: "/mail/activate", model: [link:link])
         }
 
-        //render (view: 'success', model: ['text': "Activation link was sent on ${personInstance.username}"])
-        render (view: 'success', model: ['text': "Регистрация успешно завершена!"])
+        def authentication = new UsernamePasswordAuthenticationToken(
+                personInstance.username,
+                params.password
+        )
+        SecurityContextHolder.context.authentication = authenticationManager.authenticate(authentication)
+
+        flash.message = 'REG_SUCCESS'
+        redirect (controller: 'node', action: 'index')
     }
 
     @Transactional

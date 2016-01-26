@@ -13,6 +13,13 @@
         <sec:ifNotLoggedIn>
             <g:render template="needLoginToPurchase"/>
         </sec:ifNotLoggedIn>
+        <g:if test="${flash.message && flash.message == 'REG_SUCCESS'}">
+            <script>
+                $(function() {
+                    openDialog('Регистрация успешно завершена', false, 330);
+                })();
+            </script>
+        </g:if>
 	</head>
 	<body>
         <g:render template="nav"/>
